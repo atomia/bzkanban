@@ -51,11 +51,6 @@ function initBzkanban() {
 }
 
 function loadParams() {
-    var product = getURLParameter("product");
-    if (product !== null) {
-        bzProduct = product;
-    }
-
     var milestone = getURLParameter("milestone");
     if (milestone !== null) {
         bzProductMilestone = milestone;
@@ -105,7 +100,6 @@ function initNav(callback) {
 
     async.parallel([
         loadName,
-        //loadProducts,
         loadMilestonesList
     ],
     function(err, results) {
@@ -137,43 +131,6 @@ function createQueryFields() {
     var query = document.createElement("span");
     query.id = "query";
 
-    var product = document.createElement("span");
-    product.innerHTML = "Product: "
-
-    var productIcon = document.createElement("i");
-    productIcon.className = "fa fa-archive";
-    productIcon.title = "Product";
-
-    var productList = document.createElement("select");
-    productList.id = "textProduct";
-    productList.name = "product";
-    productList.disabled = "true"; // until content is loaded
-
-    // When the user changes the Product drop down
-    productList.addEventListener("input", function() {
-        bzProduct = document.getElementById("textProduct").value;
-
-        // Disable Milestones until it's refreshed
-        document.getElementById("textMilestone").disabled = true;
-
-        // Clear affected state.
-        bzProductMilestone = "";
-        bzAssignedTo = "";
-        showSpinner();
-        hideBacklog();
-        clearAssigneesList();
-        clearCards();
-        updateAddressBar();
-        hideBacklogButton();
-        hideNewBugButton();
-        hideNotification();
-        async.parallel([
-            loadMilestonesList,
-            loadProductInfo
-        ], function(err, result) {
-            hideSpinner();
-        });
-    });
     var milestone = document.createElement("span");
     milestone.innerHTML = "Milestone:";
 
@@ -209,11 +166,9 @@ function createQueryFields() {
         filterByAssignee(name);
     });
 
-    product.appendChild(productList);
     milestone.appendChild(milestoneList);
     assignee.appendChild(assigneeList);
 
-    //query.appendChild(product);
     query.appendChild(milestone);
     query.appendChild(assignee);
 
@@ -269,7 +224,7 @@ function createActions() {
     bell.className = "fa fa-bell";
 
     actions.appendChild(createBacklogButton());
-    actions.appendChild(newbug);
+    //actions.appendChild(newbug);
     actions.appendChild(whoami);
     actions.appendChild(login);
     actions.appendChild(bell);
@@ -337,7 +292,7 @@ function loadBoard(callbackLoadBoard) {
     clearAssigneesList();
     clearCards();
     hideNotification();
-    showNewBugButton();
+    //showNewBugButton();
     if (bzProductMilestone === "---") {
         hideBacklog();
         hideBacklogButton();
@@ -420,26 +375,6 @@ function loadBug(bzRestGetBugsUrl, product, callback) {
       console.log("Loaded bugs: " + bugs.length);
       callback();
   });
-}
-
-function loadProductsList(callback) {
-    httpGet("/rest.cgi/product?type=enterable&include_fields=name", function(response) {
-        document.getElementById("textProduct").disabled = false;
-        var products = response.products;
-        products.sort(function(a, b) {
-            return a.name.localeCompare(b.name);
-        });
-        products.forEach(function(product) {
-            var option = document.createElement("option");
-            option.value = product.name;
-            option.text = product.name;
-            document.getElementById("textProduct").appendChild(option);
-        });
-        // select it in list.
-        document.getElementById("textProduct").value = bzProduct;
-
-        callback();
-    });
 }
 
 function loadMilestonesList(callback) {
@@ -1281,8 +1216,7 @@ function getGravatarImgSrc(email) {
 function updateAddressBar() {
     var currentURL = location.href;
     var newURL = currentURL.split("?")[0]; // trim off params
-    newURL += "?product=" + bzProduct;
-    newURL += "&milestone=" + bzProductMilestone;
+    newURL += "?milestone=" + bzProductMilestone;
     newURL += "&assignee=" + bzAssignedTo;
     newURL += "&comments=" + bzLoadComments;
     newURL += "&autorefresh=" + bzAutoRefresh;
