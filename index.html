@@ -4,19 +4,35 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Bz Kanban Board</title>
+        <title>Atomia Scrumboard</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="bzkanban.css">
-        <link rel="icon" href="https://assets-cdn.github.com/images/icons/emoji/unicode/1f52a.png">
-    </head>
-    <body>
-        <div id="bzkanban"></div>
+        <link rel="stylesheet" href="css/patternlib.css">
+        <link rel="stylesheet" href="css/bzkanban.css">
+
+        <script src="js/jquery-3.1.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.4/timeago.min.js"></script>
         <script src="https://cdn.rawgit.com/nfrasser/linkify-shim/v2.1.4/linkify.min.js"></script>
         <script src="https://cdn.rawgit.com/nfrasser/linkify-shim/v2.1.4/linkify-html.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/async/2.1.4/async.min.js"></script>
         <script src="bzkanban.js"></script>
+
+    </head>
+    <body>
+
+      <header>
+        <div class="NavBar NavBar--apps">
+            <a class="Logo Logo--nav" href="/"></a>
+            <ul class="Set Set--apps">
+                <li class="Set-item">
+                    <a class="Set-action" href="#">Atomia Scrum</a>
+                </li>
+            </ul>
+        </div>
+
+      </header>
+
+        <div id="bzkanban"></div>
         <script>initBzkanban();</script>
     </body>
 </html>

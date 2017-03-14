@@ -1,6 +1,5 @@
 body {
-    background: #83a4d4; /* fallback for old browsers */
-    background: linear-gradient(to bottom, #83a4d4 , #b6fbff);
+    background: #F7F7F6; /* fallback for old browsers */
     font-family: sans-serif;
     margin: 0;
 }
@@ -18,7 +17,9 @@ body {
     padding: 10px 5px 5px 5px;
     padding-top: 10px;
     border-radius: 3px 3px 0 0;
-    background: #E2E4E6;
+    background: #d8005b;
+    color: #fff;
+
 }
 .cards {
     overflow-x: hidden;
@@ -53,7 +54,7 @@ body {
     background: darkgrey;
 }
 .card {
-    background-color: white;
+    color: #000;
     border-radius: 3px;
     padding: 10px;
     margin: 5px;
@@ -62,6 +63,18 @@ body {
 }
 .card:hover {
     background-color: ghostwhite;
+    border-color: black;
+}
+.card-task {
+    color: #000;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 5px;
+    font-size: small;
+    box-shadow: 0px 1px 0px lightgrey;
+}
+.card-task:hover {
+    background-color: #b3e7ff;
     border-color: black;
 }
 .card-ref {
@@ -94,6 +107,12 @@ body {
 }
 .card-meta .badge {
     margin-right: 10px;
+}
+
+.card-depends-on {
+    float: right;
+    font-weight: bold;
+
 }
 .badge .fa {
     padding-right: 3px;
@@ -147,9 +166,8 @@ body {
 
 }
 #query select {
-    width: 150px;
-    border-width: 1px 1px 1px 0;
-    border-radius: 0 3px 3px 0;
+    width: 200px;
+
 }
 #query span {
     margin-right: 15px;

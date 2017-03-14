@@ -1,0 +1,5939 @@
+/* stylelint-disable at-rule-empty-line-before */
+/* stylelint-disable selector-list-comma-newline-after */
+html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, menu, nav, section, time, mark, audio, video, details, summary {
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  border: 0;
+  background: transparent;
+  font-size: 100%;
+  font-weight: normal; }
+
+article, aside, figure, footer, header, nav, section, details, summary {
+  display: block; }
+
+/* consider resetting the default cursor: https://gist.github.com/murtaugh/5247154 */
+/* Apply a natural box layout model to all elements: http://paulirish.com/2012/box-sizing-border-box-ftw/ */
+*, *:before, *:after {
+  box-sizing: border-box; }
+
+/* Responsive images and other embedded objects
+   Note: keeping IMG here will cause problems if you're using foreground images as sprites.
+   If this default setting for images is causing issues, you might want to replace it with a .responsive class instead. */
+img,
+object,
+embed {
+  max-width: 100%; }
+
+/* force a vertical scrollbar to prevent a jumpy page */
+html {
+  overflow-y: scroll; }
+
+/* we use a lot of ULs that aren't bulleted.
+	don't forget to restore the bullets within content. */
+ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none; }
+
+a {
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  background: transparent;
+  font-size: 100%; }
+
+del {
+  text-decoration: line-through; }
+
+abbr[title], dfn[title] {
+  cursor: help;
+  border-bottom: 1px dotted #000; }
+
+/* tables still need cellspacing="0" in the markup */
+table {
+  border-spacing: 0;
+  border-collapse: collapse; }
+
+th {
+  vertical-align: bottom;
+  font-weight: bold; }
+
+td {
+  vertical-align: top;
+  font-weight: normal; }
+
+hr {
+  display: block;
+  height: 1px;
+  margin: 1em 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid #ccc; }
+
+input, select {
+  vertical-align: middle; }
+
+pre {
+  white-space: pre;
+  /* CSS2 */
+  white-space: pre-wrap;
+  /* CSS 2.1 */
+  white-space: pre-line;
+  /* CSS 3 (and 2.1 as well, actually) */
+  word-wrap: break-word;
+  /* IE */ }
+
+input[type='radio'] {
+  vertical-align: text-bottom; }
+
+input[type='checkbox'] {
+  vertical-align: bottom; }
+
+select, input, textarea {
+  font: 99% sans-serif; }
+
+table {
+  font: 100%;
+  font-size: inherit; }
+
+small {
+  font-size: 85%; }
+
+strong {
+  font-weight: bold; }
+
+td, td img {
+  vertical-align: top; }
+
+/* Make sure sup and sub don't mess with your line-heights http://gist.github.com/413930 */
+sub, sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0; }
+
+sup {
+  top: -.5em; }
+
+sub {
+  bottom: -.25em; }
+
+/* standardize any monospaced elements */
+pre, code, kbd, samp {
+  font-family: monospace, sans-serif; }
+
+/* hand cursor on clickable elements */
+label,
+input[type=button],
+input[type=submit],
+input[type=file],
+button {
+  cursor: pointer; }
+
+/* Webkit browsers add a 2px margin outside the chrome of form elements */
+button, input, select, textarea {
+  margin: 0; }
+
+/* make buttons play nice in IE */
+button,
+input[type=button] {
+  overflow: visible;
+  width: auto; }
+
+/*
+Custom settings
+
+Some settings can be defined per theme. Because we've built our new style with **SCSS**,
+it's super simple to change a few variables and get a whole new theme.
+
+We've got a few **master variables**, (as seen here), and then we've used those to initialize
+**local variables** for each component - so you have plenty of opportunity to customize everything!
+
+Weight: -10
+
+Style guide: base-settings
+*/
+/*
+Font
+
+Fonts are defined in `_settings.base.scss` as well:
+
+**`$font-main: 'Open Sans', Helvetica, Arial, sans-serif;`**
+
+**`$font-forms: 'Open Sans', Helvetica, Arial, sans-serif;`**
+
+**`$font-title: 'Open Sans', Helvetica, Arial, sans-serif;`**
+
+Style guide: base-settings.font
+*/
+/*
+Grid
+
+The grid included is defined in `_settings.base.scss`.
+
+For usage of the grid, see `Grid` under the Layout section.
+
+The configurable variables are the number of columns and the gutter spacing between them:
+
+**`$grid-columns: '6';`**
+
+**`$grid-gutter: '2%';`**
+
+Style guide: base-settings.grid
+*/
+/*
+Breakpoints
+
+The Atomia Pattern Library stylesheet is built on a few key breakpoints defined in `_settings.base.scss`.
+
+These values can be overriden in your theme config file:
+
+**`$bp-xs: 'only screen and (max-width: 360px)';`**
+
+**`$bp-s: 'only screen and (max-width: 480px)';`**
+
+**`$bp-m: 'only screen and (max-width: 760px)';`**
+
+**`$bp-l: 'only screen and (max-width: 1024px)';`**
+
+**`$bp-xl: 'only screen and (max-width: 1200px)';`**
+
+Style guide: base-settings.breakpoints
+*/
+/*
+Borders
+
+The border radius can be set to a base value. The default value is
+
+**`$border-radius: 0;`**
+
+and is defined in `_settings.base.scss`.
+
+Style guide: base-settings.border
+*/
+/*
+Colors
+
+The color palette for the Atomia applications can be divided in different categories depending on purpose.
+
+The colors below are the default colors. They are defined in `_settings.colors.scss`.
+
+You can override the default colors in your theme config file.
+
+Weight: -9
+
+Style guide: base-colors
+*/
+/*
+Brand colors
+
+These are used on elements like navigation bars, tabs and invoices.
+
+#d8005b - $color-brand
+#c22042 - $color-accent
+
+Swatch: true
+
+Markup: _ColorSwatch.html
+
+Weight: -10
+
+Style guide: base-colors.brand
+*/
+/*
+Action colors
+
+These are used primarily on buttons and other action items.
+
+#8dc640 - $color-primary
+#fba621 - $color-secondary
+#e23434 - $color-caution
+#e5e3e0 - $color-neutral
+
+Swatch: true
+
+Markup: _ColorSwatch.html
+
+Weight: -9
+
+Style guide: base-colors.action
+*/
+/*
+Gray scale
+
+These are used mainly for text color, background color and icons.
+
+.u-bg-color-dark - $color-dark
+.u-bg-color-dusk - $color-dusk
+.u-bg-color-twilight - $color-twilight
+.u-bg-color-midday - $color-midday
+.u-bg-color-dawn - $color-dawn
+.u-bg-color-sunrise - $color-sunrise
+.u-bg-color-black - $color-black
+.u-bg-color-light - $color-light
+
+Swatch: true
+
+Markup: _ColorSwatch.html
+
+Weight: -8
+
+Style guide: base-colors.gray
+*/
+.u-bg-color-dark {
+  background: #3a3836; }
+
+.u-bg-color-dusk {
+  background: #5b5a57; }
+
+.u-bg-color-twilight {
+  background: #7f7d7a; }
+
+.u-bg-color-midday {
+  background: #aba8a5; }
+
+.u-bg-color-dawn {
+  background: #d3d1ce; }
+
+.u-bg-color-sunrise {
+  background: #f7f7f6; }
+
+.u-bg-color-black {
+  background: #000; }
+
+.u-bg-color-light {
+  background: #fff; }
+
+/*
+Specific colors
+
+These are colors with explicit names.
+
+Do not use these colors in other than special circumstances. *Prefer using the functional colors above instead.*
+
+.u-bg-color-blue-x-dark - $color-blue-x-dark
+.u-bg-color-blue-dark - $color-blue-dark
+.u-bg-color-blue - $color-blue
+.u-bg-color-blue-medium - $color-blue-medium
+.u-bg-color-blue-light - $color-blue-light
+.u-bg-color-blue-x-light - $color-blue-x-light
+.u-bg-color-green-x-dark - $color-green-x-dark
+.u-bg-color-green-dark - $color-green-dark
+.u-bg-color-green - $color-green
+.u-bg-color-green-medium - $color-green-medium
+.u-bg-color-green-light - $color-green-light
+.u-bg-color-green-x-light - $color-green-x-light
+.u-bg-color-yellow-x-dark - $color-yellow-x-dark
+.u-bg-color-yellow-dark - $color-yellow-dark
+.u-bg-color-yellow - $color-yellow
+.u-bg-color-yellow-medium - $color-yellow-medium
+.u-bg-color-yellow-light - $color-yellow-light
+.u-bg-color-yellow-x-light - $color-yellow-x-light
+.u-bg-color-red-x-dark - $color-red-x-dark
+.u-bg-color-red-dark - $color-red-dark
+.u-bg-color-red - $color-red
+.u-bg-color-red-medium - $color-red-medium
+.u-bg-color-red-light - $color-red-light
+.u-bg-color-red-x-light - $color-red-x-light
+
+Swatch: true
+
+Markup: _ColorSwatch.html
+
+Weight: -7
+
+Style guide: base-colors.specific
+*/
+.u-bg-color-blue-x-dark {
+  background: #0968ac; }
+
+.u-bg-color-blue-dark {
+  background: #0f93f2; }
+
+.u-bg-color-blue {
+  background: #3fa9f5; }
+
+.u-bg-color-blue-medium {
+  background: #a0d4fa; }
+
+.u-bg-color-blue-light {
+  background: #e9f5fe; }
+
+.u-bg-color-blue-x-light {
+  background: white; }
+
+.u-bg-color-green-x-dark {
+  background: #49681f; }
+
+.u-bg-color-green-dark {
+  background: #72a330; }
+
+.u-bg-color-green {
+  background: #8dc640; }
+
+.u-bg-color-green-medium {
+  background: #bcdd8f; }
+
+.u-bg-color-green-light {
+  background: #dfefc9; }
+
+.u-bg-color-green-x-light {
+  background: #f6fbf1; }
+
+.u-bg-color-yellow-x-dark {
+  background: #9a5f03; }
+
+.u-bg-color-yellow-dark {
+  background: #e58d04; }
+
+.u-bg-color-yellow {
+  background: #fba621; }
+
+.u-bg-color-yellow-medium {
+  background: #fdce85; }
+
+.u-bg-color-yellow-light {
+  background: #feecd0; }
+
+.u-bg-color-yellow-x-light {
+  background: white; }
+
+.u-bg-color-red-x-dark {
+  background: #841313; }
+
+.u-bg-color-red-dark {
+  background: #c71c1c; }
+
+.u-bg-color-red {
+  background: #e23434; }
+
+.u-bg-color-red-medium {
+  background: #ef8d8d; }
+
+.u-bg-color-red-light {
+  background: #f8d0d0; }
+
+.u-bg-color-red-x-light {
+  background: #fffdfd; }
+
+/*
+Sass mixins
+
+Reusable Sass mixins to help build standard and custom components.
+
+Some components also have more specific local mixins.
+
+Style guide: tool-mixins
+*/
+/*
+clearfix
+
+### @include clearfix;
+
+Include in any container that needs to clear floats.
+
+Style guide: tool-mixins.clearfix
+*/
+/*
+button-base
+
+### @include button-base;
+
+Include in any component that needs to function similar to a button with the structural and size properties used by e.g. `Btn`.
+
+Style guide: tool-mixins.button-base
+*/
+/*
+icon-base
+
+### @include icon-base;
+
+Include this in any component that needs to use an icon from **atomicons** but has requirements (e.g. sizing and spacing) that cannot be fulfilled by using a regular `Icon`.
+
+Style guide: tool-mixins.icon-base
+*/
+/*
+normal-text
+
+### @include normal-text;
+
+Include this in any component that should have the standard normal text size.
+
+Style guide: tool-mixins.normal-text
+*/
+/*
+small-text
+
+### @include small-text;
+
+Include this in any component that should have the standard small text size.
+
+Style guide: tool-mixins.small-text
+*/
+/*
+overlay
+
+### @include overlay;
+
+Include this in components that should cover the entire screen (overlays)
+
+Style guide: tool-mixins.overlay
+*/
+/*
+loading-icon
+
+### @include loading-icon;
+
+Include this in components that should display a rotating loading icon (such as loading message and overlay)
+
+Style guide: tool-mixins.loading-icon
+*/
+/*
+uipanel-base
+
+### @include uipanel-base;
+
+Include in ui panels (tabs, modals) to get the base style correct
+
+Style guide: tool-mixins.uipanel-base
+*/
+/*
+separator
+
+### @include separator($color);
+
+Include in components with a dashed border-top, default color is `rgba($color-black, .1)`;
+
+Style guide: tool-mixins.separator
+*/
+/*
+custom-arrow
+
+### @include custom-arrow($width);
+
+Include in components with a custom arrow, such as select lists and menu components. Default width is `.4em`
+
+Style guide: tool-mixins.custom-arrow
+*/
+/*
+Layout
+
+There are some base styles defined for the main page layout elements:
+
+* `html`
+* `body`
+* `header`
+* `footer`
+
+The styleguide itself is an example of how these base styles are used.
+
+They are mostly concerned with width, height, positioning and background color.
+
+See the file `_base.layout.scss`.
+
+Style guide: base-layout
+
+Weight: -3
+*/
+html {
+  height: 100%; }
+
+body {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 200px;
+  background-color: #f7f7f6; }
+
+header {
+  background-color: #d8005b; }
+
+footer {
+  position: absolute;
+  z-index: 20;
+  bottom: 0;
+  width: 100%;
+  padding: 15px 0;
+  background-color: #3a3836; }
+
+/*
+Animations
+
+Currently there is only one predefined CSS animation available.
+
+Style guide: base-animation
+
+Weight: -4
+*/
+/*
+rotateplane
+
+The `rotateplane` animation is used in waiting and loading components.
+
+Usage: `animation rotateplane 1s infinite linear;`
+
+The `Icon--loading` icon uses this animation:
+
+Markup: _Animation.html
+
+Style guide: base-animation.rotateplane
+*/
+@-webkit-keyframes rotateplane {
+  0% {
+    -webkit-transform: rotateZ(0);
+    transform: rotateZ(0); }
+  100% {
+    -webkit-transform: rotateZ(360deg);
+    transform: rotateZ(360deg); } }
+@keyframes rotateplane {
+  0% {
+    -webkit-transform: rotateZ(0);
+    transform: rotateZ(0); }
+  100% {
+    -webkit-transform: rotateZ(360deg);
+    transform: rotateZ(360deg); } }
+
+/*
+Typography
+
+The are the base styles for text elements like headings, paragraphs and links.
+
+They have local variables defined for all `color` and `font-family` properties, so full customization is possible.
+
+Markup: _Typography.html
+
+Weight: -2
+
+Style guide: base-typography
+*/
+html {
+  font-size: 17px; }
+  @media only screen and (max-width: 2100px) {
+    html {
+      font-size: 16px; } }
+  @media only screen and (max-width: 1921px) {
+    html {
+      font-size: 15px; } }
+  @media only screen and (max-width: 1680px) {
+    html {
+      font-size: 14px; } }
+  @media only screen and (max-width: 1440px) {
+    html {
+      font-size: 13px; } }
+  @media only screen and (max-width: 1024px) {
+    html {
+      font-size: 12px; } }
+
+body {
+  color: #5b5a57;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-weight: 400; }
+
+header {
+  text-align: right; }
+
+footer {
+  text-align: center;
+  color: #f7f7f6; }
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+p:first-child {
+  margin-top: 0; }
+
+h1:last-child,
+h2:last-child,
+h3:last-child,
+h4:last-child,
+p:last-child {
+  margin-bottom: 0; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif; }
+
+h1 {
+  color: #d8005b;
+  margin: 1em 0 .4em;
+  font-size: 2.8em;
+  font-weight: 400; }
+
+h2,
+h3 {
+  margin: 1em 0 .4em;
+  font-size: 2em;
+  font-weight: 700; }
+
+h3 {
+  font-weight: 400; }
+
+h4,
+h5 {
+  font-size: 1.4em;
+  margin: 1.2em 0 .6em;
+  font-weight: 700; }
+
+h5 {
+  font-weight: 400; }
+
+h6 {
+  font-weight: 700;
+  font-size: 1.2em; }
+
+p {
+  margin: .8rem 0; }
+
+a {
+  text-decoration: none;
+  color: #d8005b; }
+  a:hover {
+    color: #c22042; }
+
+hr {
+  margin: 3em 0;
+  border-top: 4px dashed rgba(0, 0, 0, 0.1); }
+
+strong {
+  color: #000; }
+
+::-moz-selection {
+  color: #fff;
+  background-color: rgba(216, 0, 91, 0.3); }
+
+::selection {
+  color: #fff;
+  background-color: rgba(216, 0, 91, 0.3); }
+
+::-moz-selection {
+  color: #fff;
+  background-color: rgba(216, 0, 91, 0.3); }
+
+/*
+Tables
+
+These are the base styles for tables.
+
+However, most tables in the Atomia applications use additional component classes like `Table`
+or the special `dt-*` classes defined in the **Datatable** component.
+
+Markup: _Table.html
+
+Weight: 0
+
+Style guide: base-table
+*/
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  background-color: #fff; }
+
+th,
+td {
+  padding: 1em;
+  font-weight: normal; }
+
+th {
+  text-align: left;
+  vertical-align: bottom;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #aba8a5;
+  border-right: 1px solid #928f8b; }
+  th:last-of-type {
+    border-right: none; }
+
+td {
+  vertical-align: baseline; }
+
+tbody tr {
+  color: #aba8a5;
+  border-top: 2px solid #f7f7f6; }
+  tbody tr:first-of-type {
+    border-top: none; }
+  tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02); }
+
+tfoot {
+  border-top: 2px solid #f7f7f6; }
+  tfoot tr {
+    background-color: rgba(0, 0, 0, 0.02); }
+  tfoot td {
+    padding: .5em;
+    text-align: right;
+    text-transform: uppercase; }
+
+/*
+Inputs
+
+These are the base styles for input elements.
+
+Be aware that some inputs like checkboxes, radio buttons and select lists need formatting with other elements or classes or both to be properly displayed.
+See the `Tick` and `Select` components.
+
+Markup: _Inputs.html
+
+Weight: -1
+
+Style guide: base-inputs
+*/
+*:focus,
+*:active {
+  outline: none; }
+
+::-webkit-input-placeholder {
+  font-style: italic; }
+
+::-moz-placeholder {
+  font-style: italic; }
+
+:-ms-input-placeholder {
+  font-style: italic; }
+
+label {
+  cursor: pointer; }
+
+input,
+textarea,
+select {
+  width: 24rem;
+  height: 2.6rem;
+  margin: 0 .2rem .5rem;
+  padding: 0 .5em;
+  color: #5b5a57;
+  border: 1px solid #d3d1ce;
+  border-radius: 0;
+  background-color: #fff;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 1.1rem;
+  line-height: 2.6rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+  input[disabled], input[readonly],
+  textarea[disabled],
+  textarea[readonly],
+  select[disabled],
+  select[readonly] {
+    box-shadow: 0 0 5rem rgba(0, 0, 0, 0.1) inset; }
+
+select {
+  width: 135%;
+  max-width: 24rem;
+  padding: 0 .5em 0 .5em;
+  font-size: 1em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none; }
+  select::-ms-expand {
+    display: none; }
+
+input[type=checkbox],
+input[type=radio] {
+  display: none; }
+
+input[type='file'] {
+  background: transparent; }
+
+button,
+input[type=submit] {
+  border: none;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif; }
+
+textarea {
+  height: 20rem;
+  padding: .2em .5em;
+  vertical-align: top; }
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  /* Targetting Webkit browsers only. */
+  select {
+    width: 110%;
+    padding: 0 1.5em 0 .5em; } }
+
+@media only screen and (max-width: 480px) {
+  input[type=text],
+  input[type=password],
+  input[type=search],
+  input[type=email],
+  textarea {
+    width: 100%; } }
+
+/*
+Page layout, intro
+
+There are a few key page layout elements available:
+
+* `Main` that wraps the main section of the page,
+* `Margins` that add margins around content and
+* `Sidebar` with content divided into boxes with `Sidebar-box`,
+* `Footer` is the last visible element of the page (see the footer of *Atomia Pattern Library* itself).
+
+Notice that the *Atomia Pattern Library* itself is also an example of the layout with the sidebar below.
+
+You will also notice in the examples that using these classes for other layout than page wide layout works fine,
+although for more general purpose layout `Grid` might be more suitable.
+
+(In the examples below we have added borders for clarity).
+
+Markup: _Layout.html
+
+Weight: -9
+
+Style guide: layout-introduction
+*/
+/*
+Main
+
+### .Main
+
+`Main` wraps the main section of the page, see *Page layout, intro* for examples.
+
+Weight: -9
+
+Style guide: layout-main
+*/
+.Main {
+  position: relative;
+  padding: 3rem;
+  max-width: 110rem;
+  margin: 0 auto; }
+  @media only screen and (max-width: 480px) {
+    .Main {
+      padding: 1rem; } }
+
+/*
+Margins
+
+### .Margins
+
+If you intend to use a sidebar next to the `Margins` element, you should add the modifier `Margins--sidebar`.
+
+See *Page layout, intro* for examples.
+
+Style guide: layout-margins
+
+Weight: -8
+
+*/
+.Margins {
+  max-width: 80em;
+  margin: 0 auto; }
+  @media only screen and (max-width: 1024px) and (orientation: portrait) {
+    .Margins {
+      width: auto;
+      padding: 0 1em; } }
+  @media only screen and (max-width: 480px) {
+    .Margins {
+      width: auto;
+      padding: 0 1em; } }
+
+.Margins--sidebar {
+  max-width: 80rem;
+  margin: 0 0 0 25rem; }
+  @media only screen and (max-width: 1200px) {
+    .Margins--sidebar {
+      margin: 0; } }
+
+/*
+Sidebar
+
+### .Sidebar
+
+The sidebar in this style guide is a perfect example of a `Sidebar`.
+
+Also see *Page layout, intro* for examples.
+
+Style guide: layout-sidebar
+
+Weight: -7
+*/
+.Sidebar {
+  z-index: 10;
+  float: left;
+  width: 20rem; }
+  @media only screen and (max-width: 1200px) {
+    .Sidebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+      float: none;
+      width: 24rem;
+      padding: 3rem 2rem 0;
+      background-color: rgba(0, 0, 0, 0.05); } }
+
+.Sidebar--visible {
+  display: block; }
+
+.Sidebar-box {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background-color: #fff; }
+
+/*
+Footer
+
+### .Footer
+
+The `Footer` is the last element on the page, usually containing some basic info like copyright notice and version.
+
+These information type descendants are available:
+
+* `Footer-info` for general information,
+* `Footer-copyright` for copyright notices,
+* `Footer-version` for version information.
+
+To see how it looks, simply scroll down to the bottom of the page!
+
+Also see see *Page layout, intro* for examples.
+
+Style guide: layout-footer
+
+Weight: -6
+*/
+.Footer-info {
+  margin: 0;
+  text-transform: uppercase;
+  line-height: 2em; }
+
+.Footer-copyright {
+  margin: 0;
+  opacity: .5;
+  line-height: 2em; }
+
+.Footer-version {
+  margin: .5em 0 0;
+  opacity: .3;
+  font-size: .8em; }
+
+/*
+Grid
+
+### .Grid
+
+This is a simple general purpose grid with a configurable number of base columns and gutter width (see [the custom settings](section-base-settings.html#ref-base-settings-grid)).
+
+A `Grid` can be used on both small and large sections of a page; it is not necessarily a page-wide thing.
+
+**Note:** all columns in a grid row should add up to the configured amount of columns.
+
+Markup: _Grid.html
+
+Style guide: layout-grid
+
+Weight: -5
+*/
+.Grid {
+  width: 100%; }
+  .Grid:after {
+    display: block;
+    clear: both;
+    content: ' '; }
+  .Grid [class*='Grid-column-']:last-of-type {
+    margin-right: 0; }
+
+.Grid-column-1 {
+  width: 15%;
+  margin: 2% 2% 0 0; }
+
+.Grid--no-gutter .Grid-column-1 {
+  width: 16.66667%;
+  margin: 2% 0 0; }
+
+.Grid-column-2 {
+  width: 32%;
+  margin: 2% 2% 0 0; }
+
+.Grid--no-gutter .Grid-column-2 {
+  width: 33.33333%;
+  margin: 2% 0 0; }
+
+.Grid-column-3 {
+  width: 49%;
+  margin: 2% 2% 0 0; }
+
+.Grid--no-gutter .Grid-column-3 {
+  width: 50%;
+  margin: 2% 0 0; }
+
+.Grid-column-4 {
+  width: 66%;
+  margin: 2% 2% 0 0; }
+
+.Grid--no-gutter .Grid-column-4 {
+  width: 66.66667%;
+  margin: 2% 0 0; }
+
+.Grid-column-5 {
+  width: 83%;
+  margin: 2% 2% 0 0; }
+
+.Grid--no-gutter .Grid-column-5 {
+  width: 83.33333%;
+  margin: 2% 0 0; }
+
+.Grid-column-6 {
+  width: 100%;
+  margin: 2% 2% 0 0; }
+
+.Grid--no-gutter .Grid-column-6 {
+  width: 100%;
+  margin: 2% 0 0; }
+
+.Grid.Grid--flexbox [class*='Grid-column-'] {
+  margin-right: 0; }
+
+.Grid [class*='Grid-column-'] {
+  float: left;
+  min-height: 1px; }
+  @media only screen and (max-width: 760px) {
+    .Grid [class*='Grid-column-'] {
+      width: 100%;
+      margin: 2rem 0 0; }
+      .Grid [class*='Grid-column-']:last-child {
+        margin: 2rem 0; } }
+
+@media only screen and (max-width: 760px) {
+  .Grid.Grid--no-gutter [class*='Grid-column-'] {
+    margin: 0; } }
+
+/*
+Table
+
+### .Table
+
+Most tables are in some way enhanced by adding the `Table` component and one of its modifiers like `Table--invoice` or `Table--datatable`.
+
+Style guide: component-table
+*/
+/*
+Invoice tables
+
+A table used as an invoice should be modified with the `Table--invoice` class.
+
+Markup: _Table.invoice.html
+
+Style guide: component-table.invoice
+
+Weight: -9
+*/
+.Table--datatable {
+  margin-top: 0; }
+
+.Table--invoice {
+  border-bottom: 0.45em solid #aba8a5; }
+  .Table--invoice .Table-row {
+    background-color: #fff !important; }
+  .Table--invoice .Table-bodyrow {
+    border-bottom: 0.2em solid #e5e3e0;
+    background-color: #fff !important; }
+
+.Table-row--expanded {
+  display: none; }
+
+.Table-row--expanded-head {
+  color: #5b5a57;
+  background-color: #d3d1ce !important; }
+
+.Table-row--expanded-body {
+  margin: 3em 0;
+  padding: 3em;
+  border-bottom: 0.3em solid #d3d1ce;
+  background-color: #e5e3e0 !important;
+  box-shadow: 0 0 3em rgba(0, 0, 0, 0.05), 0 0 3em #fff inset; }
+
+.Table-cell--strong {
+  padding: .335em;
+  color: #3a3836;
+  font-size: 1.5em; }
+
+/*
+Datatables
+
+Datatables are used extensively throughout the Atomia applications to list things such as invoices, domain names, subcriptions, etc.
+
+The datatables are generated with the help of the [DataTables](http://datatables.net/) jQuery plugin.
+
+Some of the elements of a datatable are automatically generated by the plugin. To distinguish the classes on these elements from manually added classes
+they do not follow our standard naming convention, but are instead prefixed with `dt-`.
+
+The datatables are also responsive, thanks to the [Responsive](http://datatables.net/extensions/responsive/) extension.
+
+Markup: _Table.datatable.html
+
+Style guide: component-datatable
+*/
+.dt-Length {
+  font-size: .8rem; }
+  .dt-Length .Select {
+    font-size: .9rem; }
+
+.dt-Info {
+  text-align: right;
+  font-size: .8rem; }
+
+.dt-Filter {
+  margin: 2rem 0 1rem; }
+
+.dt-Search {
+  margin: 0 0 0 1em;
+  width: 12rem;
+  font-size: .9rem; }
+
+.dt-Wrapper {
+  margin: 1em 0; }
+
+.dt-Processing {
+  display: none; }
+
+.dt-Actions {
+  padding: 2em;
+  background-color: #fff;
+  color: #7f7d7a;
+  display: block;
+  clear: right;
+  margin: 2rem 0 0;
+  padding: 1em;
+  background: #ebeae9;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px; }
+  .dt-Actions input:not([readonly]):not([disabled]),
+  .dt-Actions textarea:not([readonly]):not([disabled]),
+  .dt-Actions select:not([readonly]):not([disabled]) {
+    box-shadow: 0 0 3em rgba(0, 0, 0, 0.05); }
+  .dt-Filter + .dt-Actions {
+    margin-top: 1rem; }
+  .dt-Actions + .dt-Wrapper {
+    margin-top: 0; }
+    .dt-Actions + .dt-Wrapper .dt-Filter {
+      margin: 0; }
+
+@media only screen and (max-width: 760px) {
+  .dt-Length,
+  .dt-Info {
+    margin: 1rem 0;
+    text-align: center; } }
+
+@media only screen and (max-width: 480px) {
+  .dt-Search {
+    margin: 1em 0 0; } }
+
+.dtr-inline .child,
+.dtr-column .child {
+  cursor: default !important; }
+  .dtr-inline .child:before,
+  .dtr-column .child:before {
+    display: none !important; }
+
+.dtr-inline.collapsed tr > td:first-child,
+.dtr-column.collapsed tr > td:first-child {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer; }
+  .dtr-inline.collapsed tr > td:first-child:before,
+  .dtr-column.collapsed tr > td:first-child:before {
+    position: relative;
+    text-transform: none;
+    font-family: atomicons;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    content: '\e607';
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    opacity: .5;
+    font-size: 1.2em;
+    line-height: 1.2; }
+  .dtr-inline.collapsed tr > td:first-child:hover:before,
+  .dtr-column.collapsed tr > td:first-child:hover:before {
+    opacity: 1; }
+
+.dtr-inline.collapsed .parent > td:first-child:before,
+.dtr-column.collapsed .parent > td:first-child:before {
+  content: '\e608'; }
+
+.dtr-inline .child td:before,
+.dtr-column .child td:before {
+  display: none; }
+
+.dtr-inline .child,
+.dtr-column .child {
+  padding: .5em 1em; }
+  .dtr-inline .child:hover,
+  .dtr-column .child:hover {
+    background: transparent !important; }
+  .dtr-inline .child li,
+  .dtr-column .child li {
+    padding: .5em 0; }
+    .dtr-inline .child li:first-child,
+    .dtr-column .child li:first-child {
+      padding-top: 0; }
+    .dtr-inline .child li:last-child,
+    .dtr-column .child li:last-child {
+      border-bottom: none; }
+  .dtr-inline .child .dtr-title,
+  .dtr-column .child .dtr-title {
+    display: inline-block;
+    min-width: 75px;
+    font-weight: bold; }
+
+.dtr-column.collapsed tr > td:first-child {
+  padding-left: 0; }
+
+.dtr-control {
+  padding: 1em .5em; }
+
+.Icon.Icon--datatable {
+  position: relative;
+  cursor: pointer; }
+  .Icon.Icon--datatable:before {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    font-size: .9rem;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%); }
+  .Icon.Icon--datatable.Icon--sort:before {
+    opacity: .5; }
+
+/*
+Paper
+
+### .Paper
+
+The `Paper` component is designed to replicate a paper, which can be useful when designing an invoice for example.
+
+It can have optional navigation above and below with the `Paper-navigation` wrapper.
+
+Markup: _Paper.html
+
+Style guide: component-paper
+*/
+.Paper {
+  position: relative;
+  margin: 3rem 0;
+  padding: 3em;
+  background-color: #fff;
+  box-shadow: 0 0 5em rgba(0, 0, 0, 0.06); }
+  @media only screen and (max-width: 760px) {
+    .Paper {
+      overflow-x: scroll; } }
+
+.Paper-navigation {
+  margin: 3rem 0; }
+  .Paper-navigation + .Paper,
+  .Paper + .Paper-navigation {
+    margin-top: -2rem; }
+
+/*
+Tabs
+
+There are two different tab variants currently available: `Tabs` and `Tabs--mini`.
+
+In most cases the standard `Tabs` variant without modifier should be used.
+
+Style guide: component-tabs
+*/
+/*
+Standard tabs
+
+### .Tabs
+
+The `Tabs` component is dependent on **jQuery UI**.
+
+Overrides of the jQuery UI generated structural classes are defined in the file `_component.ui-tabs.scss`.
+
+The jQuery UI generated classes are prefixed with `ui-`.
+
+The `Tabs` component itself defines the "content" of the tabs, which jQuery UI then turns in to a functioning tabs.
+
+Markup: _Tabs.html
+
+Style guide: component-tabs.standard
+
+Weight: -10
+*/
+/*
+Mini tabs
+
+### .Tabs--mini
+
+Mini tabs use an alternative tab implementation that is not dependent on jQuery UI.
+
+But the markup for the defining the tabs are the same, so they are specified with the `Tabs--mini` modifier.
+
+They are mostly used in cases where smaller tabs are needed within an existing jQuery UI tab.
+
+Markup: _Tabs.mini.html
+
+Style guide: component-tabs.mini
+
+Weight: -9
+*/
+.Tabs--mini .Tabs-list {
+  font-size: .9em; }
+  .Tabs--mini .Tabs-list .Tabs-item-content {
+    padding: .6em 1em; }
+  .Tabs--mini .Tabs-list .no-tab {
+    padding: .6em 1em .5em 1em; }
+
+.Tabs-list {
+  background-color: #aba8a5;
+  padding: 1em 1.5em 0 1.5em;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-size: .9em; }
+
+.Tabs-item {
+  display: inline-block;
+  margin-top: 1px;
+  background: #7f7d7a;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px; }
+  @media only screen and (max-width: 480px) {
+    .Tabs-item {
+      display: block; } }
+
+.is-active {
+  background-color: #fff; }
+
+.is-active .Tabs-item-content,
+.Tabs-item:not(.no-tab) .Tabs-item-content:hover {
+  color: #3a3836; }
+
+.Tabs-item-content {
+  display: inline-block;
+  padding: .8em 1.4em;
+  vertical-align: middle;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 100%; }
+  @media only screen and (max-width: 480px) {
+    .Tabs-item-content {
+      display: block; } }
+
+.Tabs-content {
+  padding: 2em;
+  background-color: #fff;
+  color: #7f7d7a;
+  padding: 2em; }
+  .Tabs-content input:not([readonly]):not([disabled]),
+  .Tabs-content textarea:not([readonly]):not([disabled]),
+  .Tabs-content select:not([readonly]):not([disabled]) {
+    box-shadow: 0 0 3em rgba(0, 0, 0, 0.05); }
+
+.no-tab {
+  vertical-align: middle;
+  text-transform: uppercase; }
+  .no-tab .Tabs-item-content {
+    color: #d3d1ce; }
+
+.ui-tabs-nav {
+  background-color: #aba8a5;
+  padding: 1em 1.5em 0 1.5em;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-size: .9em; }
+
+.Tabs--attachedtop .ui-tabs-nav {
+  border-radius: 0; }
+
+.ui-state-active {
+  background-color: #fff; }
+  .ui-state-active .Tabs-item-content {
+    color: #3a3836; }
+
+.ui-tabs-panel {
+  padding: 2em;
+  background-color: #fff;
+  color: #7f7d7a; }
+  .ui-tabs-panel input:not([readonly]):not([disabled]),
+  .ui-tabs-panel textarea:not([readonly]):not([disabled]),
+  .ui-tabs-panel select:not([readonly]):not([disabled]) {
+    box-shadow: 0 0 3em rgba(0, 0, 0, 0.05); }
+
+/*
+Dialogs
+
+Style guide: component-dialog
+*/
+/*
+Inline dialogs
+
+.Dialog--inline
+
+Inline dialogs are a special type of dialog that slides down inline with the content.
+
+Markup: _Dialog.inline.html
+
+Style guide: component-dialog.inline
+
+Weight: -8
+*/
+.Dialog {
+  padding: 2em;
+  background-color: #fff;
+  color: #7f7d7a;
+  width: 50rem;
+  max-width: 100vw;
+  padding: 0;
+  z-index: 1004; }
+  .Dialog input:not([readonly]):not([disabled]),
+  .Dialog textarea:not([readonly]):not([disabled]),
+  .Dialog select:not([readonly]):not([disabled]) {
+    box-shadow: 0 0 3em rgba(0, 0, 0, 0.05); }
+
+.Dialog--prompt {
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: fixed;
+  top: 0;
+  right: -40rem;
+  height: 100vh;
+  width: 40rem;
+  -webkit-transition: right 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: right 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+  .Dialog--prompt.Dialog--open {
+    right: 0; }
+  @media only screen and (max-width: 480px) {
+    .Dialog--prompt {
+      width: 100vw !important;
+      min-height: 100vh !important; } }
+
+.Dialog--modal {
+  overflow-y: auto;
+  position: fixed;
+  top: 52%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  max-height: 100vh;
+  -webkit-transition: top 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: top 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0; }
+  .Dialog--modal.Dialog--open {
+    opacity: 1;
+    top: 50%; }
+  @media only screen and (max-width: 480px) {
+    .Dialog--modal {
+      width: 100vw !important;
+      height: 100vh !important; } }
+
+.Dialog--inline {
+  width: auto;
+  max-width: auto;
+  z-index: auto; }
+
+.Dialog-header {
+  background: #d8005b;
+  color: #fff;
+  font-size: 2rem;
+  padding: 2rem; }
+  .Dialog-header .Dialog-close {
+    position: absolute;
+    top: 2.5rem;
+    right: 2rem;
+    border: 1px solid;
+    border-color: #fff;
+    color: #fff;
+    background: transparent;
+    border-radius: 3px;
+    width: 2rem;
+    height: 2rem;
+    -webkit-transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    .Dialog-header .Dialog-close:before {
+      right: .05em;
+      font-weight: 900; }
+    .Dialog-header .Dialog-close:hover {
+      color: #d3d1ce;
+      border-color: #d3d1ce; }
+
+.Dialog-content {
+  padding: 2rem; }
+
+/*
+/*
+Modal dialogs
+
+Modal dialogs are the most common dialog component.
+
+The structural elements of these dialogs are generated by **jQuery UI**,
+and the customization of jQuery UI added classes can be found in `_component.ui-dialog.scss`
+
+This component does not follow our regular naming convention, because it's a default component from **jQuery UI**.
+
+Markup: _Dialog.modal.html
+
+Style guide: component-dialog.ui
+
+Weight: -9
+*/
+.ui-front {
+  z-index: 1004; }
+
+.ui-dialog {
+  padding: 2em;
+  background-color: #fff;
+  color: #7f7d7a;
+  width: auto !important;
+  max-width: 60rem;
+  padding: 0; }
+  .ui-dialog input:not([readonly]):not([disabled]),
+  .ui-dialog textarea:not([readonly]):not([disabled]),
+  .ui-dialog select:not([readonly]):not([disabled]) {
+    box-shadow: 0 0 3em rgba(0, 0, 0, 0.05); }
+  @media only screen and (max-width: 480px) {
+    .ui-dialog {
+      width: 100vw !important;
+      min-height: 100vh !important; } }
+
+.ui-dialog-titlebar {
+  display: none; }
+
+.ui-dialog-buttonpane {
+  padding: 0 2rem 2rem; }
+  .ui-dialog-buttonpane .ui-dialog-buttonset {
+    text-align: left; }
+  .ui-dialog-buttonpane .ui-button + .ui-button {
+    margin-left: .6em; }
+
+/*
+Overlays
+
+Style guide: component-overlay
+*/
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  -webkit-transition: 0.45s cubic-bezier(0.4, 0, 0.2, 1) opacity;
+  transition: 0.45s cubic-bezier(0.4, 0, 0.2, 1) opacity; }
+  .Overlay.Overlay--show {
+    opacity: 1; }
+
+/*
+Modal overlay
+
+The modal overlay is used in our custom dialog binding, and as event listener on click-to-close events of said dialogs.
+
+Markup: _Overlay.modal.html
+
+Weight: -9
+
+Style guide: component-overlay.modal
+*/
+.Overlay--clickable {
+  z-index: 1000; }
+
+/*
+Invisible overlay
+
+This variant is only used when you want the same behavior as Modal Overlay (close modal when clicking on it), but don't want it to be visible.
+
+Markup: _Overlay.invisible.html
+
+Style guide: component-overlay.invisible
+*/
+.Overlay--invisible {
+  background: none;
+  z-index: 50; }
+
+/*
+Loading overlay
+
+### .Overlay--loading
+
+The loading overlay should be used when waiting for the application to fetch data and finish initialising.
+
+Markup: _Overlay.loading.html
+
+Style guide: component-overlay.loading
+*/
+.Overlay--loading {
+  z-index: 1010;
+  cursor: wait;
+  background-color: rgba(58, 56, 54, 0.1); }
+  .Overlay--loading:after {
+    position: relative;
+    text-transform: none;
+    font-family: atomicons;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    content: '\e655';
+    -webkit-animation: rotateplane 1s infinite linear;
+    animation: rotateplane 1s infinite linear;
+    color: #fff;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -.5em 0 0 -.5rem;
+    cursor: wait;
+    font-size: 6.5em; }
+
+/*
+Messages
+
+### .Message
+
+Messages should be used when communicating extra important feedback to the user.
+
+**N.B.** The `Message` component makes little sense when used without a modifier class, as can be seen in the example below.
+
+Markup: _Message.html
+
+Style guide: component-messages
+*/
+.Message {
+  position: relative;
+  padding: 2.5em 2em 2.5em 7.4em;
+  text-align: left;
+  color: #3a3836; }
+  .Message:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5.25em;
+    height: 100%;
+    content: ''; }
+  .Message:after {
+    position: relative;
+    text-transform: none;
+    font-family: atomicons;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    position: absolute;
+    top: 50%;
+    left: .4em;
+    margin-top: -.5em;
+    color: #fff;
+    font-size: 3em;
+    line-height: 1; }
+
+/*
+Standard variations
+
+These are the main variations and states of the `Message` component.
+
+Message--info - Use this when you need to inform the user of something.
+Message--success - Use this to highlight that something went as expected.
+Message--warning - Use this to warn the user to take caution - perhaps the changes aren't saved?
+Message--error - Use this in case of error/permission denied.
+Message--loading - Use this while waiting for something, like a page load or an ajax call.
+
+Markup: _Message.html
+
+Style guide: component-messages.standard
+
+Weight: -10
+*/
+.Message--info {
+  color: #0f93f2;
+  background-color: #e9f5fe; }
+  .Message--info:before {
+    background-color: #3fa9f5; }
+  .Message--info:after {
+    content: '\e617'; }
+
+.Message--warning {
+  color: #e58d04;
+  background-color: #feecd0; }
+  .Message--warning:before {
+    background-color: #fba621; }
+  .Message--warning:after {
+    content: '\e628'; }
+
+.Message--success {
+  color: #72a330;
+  background-color: #dfefc9; }
+  .Message--success:before {
+    background-color: #8dc640; }
+  .Message--success:after {
+    content: '\e626'; }
+
+.Message--error {
+  color: #c71c1c;
+  background-color: #f8d0d0; }
+  .Message--error:before {
+    background-color: #c71c1c; }
+  .Message--error:after {
+    content: '\e636'; }
+
+.Message--loading {
+  color: #0f93f2;
+  background-color: #e9f5fe; }
+  .Message--loading:before {
+    background-color: #3fa9f5; }
+  .Message--loading:after {
+    content: '\e655';
+    -webkit-animation: rotateplane 1s infinite linear;
+    animation: rotateplane 1s infinite linear;
+    color: #fff;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2); }
+
+/*
+Small messages
+
+The `Message--small` modifier should be used when a smaller message is required, e.g. together with a `Formrow` to provide info on what to put in the field.
+
+Markup: _Message.small.html
+
+Style guide: component-messages.small
+
+Weight: -9
+*/
+.Message--small {
+  position: relative;
+  top: 50%;
+  right: 0;
+  display: inline-block;
+  width: 24rem;
+  max-width: 100%;
+  min-height: 2.6rem;
+  margin: 0 .2rem .5rem;
+  padding: .6rem 1rem .6rem 4rem;
+  vertical-align: top;
+  line-height: 1.4rem; }
+  .Message--small:before {
+    width: 3rem; }
+  .Message--small:after {
+    font-size: 1.7rem; }
+  .Message--small-block {
+    width: 100%;
+    margin: 0; }
+  @media only screen and (max-width: 480px) {
+    .Message--small {
+      width: 100%; } }
+
+/*
+Block messages
+
+The `Message--block` modifier is used when the message is longer, perhaps with multiple paragraphs and a heading.
+
+Markup: _Message.block.html
+
+Style guide: component-messages.block
+
+Weight: -8
+*/
+.Message--block {
+  color: #3a3836; }
+
+/*
+See though messages
+
+The `See-through` can be used to remove the background color
+
+Message--info.Message--seethrough - Removes light blue background but keeps blue color scheme
+
+Markup: _Message.html
+
+Style guide: component-messages.seethrough
+
+Weight: -7
+*/
+.Message--seethrough {
+  background-color: transparent; }
+  .Message--seethrough:before {
+    background-color: transparent; }
+  .Message--seethrough.Message--small {
+    padding: .6rem 0 .6rem 3rem;
+    margin: 0 0 .5rem; }
+    .Message--seethrough.Message--small:before {
+      width: 3rem; }
+    .Message--seethrough.Message--small .Message-close {
+      top: 0;
+      right: 0; }
+  .Message--seethrough.Message--info:after {
+    color: #3fa9f5; }
+  .Message--seethrough.Message--success:after {
+    color: #8dc640; }
+  .Message--seethrough.Message--warning:after {
+    color: #fba621; }
+  .Message--seethrough.Message--error:after {
+    color: #e23434; }
+  .Message--seethrough:hover .Message-close:before {
+    color: #7f7d7a; }
+
+/*
+Notification messages
+
+The `Message--notify` modifier is used when the message is supposed to act as a notification.
+
+Markup: _Message.notify.html
+
+Style guide: component-messages.notification
+
+Weight: -6
+*/
+.Message--notify {
+  position: fixed;
+  z-index: 9001;
+  top: 0;
+  display: none;
+  width: 100%;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  padding: 0; }
+  .Message--notify h1,
+  .Message--notify h2,
+  .Message--notify h3,
+  .Message--notify h4 {
+    margin-top: 0; }
+  .Message--notify .Message-inner {
+    padding: 2.5em 2em 2.5em 7.4em; }
+
+.Message-close {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  font-size: 0; }
+  .Message-close:before {
+    position: relative;
+    text-transform: none;
+    font-family: atomicons;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    content: '\e605';
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2rem; }
+    .Message--notify:hover .Message-close:before {
+      color: #fff; }
+
+.Message--small .Message-close:before {
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1.5rem; }
+
+/*
+Password requirements
+
+### .PassReq
+
+The component `PassReq` should be used to provide feedback on if a password meets all requirements.
+
+Markup: _PassReq.html
+
+Style guide: component-passreq
+*/
+/*
+Is passed
+
+is-passed - Use this to indicate that the requirement is met
+
+Markup: _PassReq.html
+
+Style guide: component-passreq.is-passed
+
+Weight: -10
+*/
+.PassReq {
+  position: relative;
+  margin: 0;
+  padding: 1rem 3rem 1rem 0; }
+  .PassReq:after {
+    position: relative;
+    text-transform: none;
+    font-family: atomicons;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin: -.8rem .2em 0;
+    content: '\e626';
+    color: rgba(15, 147, 242, 0.25);
+    font-size: 1.6em; }
+  .PassReq.is-passed:after {
+    color: #8dc640; }
+  .PassReq + .PassReq {
+    border-top: 0.2rem dotted rgba(15, 147, 242, 0.5); }
+
+/*
+Address
+
+### .Address
+
+A formatted address box. Complement with `Address-header` to get a label describing the address, like "Bill to" or "Ship to".
+
+Markup: _address.html
+
+Style guide: component-address
+*/
+.Address {
+  position: relative;
+  float: right;
+  width: 18em;
+  margin: -8em 0 2em;
+  padding: 1em;
+  text-align: right;
+  background-color: #f7f7f6; }
+  .Address .Address-header {
+    position: absolute;
+    top: 0;
+    left: -105%;
+    width: 100%;
+    text-align: right;
+    text-transform: uppercase;
+    font-weight: 700; }
+  @media only screen and (max-width: 480px) {
+    .Address {
+      margin: 2em 0; } }
+
+/*
+Tick (check boxes and radio buttons)
+
+### .Tick
+
+The `Tick` component is used to give enhanced style to the standard input radio buttons and check boxes.
+
+The original `checkbox` or `radio` input element should be wrapped in a `label` with the `Tick` class, and
+should be given the class `Tick-input`.
+
+Check boxes should have an additional element with the `Tick-checkbox` class.
+
+Similarly radio buttons should have an additional element with the `Tick-radio` class.
+
+The `Tick-checkbox` and `Tick-radio` sub-components are the ones giving the tickable component its new style,
+while `Tick-input` hides the original input element.
+
+Markup: _Tick.html
+
+Style guide: component-tick
+*/
+.Tick-checkbox {
+  position: relative;
+  top: .1em;
+  display: inline-block;
+  width: 1.22em;
+  height: 1.22em;
+  border: 1px solid #d3d1ce;
+  background-color: #fff; }
+  .Tick-input:checked ~ .Tick-checkbox {
+    background-color: #7f7d7a;
+    box-shadow: 0 0 0 3px #fff inset; }
+
+.Tick-radio {
+  position: relative;
+  top: .1em;
+  display: inline-block;
+  width: 1.22em;
+  height: 1.22em;
+  border: 1px solid #d3d1ce;
+  background-color: #fff;
+  border-radius: 50%; }
+  .Tick-input:checked ~ .Tick-radio {
+    background-color: #7f7d7a;
+    box-shadow: 0 0 0 3px #fff inset; }
+
+.Tick--dark .Tick-checkbox,
+.Tick--dark .Tick-radio {
+  border-color: #97928b; }
+
+/*
+Switch
+
+Switch component instead of checkboxes
+
+Markup: _Switch.html
+
+Style guide: component-switch
+*/
+.Switch-input {
+  position: absolute;
+  margin: 0;
+  margin-left: -9999px;
+  visibility: hidden; }
+
+.Switch-click {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 2px;
+  width: 50px;
+  height: 30px;
+  background: #e23434;
+  border-radius: 30px;
+  -webkit-transition: background 0.225s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 0.225s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3); }
+  .Switch-click:before {
+    display: block;
+    position: absolute;
+    content: '';
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    width: 26px;
+    background-color: #fff;
+    border-radius: 26px;
+    -webkit-transition: margin 0.225s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: margin 0.225s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.Switch-input:checked + .Switch-click {
+  background: #8dc640; }
+  .Switch-input:checked + .Switch-click:before {
+    margin-left: 20px; }
+
+.Switch-click:after {
+  color: #aba8a5;
+  font-family: arial;
+  line-height: 30px;
+  display: inline-block;
+  margin-left: 60px;
+  width: 500%;
+  content: attr(data-off); }
+
+.Switch-input:checked + .Switch-click:after {
+  content: attr(data-on); }
+
+/*
+Select boxes
+
+### .Select
+
+The basic select box component, `Select`, adds some custom style to the `select` element, such as the arrow.
+
+Markup: _Select.html
+
+Style guide: component-select
+*/
+/*
+Auto width
+
+Select inputs can be styled with `Select--autowidth`.
+
+Select--autowidth - When the input should adapt to the content of the list
+
+Markup: _Select.html
+
+Weight: -9
+
+Style guide: component-select.autowidth
+*/
+.Select {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 24rem;
+  height: 2.6rem;
+  margin: 0 .2rem .5rem;
+  padding: 0;
+  padding-right: .5rem;
+  vertical-align: middle;
+  color: #c22042;
+  border: 1px solid #d3d1ce;
+  border-radius: 0;
+  background-color: #fff;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 1.1rem;
+  line-height: 2.6rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+  .Select:after {
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    margin-top: -.1em;
+    content: '';
+    pointer-events: none;
+    border: 0.3em solid transparent;
+    border-top-color: #3a3836;
+    right: .58em; }
+  @media only screen and (max-width: 480px) {
+    .Select {
+      width: 100%; } }
+
+.Select--autowidth {
+  width: auto; }
+
+.Select--noborder {
+  border: none; }
+
+/*
+Formrow
+
+### .Formrow
+
+The `Formrow` component should be used as a wrapper for inputs and labels.
+
+On smaller screen sizes the label and input field will stack on top of each other.
+
+Markup: _Formrow.basic.html
+
+Style guide: component-formrow
+*/
+.Formrow {
+  padding: .6rem 0;
+  text-align: left;
+  clear: left; }
+  .Formrow ::-webkit-input-placeholder {
+    color: rgba(58, 56, 54, 0.3);
+    font-size: 0; }
+  .Formrow ::-moz-placeholder {
+    color: rgba(58, 56, 54, 0.3);
+    font-size: 0; }
+  .Formrow :-ms-input-placeholder {
+    color: rgba(58, 56, 54, 0.3);
+    font-size: 0; }
+
+.Formrow-label {
+  font-weight: 600;
+  position: relative;
+  display: block;
+  float: left;
+  width: 12rem;
+  padding: .5rem 0 0 .2rem;
+  font-size: 1.2rem; }
+  .Formrow--noLabel .Formrow-label {
+    display: none; }
+
+.Formrow-offset {
+  position: relative;
+  margin: 0 0 0 13rem;
+  line-height: 2.6rem; }
+  .Formrow--noLabel .Formrow-offset {
+    margin: 0; }
+
+.Formrow-input-group {
+  line-height: 2.6rem; }
+
+.Formrow-input {
+  width: 24rem; }
+
+.Formrow-input--small {
+  width: 6rem; }
+
+.Formrow-message {
+  display: none;
+  width: 24rem; }
+
+.Formrow-input--readonly {
+  padding: 0 .2rem;
+  color: #7f7d7a;
+  font-size: 1.3333em; }
+
+/*
+Formrow variations
+
+A number of modifier classes are available for use with `Formrow`.
+
+Formrow--block - Formrow used in small spaces, like the sidebar
+Formrow--noLabel - Formrow without a label
+Formrow--optional - Optional input
+Formrow--required - Required input (obsolete)
+Formrow--success - Display input success message
+Formrow--info - Display input info message
+Formrow--warning - Display input warning message
+Formrow--error - Display input error message
+Formrow--noLabel.Formrow--warning - Input without label, marked as warning
+
+Markup: _Formrow.html
+
+Style guide: component-formrow.variations
+*/
+.Formrow--noLabel ::-webkit-input-placeholder {
+  font-size: 1em; }
+
+.Formrow--noLabel ::-moz-placeholder {
+  font-size: 1em; }
+
+.Formrow--noLabel :-ms-input-placeholder {
+  font-size: 1em; }
+
+.Formrow--optional .Formrow-label {
+  opacity: .5; }
+  .Formrow--optional .Formrow-label:after {
+    content: attr(data-opt);
+    font-size: .8rem;
+    padding-left: .8rem;
+    font-weight: 400;
+    text-transform: uppercase; }
+
+.Formrow--required .Formrow-label:before,
+.Formrow--required.Formrow--noLabel .Formrow-offset:not(.Formrow-message):before {
+  position: absolute;
+  top: -.7rem;
+  left: -1rem;
+  content: '*';
+  color: #d8005b;
+  font-size: 2em; }
+
+.Formrow--block .Formrow-offset {
+  margin: 0; }
+
+.Formrow--block .Formrow-input {
+  width: 100%; }
+
+.Formrow--block .Formrow-label {
+  float: none; }
+
+.Formrow--error .Formrow-message,
+.Formrow--success .Formrow-message,
+.Formrow--info .Formrow-message,
+.Formrow--warning .Formrow-message {
+  display: block;
+  line-height: normal; }
+  .Formrow--error .Formrow-message:before,
+  .Formrow--success .Formrow-message:before,
+  .Formrow--info .Formrow-message:before,
+  .Formrow--warning .Formrow-message:before {
+    position: relative;
+    text-transform: none;
+    font-family: atomicons;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    top: .12em;
+    margin: 0 .2em;
+    font-size: 1.6em; }
+
+.Formrow--warning .Formrow-input {
+  border-color: #fba621;
+  box-shadow: 6px 0 0 #fba621 inset; }
+
+.Formrow--warning .Formrow-message:before {
+  content: '\e628';
+  color: #fba621; }
+
+.Formrow--success .Formrow-input {
+  border-color: #8dc640;
+  box-shadow: 6px 0 0 #8dc640 inset; }
+
+.Formrow--success .Formrow-message:before {
+  content: '\e626';
+  color: #8dc640; }
+
+.Formrow--info .Formrow-input {
+  border-color: #3fa9f5;
+  box-shadow: 6px 0 0 #3fa9f5 inset; }
+
+.Formrow--info .Formrow-message:before {
+  content: '\e617';
+  color: #3fa9f5; }
+
+.Formrow--error .Formrow-input {
+  border-color: #e23434;
+  box-shadow: 6px 0 0 #e23434 inset; }
+
+.Formrow--error .Formrow-message:before {
+  content: '\e636';
+  color: #e23434; }
+
+@media only screen and (max-width: 480px) {
+  .Formrow-label {
+    float: none;
+    width: 100%;
+    padding-bottom: .5rem; }
+  .Formrow-input-group,
+  .Formrow-message,
+  .Formrow-offset {
+    margin: 0; }
+  .Formrow .Message {
+    width: 100%; } }
+
+/*
+Slider
+
+### .Slider
+
+The `Slider` component is dependent on **jQuery UI**.
+
+Overrides of the jQuery UI generated structural classes are defined in the file `_component.ui-slider.scss`.
+
+The jQuery UI generated classes are prefixed with `ui-`.
+
+The `Slider` component itself defines the "content" of the slider, which jQuery UI then turns in to a functioning slider.
+
+Markup: _Slider.html
+
+Style guide: component-slider
+*/
+.Slider {
+  position: relative;
+  top: -.4rem;
+  width: 24rem;
+  padding: .1rem 2em 1.2rem; }
+  @media only screen and (max-width: 480px) {
+    .Slider {
+      width: auto; } }
+
+.Slider-label-list {
+  position: relative;
+  margin: 0;
+  list-style: none; }
+
+.Slider-label-item {
+  display: inline-block;
+  margin: 0;
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+  color: #7f7d7a;
+  font-size: .8em;
+  line-height: 1em; }
+  .Slider-label-item:hover, .Slider-label-item.active {
+    color: #000; }
+
+/*
+Slider themes
+
+Sliders themes classes - applied to the `Slider` handler element.
+
+Slider-theme--thermo - A heat scale like theme
+Slider-theme--thermo-reverse - Also a heat scale like theme, but with the coloring in reverse
+
+Markup: _Slider.html
+
+Style guide: component-slider.themes
+*/
+.Slider-theme--thermo {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#67b50e+15,d8ce11+40,ed9912+60,e83535+85 */
+  background: #67b50e;
+  /* Old browsers */
+  background: -webkit-linear-gradient(left, #67b50e 15%, #d8ce11 40%, #ed9912 60%, #e83535 85%);
+  background: linear-gradient(to right, #67b50e 15%, #d8ce11 40%, #ed9912 60%, #e83535 85%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  box-shadow: 0 1.1rem 0 #d3d1ce inset; }
+
+.Slider-theme--thermo-reverse {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e83535+15,ed9912+40,d8ce11+60,67b50e+85 */
+  background: #e83535;
+  /* Old browsers */
+  background: -webkit-linear-gradient(left, #e83535 15%, #ed9912 40%, #d8ce11 60%, #67b50e 85%);
+  background: linear-gradient(to right, #e83535 15%, #ed9912 40%, #d8ce11 60%, #67b50e 85%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  box-shadow: 0 1.1rem 0 #d3d1ce inset; }
+
+.ui-slider {
+  position: relative;
+  border-radius: .4em;
+  background-color: #d3d1ce; }
+  .ui-slider .ui-slider-handle {
+    position: absolute;
+    width: 2.4em;
+    height: 2.4em;
+    margin: -.6em 0 0 -1.3em;
+    cursor: pointer;
+    border: 0.4em solid #d3d1ce;
+    border-radius: 50%;
+    background-color: #fff; }
+    .ui-slider .ui-slider-handle.ui-state-active, .ui-slider .ui-slider-handle.ui-state-hover {
+      border-color: #7f7d7a; }
+  .ui-slider .ui-slider-range {
+    position: absolute;
+    pointer-events: none;
+    background-color: #8dc640; }
+
+.ui-slider-horizontal {
+  height: 1.3em;
+  margin: 1em 0; }
+  .ui-slider-horizontal .ui-slider-range {
+    top: 0;
+    height: 100%; }
+  .ui-slider-horizontal .ui-slider-range-min {
+    left: 0; }
+  .ui-slider-horizontal .ui-slider-range-max {
+    right: 0; }
+
+/*
+Filetree
+
+### .Filetree
+
+Filetrees are a good representation of the file system.
+
+The `Filetree` component goes well together with the [AdvancedSelect](section-component-advanced-select.html#ref-component-advanced-select-filetree) component,
+making folder selection more compact.
+
+Markup: _Filetree.html
+
+Style guide: component-filetree
+*/
+.Filetree-folderlist {
+  width: 100%;
+  background: #fff;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 1.1rem;
+  line-height: 2rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+  .Filetree-folderlist.Filetree-folderlist--dark {
+    background-color: #5b5a57;
+    font-size: 1rem; }
+    .Filetree-folderlist.Filetree-folderlist--dark .Filetree-item {
+      color: #aba8a5; }
+    .Filetree-folderlist.Filetree-folderlist--dark .Filetree-dir--selected .Filetree-item {
+      color: #fff; }
+
+.Filetree-item {
+  color: #7f7d7a; }
+  .Filetree-item:before {
+    margin-right: .3em; }
+  .Filetree-dir--selected .Filetree-item {
+    color: #c22042; }
+
+.Filetree-dir:before {
+  position: relative;
+  top: -.2rem;
+  display: inline-block;
+  margin: 0 .2rem 0 1rem;
+  content: '';
+  border: .25em solid transparent;
+  border-left-color: #7f7d7a; }
+
+.Filetree-dir.Filetree-dir--expanded:before {
+  -webkit-transform: translateX(-0.2rem) rotateZ(90deg);
+  transform: translateX(-0.2rem) rotateZ(90deg); }
+
+.Filetree-dir .Filetree-dir:before {
+  margin-left: 2rem; }
+
+.Filetree-dir .Filetree-dir .Filetree-dir:before {
+  margin-left: 3rem; }
+
+.Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir:before {
+  margin-left: 4rem; }
+
+.Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir:before {
+  margin-left: 5rem; }
+
+.Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir:before {
+  margin-left: 6rem; }
+
+.Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir:before {
+  margin-left: 7rem; }
+
+.Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir:before {
+  margin-left: 8rem; }
+
+.Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir:before {
+  margin-left: 9rem; }
+
+.Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir .Filetree-dir:before {
+  margin-left: 10rem; }
+
+/*
+Advanced select box
+
+### .AdvancedSelect
+
+Advanced select boxes are used for dropdowns where full theme customization and ability to add more complex content is needed.
+
+Markup: _Advanced-select.html
+
+Style guide: component-select.advanced
+
+Weight: -8
+*/
+.AdvancedSelect {
+  position: relative;
+  display: inline-block;
+  height: 2.667em;
+  vertical-align: middle; }
+  .AdvancedSelect:after {
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    margin-top: -.1em;
+    content: '';
+    pointer-events: none;
+    border: 0.4em solid transparent;
+    border-top-color: #3a3836;
+    right: .9em; }
+  @media only screen and (max-width: 480px) {
+    .AdvancedSelect {
+      display: block; } }
+
+.AdvancedSelect-title {
+  margin: .7rem 0 .3rem;
+  color: #fff;
+  line-height: 1.2em; }
+
+.AdvancedSelect-desc {
+  margin: 0;
+  opacity: .5;
+  font-size: .9em;
+  line-height: 1.4em; }
+
+.AdvancedSelect-input {
+  margin: 0;
+  vertical-align: top; }
+  .AdvancedSelect-input[readonly] {
+    box-shadow: none; }
+
+.AdvancedSelect-list {
+  position: absolute;
+  z-index: 10;
+  top: 2.6rem;
+  overflow: auto;
+  width: 100%;
+  max-height: 27rem;
+  margin: 0;
+  list-style: none;
+  color: #fff;
+  background-color: #5b5a57; }
+
+.AdvancedSelect-item {
+  padding: .4em 1em;
+  cursor: pointer;
+  border-top: 1px solid #3a3836; }
+  .AdvancedSelect-item:not(.AdvancedSelect-item--disabled):hover {
+    background-color: rgba(0, 0, 0, 0.02); }
+
+.AdvancedSelect-item--separator {
+  border-top: 0.2rem dotted rgba(0, 0, 0, 0.1); }
+
+.AdvancedSelect-item--disabled {
+  cursor: default;
+  opacity: .5; }
+
+/*
+Enhancing select items with images
+
+### .AdvancedSelect--images
+
+By using the modifier `AdvancedSelect--images` you can enhance an advanced select box with images representing each item, e.g. flags for choosing language.
+
+Markup: _Advanced-select.image.html
+
+Weight: -7
+
+Style guide: component-select.advanced-image
+*/
+.AdvancedSelect--images > .AdvancedSelect-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 0.7rem rgba(0, 0, 0, 0.25) inset; }
+
+.AdvancedSelect--images .AdvancedSelect-item {
+  min-height: 5.8rem; }
+
+.AdvancedSelect--images .AdvancedSelect-title {
+  margin-top: .7rem; }
+
+.AdvancedSelect--images .AdvancedSelect-input {
+  padding-left: 4.4em; }
+
+.AdvancedSelect-image {
+  float: left;
+  margin: 0 .4em 0 0;
+  box-shadow: 0 0 1.4rem rgba(0, 0, 0, 0.25) inset; }
+
+/*
+Selecting folders in a filetree
+
+For selecting folders `AdvancedSelect` can be used in combination with the `Filetree` component.
+
+Markup: _Advanced-select.filetree.html
+
+Weight: -6
+
+Style guide: component-select.advanced-filetree
+*/
+/*
+Paginate
+
+### .Paginate
+
+The `Paginate` component is orignally a part of datatables, but it can be used for navigation elsewhere as well.
+
+markup: _Paginate.html
+
+Style guide: component-paginate
+*/
+.Paginate {
+  text-align: center;
+  font-size: 0;
+  /* Fix so pagination elements can have space in source */ }
+  @media only screen and (max-width: 480px) {
+    .Paginate {
+      margin: 1rem 0; } }
+
+.Paginate--navigation {
+  margin-top: .3rem; }
+
+.Paginate-button {
+  position: relative;
+  display: inline-block;
+  min-width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  text-align: center;
+  color: #aba8a5;
+  background-color: #fff;
+  font-size: 0;
+  line-height: 2rem;
+  border: 1px solid #d3d1ce;
+  border-radius: 2px;
+  margin: 0 5px 5px 0; }
+  .Paginate-button:hover {
+    color: #aba8a5;
+    border-color: transparent; }
+  .Paginate-button:not(.is-disabled):hover, .Paginate-button.is-active {
+    color: #fff;
+    background-color: #aba8a5; }
+  .Paginate-button.is-active, .Paginate-button.is-disabled, .Paginate-button.is-disabled:hover {
+    border-color: transparent;
+    cursor: default; }
+  .Paginate-button.is-disabled:before {
+    opacity: .5; }
+  .Paginate-button:before {
+    position: relative;
+    text-transform: none;
+    font-family: atomicons;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    font-size: .8rem; }
+
+.Paginate-button--page {
+  padding: 0 .3em;
+  vertical-align: top;
+  font-size: 1rem; }
+
+/* Temporary fix */
+.jqueryFileTree {
+  padding-left: 1.2rem;
+  line-height: 2rem; }
+
+.directory:before {
+  position: relative;
+  text-transform: none;
+  font-family: atomicons;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  speak: none;
+  top: .11em;
+  margin-right: .2em;
+  font-size: 1.2em;
+  line-height: 1.2;
+  content: '\e907'; }
+
+.directory.expanded:before {
+  content: '\e90c'; }
+
+/*
+Buttons
+
+### .Btn
+
+Buttons can be used for actions, links or submitting forms.
+
+Markup: _Button.standard.html
+
+Style guide: component-button
+*/
+/*
+Standard buttons
+
+These are the main variations and states a button can take.
+
+Btn--primary - Use this as the primary action.
+Btn--secondary - Use this for secondary actions.
+Btn--caution - Use this for destructive or negative actions.
+Btn--info - Use this for informative actions.
+Btn--neutral - Use this for a generic action button, also the default style
+Btn--brand - Use this when the brand color is desired.
+Btn--small - Use this when you need a small button.
+Btn--inline - Use this when you need a button that should fit it with a line of text.
+is-disabled - Use this when the user should not be able to click the button.
+
+Markup: _Button.html
+
+Style guide: component-button.standard
+
+Weight: -10
+*/
+.Btn {
+  font-size: .9rem;
+  line-height: 2.5em;
+  position: relative;
+  display: inline-block;
+  margin: .1em 0;
+  padding: 0 1.1em;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 2.8em;
+  color: #fff;
+  background-color: #aba8a5;
+  border-color: #7f7d7a;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 3px; }
+  .Btn:hover {
+    color: #fff;
+    background-color: #aba8a5;
+    border-color: #7f7d7a;
+    color: #fff;
+    box-shadow: 0 0 5.55em rgba(0, 0, 0, 0.1) inset; }
+  .Btn.is-disabled {
+    cursor: not-allowed;
+    color: #fff;
+    background-color: #e5e3e0;
+    border-color: #cecac4; }
+    .Btn.is-disabled:hover {
+      box-shadow: none; }
+
+.Btn--small {
+  font-size: 0.8rem;
+  line-height: 2.5em;
+  padding: 0 1em;
+  font-weight: 400; }
+
+.Btn--inline {
+  vertical-align: text-bottom;
+  margin-left: 1em; }
+
+.Btn--primary {
+  color: #fff;
+  background-color: #8dc640;
+  border-color: #72a330; }
+  .Btn--primary:hover {
+    color: #fff;
+    background-color: #8dc640;
+    border-color: #72a330; }
+
+.Btn--caution {
+  color: #fff;
+  background-color: #e23434;
+  border-color: #c71c1c; }
+  .Btn--caution:hover {
+    color: #fff;
+    background-color: #e23434;
+    border-color: #c71c1c; }
+
+.Btn--secondary {
+  color: #fff;
+  background-color: #fba621;
+  border-color: #e58d04; }
+  .Btn--secondary:hover {
+    color: #fff;
+    background-color: #fba621;
+    border-color: #e58d04; }
+
+.Btn--info {
+  color: #fff;
+  background-color: #3fa9f5;
+  border-color: #0f93f2; }
+  .Btn--info:hover {
+    color: #fff;
+    background-color: #3fa9f5;
+    border-color: #0f93f2; }
+
+.Btn--neutral {
+  color: #fff;
+  background-color: #aba8a5;
+  border-color: #7f7d7a; }
+  .Btn--neutral:hover {
+    color: #fff;
+    background-color: #aba8a5;
+    border-color: #7f7d7a; }
+
+.Btn--brand {
+  color: #fff;
+  background-color: #d8005b;
+  border-color: #a50046; }
+  .Btn--brand:hover {
+    color: #fff;
+    background-color: #d8005b;
+    border-color: #a50046; }
+
+/*
+Icon buttons
+
+Buttons can be combined with the `Icon` component. To create a basic button with an icon add the `Icon` class and any of the `Icon--*` modifiers for a specific icon.
+
+See [Iconography](section-base-icon.html) for all options available for icon enhanced buttons and a [full list of icons](section-base-icon.html#ref-base-icon-list).
+
+Icon--plus - Button with a plus icon, e.g. for adding.
+Icon--minus - Button with a mius icon, e.g. for deleting.
+Icon--star - Button with a star icon, e.g. for favoriting.
+
+Markup: _Button.icons.html
+
+Style guide: component-button.icons
+
+Weight: -9
+*/
+/*
+Navigation bars
+
+### .NavBar
+
+Navigation bars cover the whole width of their parent element.
+
+They typically contain things like menus, links and other information.
+
+Navigation bars are container items and will not have a `width`  and `height` on their own. They also need to get any visuals like `background-color` from inheritance or by a modifier like `NavBar--apps`.
+
+Also note that there is no spacing between items in the navigation bar by default.
+
+Markup: _NavBar.html
+
+Style guide: component-nav-bar
+*/
+.NavBar {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0 1rem;
+  border-radius: 0;
+  font-size: 0; }
+  .NavBar:after {
+    display: block;
+    clear: both;
+    content: ' '; }
+
+/*
+Primary navigation
+
+### .NavBar--apps
+
+The primary navigation bar is used to link between the different parts of the control panel.
+
+Markup: _NavBar.primary.html
+
+Style guide: component-nav-bar.primary
+*/
+.NavBar--apps {
+  padding-left: 2rem;
+  text-align: right;
+  color: #fff;
+  background-color: #d8005b; }
+  @media only screen and (max-width: 480px) {
+    .NavBar--apps {
+      padding-left: 1rem;
+      text-align: left; } }
+
+/*
+Secondary navigation
+
+### .NavBar--sections
+
+The secondary navigation bar is used for utilities and section menus within the current control panel.
+
+**Note:** To save space in the markup the example menus are not functional.
+
+Markup: _NavBar.secondary.html
+
+Style guide: component-nav-bar.secondary
+*/
+.NavBar--sections {
+  padding-left: 2rem;
+  text-align: right;
+  color: #5b5a57;
+  background-color: #fff;
+  border-bottom: 1px solid #d3d1ce; }
+  @media only screen and (max-width: 1024px) {
+    .NavBar--sections {
+      padding-right: 0; } }
+  @media only screen and (max-width: 360px) {
+    .NavBar--sections {
+      text-align: left; } }
+
+/*
+Stacked navigation bars
+
+Navigation bars stack on top of each other.
+
+HideCode: true
+
+Markup: _NavBar.stacked.html
+
+Style guide: component-nav-bar.stacked
+*/
+/*
+Sets
+
+### .Set
+
+Sets are collections of other elements like menus. Each element must be wrapped in a `Set-item` element.
+
+The `Set` module also contains a few built in descendants that can be used with `Set-item`:
+
+* `Set-action` for clickable things
+* `Set-label` for text items
+
+Multiple sets are lined-up inline with spacing between.
+
+By default any `Set-item` within a `Set` will inherit "skin" properties like `background-color`, `border-radius`, `color` and `text-transform` from the `Set`.
+This means you can use one modifier class for the entire `Set` and get a uniform look for the `Set-items`.
+
+Markup: _Set.html
+
+Style guide: component-set
+*/
+.Set {
+  display: inline-block;
+  margin: .1rem 0;
+  padding: 0 1rem;
+  cursor: default;
+  text-transform: none;
+  color: #5b5a57;
+  border-radius: 0;
+  font-size: 0;
+  line-height: 3; }
+  .Set .Set-item {
+    display: inline-block;
+    /* Set these here so we can skin entire .Set with single modifier by letting
+         actual content nodes inherit. */
+    background-color: #fff; }
+    .Set .Set-item .Set-action,
+    .Set .Set-item .Set-label {
+      display: block;
+      padding: 0 1em;
+      color: inherit;
+      background-color: inherit;
+      font-size: 1rem; }
+    .Set .Set-item .Set-action {
+      cursor: pointer; }
+
+/*
+Primary NavBar sets
+
+### .Set--apps
+
+This modifier is used for a set that fits  within the context of `NavBar--apps`.
+
+It also defines a special descendant `is-active` state class to mark the current application.
+
+Markup: _Set.primary.html
+
+Style guide: component-set.primary
+*/
+.Set--apps {
+  margin: 0;
+  text-transform: uppercase;
+  color: #d8005b;
+  background-color: #d8005b; }
+  .Set--apps .Set-item {
+    background-color: transparent; }
+    .Set--apps .Set-item .Set-action {
+      border-radius: 2rem;
+      padding: 0 1em 0 .5em;
+      background-color: #a50046;
+      line-height: 1.7rem;
+      margin: 1em 0 1em 1em;
+      font-weight: 600;
+      text-shadow: 0 1px 0 #8c003b;
+      color: #fff;
+      font-weight: normal;
+      border: 1px solid #fff;
+      background-color: #d8005b; }
+      @media only screen and (max-width: 760px) {
+        .Set--apps .Set-item .Set-action {
+          padding: 0 1rem; } }
+    .Set--apps .Set-item .Set-label {
+      padding: 0 1em 0 .5em;
+      line-height: 2rem;
+      margin: 1em 0 1em 1em;
+      color: #fff;
+      font-style: italic;
+      text-transform: none; }
+    .Set--apps .Set-item .Set-action:hover {
+      -webkit-transition: all .3s ease 0s;
+      transition: all .3s ease 0s;
+      background: #fff;
+      text-shadow: none;
+      color: #d8005b; }
+    .Set--apps .Set-item.is-active .Set-action {
+      background: #fff;
+      text-shadow: none;
+      color: #d8005b; }
+  @media only screen and (max-width: 360px) {
+    .Set--apps {
+      padding-left: 0; } }
+
+/*
+Section menus set
+
+### .Set--sections
+
+This modifier is used for the set that holds the section menus within the context of `NavBar--sections`.
+
+This type of set will stack the set items on top of each other when the viewport gets smaller. In the smaller sizes it will also hide the entire set unless the `is-opened` state class is applied.
+
+**Note**: Resize the browser window to see it in action.
+
+Markup: _Set.sections.html
+
+Style guide: component-set.sections
+*/
+.Set--sections {
+  margin: 0;
+  padding-left: 0;
+  text-transform: uppercase; }
+  .Set--sections .Set-item {
+    color: #3a3836;
+    background-color: #fff;
+    font-weight: 600; }
+    .Set--sections .Set-item .Set-action,
+    .Set--sections .Set-item .Set-label {
+      line-height: 3.4445rem; }
+    .Set--sections .Set-item .Set-action:hover {
+      -webkit-transition: all .3s ease 0s;
+      transition: all .3s ease 0s;
+      background-color: #f7f7f6; }
+  @media only screen and (max-width: 1024px) {
+    .Set--sections {
+      display: none;
+      width: 40vw;
+      padding-right: 0;
+      color: #f7f7f6;
+      background-color: #5b5a57; }
+      .Set--sections.is-opened {
+        position: absolute;
+        z-index: 100;
+        right: 0;
+        display: block;
+        text-align: left; }
+      .Set--sections .Set-item {
+        display: block;
+        color: #f7f7f6;
+        background-color: #5b5a57;
+        border-top: 1px solid #201f1d; }
+        .Set--sections .Set-item .Set-action {
+          padding: 1rem 1.5rem;
+          line-height: 1.5em; }
+          .Set--sections .Set-item .Set-action:hover {
+            color: inherit;
+            background-color: inherit;
+            font-weight: bold; } }
+  @media only screen and (max-width: 760px) {
+    .Set--sections {
+      width: 50vw; } }
+  @media only screen and (max-width: 480px) {
+    .Set--sections {
+      width: 100vw;
+      padding-right: 0; } }
+
+/*
+Section utils set
+
+### .Set--utils
+
+This modifier is used for the set that holds the utility icons within the context of `NavBar--sections`.
+
+Markup: _Set.utils.html
+
+Style guide: component-set.utils
+*/
+.Set--utils {
+  margin: 0;
+  padding-right: 0;
+  padding-left: 0; }
+  .Set--utils .Set-item {
+    padding-right: 1rem; }
+    .Set--utils .Set-item.Set-item--sidebar {
+      display: none; }
+      @media only screen and (max-width: 1200px) {
+        .Set--utils .Set-item.Set-item--sidebar {
+          display: inline-block; } }
+    .Set--utils .Set-item.Set-item--search {
+      margin-right: 0; }
+    .Set--utils .Set-item .Set-action,
+    .Set--utils .Set-item .Set-label {
+      padding: 0;
+      background: #d3d1ce;
+      color: #fff;
+      border-radius: 50%;
+      height: 2.6rem;
+      width: 2.6rem;
+      line-height: 2.6rem;
+      font-size: .8rem;
+      margin-top: .3rem;
+      -webkit-transition: all .3s ease 0s;
+      transition: all .3s ease 0s;
+      text-align: center; }
+      .Set--utils .Set-item .Set-action:hover,
+      .Set--utils .Set-item .Set-label:hover {
+        background: #aba8a5; }
+
+/*
+Action sets
+
+These sets can be used for generic action in different contexts.
+
+Set--actions - A generic action set
+Set--bulk - A set with items used for bulk actions
+Set--smallActions - A small generic action set
+
+Markup: _Set.html
+
+Style guide: component-set.actions
+*/
+.Set--actions {
+  padding: 0;
+  text-transform: uppercase;
+  border-radius: 0; }
+  .Set--actions .Set-item .Set-action,
+  .Set--actions .Set-item .Set-label {
+    font-size: .9rem;
+    line-height: 2.5em; }
+  .Set--actions .Set-item .Set-action:hover {
+    box-shadow: 0 0 5.55em rgba(0, 0, 0, 0.1) inset; }
+
+.Set--bulk {
+  padding: 0;
+  text-transform: uppercase;
+  border-radius: 5px; }
+  .Set--bulk .Set-item {
+    color: #fff;
+    background-color: #aba8a5;
+    border-color: #7f7d7a;
+    border-right: 1px solid #fff; }
+    .Set--bulk .Set-item:first-of-type {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px; }
+    .Set--bulk .Set-item:last-of-type {
+      border-right: none;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px; }
+    .Set--bulk .Set-item .Set-action,
+    .Set--bulk .Set-item .Set-label {
+      font-size: .9rem;
+      line-height: 2.5em;
+      border-radius: 5px; }
+    .Set--bulk .Set-item .Set-action:hover {
+      box-shadow: 0 0 5.55em rgba(0, 0, 0, 0.1) inset; }
+
+.Set--smallActions {
+  padding: 0;
+  text-transform: uppercase;
+  border-radius: 0; }
+  .Set--smallActions .Set-item .Set-action,
+  .Set--smallActions .Set-item .Set-label {
+    font-size: .9rem;
+    line-height: 1.8em; }
+  .Set--smallActions .Set-item .Set-action:hover {
+    box-shadow: 0 0 5.55em rgba(0, 0, 0, 0.1) inset; }
+
+/*
+Trays
+
+### .Tray
+
+Trays can be used for information or actions that should not be shown all the time.
+
+Trays will stack below their previous sibling. They are closed by default and require JavaScript like the jQuery `slide` functions to open.
+
+By default they will push down any content below when they open.
+
+You can use the descendant `Tray-list` with `Tray-link` for placing a list of actions in the tray.
+
+The `Tray-list--horiz` modifier makes the tray list horizontal instead of vertical.
+
+You can of course also fill the tray with any other content you want.
+
+Markup: _Tray.html
+
+Style guide: component-tray
+*/
+.Tray {
+  position: relative;
+  display: none;
+  overflow: hidden;
+  padding: 2rem;
+  text-align: left;
+  border-bottom: 0.45em solid #c22042;
+  background-color: #fff;
+  font-size: 1rem; }
+  .Tray .Tray-title {
+    color: #7f7d7a;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 2.8em;
+    font-weight: 300; }
+  .Tray .Tray-list {
+    display: inline-block;
+    text-align: left; }
+    .Tray .Tray-list.Tray-list--horiz > * {
+      display: inline-block;
+      margin: 1.2em .8em;
+      vertical-align: middle; }
+  .Tray .Tray-link {
+    color: #5b5a57;
+    line-height: 2.6em; }
+    .Tray .Tray-link:hover {
+      color: #c22042; }
+    .Tray .Tray-link:before {
+      margin-right: .7em; }
+  .Tray.is-open {
+    display: block; }
+
+/*
+Trays covering content
+
+### .Tray--cover
+
+You can use the `Tray--cover` modifier to make the tray cover any content below instead of pushing it down.
+
+The covering tray will also take up 100% width of its closest positioned parent.
+
+Markup: _Tray.cover.html
+
+Weight: -10
+
+Style guide: component-tray.cover
+*/
+.Tray--cover {
+  position: absolute;
+  z-index: 40;
+  left: 0;
+  width: 100%; }
+
+/*
+Action tray
+
+### .Tray--actions
+
+A right-aligned tray styled to be a good fit for an action menu, like clicking the profile link in the primary navigation bar.
+
+Markup: _Tray.actions.html
+
+Style guide: component-tray.actions
+*/
+.Tray--actions {
+  padding: 2.4em 10em 4em;
+  text-align: right; }
+  .Tray--actions .Tray-title {
+    margin: 0 0 .4em; }
+
+/*
+Action tray
+
+### .Tray--info
+
+A left-aligned tray styled to be a good fit for showing information, like the meters in the secondary navigation bar.
+
+Markup: _Tray.info.html
+
+Style guide: component-tray.info
+*/
+.Tray--info {
+  padding: 1.2em 2em; }
+  .Tray--info .Tray-title {
+    margin: 0; }
+
+@media only screen and (max-width: 760px) {
+  .Tray .Tray-title {
+    color: #5b5a57;
+    font-size: 1.8em; }
+  .Tray .Tray-list.Tray-list--horiz > * {
+    margin: .8em; }
+  .Tray--actions {
+    padding: 1em 3em; }
+  .Tray--info {
+    padding: 0; }
+    .Tray--info .Tray-list {
+      text-align: center; }
+    .Tray--info .Tray-title {
+      font-size: 0; } }
+
+/*
+Toggles
+
+### .Toggle
+
+Toggles can be used to switch things on or off, hide or show things, etc. Especially useful combined with an `Icon`.
+
+The `Toggle` changes state by adding or removing the `is-on` class.
+
+**Note:** Click the toggles to switch them on or off.
+
+**Note 2:** The ids in the markup are only there to make the toggles switchable in the pattern library.
+
+Markup: _Toggle.html
+
+Style guide: component-toggle
+*/
+.Toggle {
+  cursor: pointer; }
+  .Toggle .Toggle-on {
+    display: inline-block;
+    padding: 0 1rem;
+    color: #7f7d7a;
+    background-color: #fff;
+    line-height: 3.4445rem; }
+  .Toggle .Toggle-off {
+    display: none;
+    padding: 0 1rem;
+    color: #fff;
+    background-color: #3a3836;
+    line-height: 3.4445rem; }
+  .Toggle.is-on .Toggle-on {
+    display: none; }
+  .Toggle.is-on .Toggle-off {
+    display: inline-block; }
+
+/*
+Secondary nav toggle
+
+### .Toggle--sections
+
+This toggle is used to hide or show the menus in `Set--sections` and is shown when the menus get stacked on smaller viewport sizes.
+
+**Note:** Shrink your browser window to make it appear.
+
+Markup: _Toggle.sections.html
+
+Style guide: component-toggle.sections
+*/
+.Toggle--sections {
+  display: none; }
+  @media only screen and (max-width: 1024px) {
+    .Toggle--sections {
+      display: inline-block; } }
+
+/*
+Menus
+
+### .Menu
+
+Menus are used when many actions, links or options need to be displayed.
+
+A `Menu` should always contain the `Menu-button`, `Menu-list` and `Menu-item` elements. For large menus the `Menu-separator` can also be used.
+
+They can be used standalone or be combined with other components into a [Set](section-component-set.html).
+
+For item actions (as opposed to navigational menus) it is preferrable to use a flat set or single buttons instead of a menu if there are three actions or less.
+
+Markup: _Menu.html
+
+Style guide: component-menu
+*/
+/*
+Menu alignment
+
+By default menus are right aligned (they are commonly placed to the right in the control panels). However, you can explictly set the direction with a modifier.
+
+Menu--left - Use this for a left aligned menu.
+Menu--right - Use this for a right aligned menu (default).
+
+Markup: _Menu.html
+
+Style guide: component-menu.alignment
+*/
+.Menu {
+  position: relative;
+  display: inline-block; }
+  .Menu .Menu-button {
+    font-size: .9rem;
+    line-height: 2.5em;
+    color: #fff;
+    background-color: #aba8a5;
+    border-color: #7f7d7a;
+    display: inline-block;
+    padding: 0 .95em;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    text-transform: uppercase; }
+    .Menu .Menu-button:after {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      margin-left: .22em;
+      content: '';
+      vertical-align: middle;
+      border: .25em solid transparent;
+      border-top-color: #fff; }
+    .Menu .Menu-button:hover {
+      box-shadow: 0 0 3.55em rgba(0, 0, 0, 0.1) inset; }
+    .Menu .Menu-button.is-opened {
+      background: #5b5a57; }
+    .Menu .Menu-button.Menu-button--small {
+      font-size: .9rem;
+      line-height: 1.8em; }
+    .Menu .Menu-button.Menu-button--primary {
+      color: #fff;
+      background-color: #8dc640;
+      border-color: #72a330; }
+      .Menu .Menu-button.Menu-button--primary:after {
+        border-top-color: #fff; }
+  .Menu .Menu-list {
+    position: absolute;
+    z-index: 20;
+    right: 0;
+    display: none;
+    width: 18rem;
+    min-width: 100%; }
+    .Menu .Menu-list .Menu-item {
+      display: block;
+      padding: 0 1.5rem;
+      cursor: pointer;
+      text-align: right;
+      vertical-align: middle;
+      text-transform: uppercase;
+      color: #f7f7f6;
+      background-color: #5b5a57;
+      font-size: .9rem;
+      line-height: 3rem;
+      font-weight: 600;
+      border-top: 1px solid #3a3836; }
+      .Menu .Menu-list .Menu-item:hover {
+        color: #fff;
+        background-color: #7f7d7a; }
+    .Menu .Menu-list .Menu-separator {
+      display: block;
+      padding: 0 1.5rem;
+      text-align: right;
+      vertical-align: middle;
+      text-transform: uppercase;
+      color: #7f7d7a;
+      background-color: #3a3836;
+      font-size: .8rem;
+      line-height: 2rem;
+      font-weight: 600; }
+    .Menu .Menu-list.is-opened {
+      display: block; }
+  .Menu.Menu--left .Menu-list {
+    left: 0; }
+    .Menu.Menu--left .Menu-list .Menu-item {
+      text-align: left; }
+    .Menu.Menu--left .Menu-list .Menu-separator {
+      text-align: left; }
+  .Menu.Menu--right .Menu-list {
+    right: 0; }
+    .Menu.Menu--right .Menu-list .Menu-item {
+      text-align: right; }
+    .Menu.Menu--right .Menu-list .Menu-separator {
+      text-align: right; }
+  .Menu.Menu--bulk .Menu-button {
+    border-radius: 5px;
+    font-weight: inherit; }
+    .Menu.Menu--bulk .Menu-button.is-opened {
+      border-radius: 0; }
+    .Menu.Menu--bulk .Menu-button:after {
+      border-top-color: #fff; }
+  .Menu.Menu--action .Menu-button {
+    font-size: .9rem;
+    line-height: 1.8em;
+    border-radius: 3px;
+    padding: 0 .8em;
+    border-bottom: 2px solid;
+    border-bottom-color: #7f7d7a; }
+    .Menu.Menu--action .Menu-button:after {
+      border-top-color: #fff; }
+
+/*
+Menu sections
+
+Menus in the secondary sections navigation bar use the `Menu--sections` modifier to match the navigation bar styling and to adapt when the view port shrinks.
+
+The example markup is wrapped in a `Set--section` to set a background color for the `Menu`, since it is inherited from the parent element.
+
+(Resize your browser to see it in action.)
+
+Menu--sections - Use this secondary navigation bars.
+
+Markup: _Menu.sections.html
+
+Style guide: component-menu.sections
+*/
+.Menu--sections {
+  padding: 0; }
+  .Menu--sections .Menu-button {
+    color: #3a3836;
+    background-color: #fff;
+    font-size: 1rem;
+    line-height: 3.4445rem;
+    font-weight: 600; }
+    .Menu--sections .Menu-button.is-opened {
+      color: #fff; }
+      .Menu--sections .Menu-button.is-opened:after {
+        border-top-color: #fff; }
+    .Menu--sections .Menu-button:after {
+      border-top-color: #3a3836; }
+  @media only screen and (max-width: 1024px) {
+    .Menu--sections {
+      width: 100%; }
+      .Menu--sections .Menu-button {
+        width: 100%;
+        background: #5b5a57;
+        color: #f7f7f6;
+        text-align: left;
+        padding: 0 1.5rem; }
+        .Menu--sections .Menu-button:after {
+          border-top-color: #f7f7f6; }
+      .Menu--sections .Menu-list {
+        position: relative;
+        background: #3a3836; }
+        .Menu--sections .Menu-list .Menu-item {
+          padding: 1rem 1rem 1rem 3rem;
+          text-align: left;
+          background-color: inherit;
+          line-height: 1.5em;
+          border-top: 1px solid #201f1d; }
+          .Menu--sections .Menu-list .Menu-item:hover {
+            color: inherit;
+            background-color: inherit;
+            font-weight: bold; }
+        .Menu--sections .Menu-list .Menu-separator {
+          width: 100%;
+          padding: 0 0 0 3rem;
+          text-align: left;
+          background-color: #201f1d; } }
+
+/*
+Menu search box
+
+### .SearchBox
+
+This is a fancy search box that is used e.g. for domain search.
+
+The descendant elements are required for the search box to work properly.
+
+Markup: _SearchBox.html
+
+Style guide: component-search-box
+*/
+.SearchBox {
+  margin: 0 !important;
+  line-height: normal !important;
+  width: 100% !important;
+  background: none !important;
+  display: inline-block; }
+  .SearchBox .SearchBox-wrapper {
+    border: 1px solid #d3d1ce;
+    background-color: #fff;
+    border-radius: 2rem;
+    cursor: pointer;
+    width: 12rem;
+    position: relative; }
+    .SearchBox .SearchBox-wrapper .SearchBox-input {
+      width: 100%;
+      padding: 0 2.5em 0 .5em;
+      margin: 0 0 0 .5em;
+      border: none;
+      background: transparent;
+      font-size: 1rem; }
+    .SearchBox .SearchBox-wrapper .SearchBox-submit {
+      position: absolute;
+      display: inline-block;
+      margin: 0;
+      width: 2.9em;
+      height: 2.9em;
+      border-radius: 50%;
+      color: #fff;
+      top: .2em;
+      right: .2em;
+      background: #d3d1ce;
+      -webkit-transition: all .3s ease 0s;
+      transition: all .3s ease 0s; }
+      .SearchBox .SearchBox-wrapper .SearchBox-submit:hover {
+        background: #aba8a5; }
+      .SearchBox .SearchBox-wrapper .SearchBox-submit:before {
+        position: absolute;
+        right: .5em;
+        top: .65em; }
+        @media only screen and (max-width: 1024px) {
+          .SearchBox .SearchBox-wrapper .SearchBox-submit:before {
+            top: .25em;
+            right: .15em; } }
+      @media only screen and (max-width: 1024px) {
+        .SearchBox .SearchBox-wrapper .SearchBox-submit {
+          width: 2em;
+          height: 2em;
+          top: .15em;
+          right: .15em; } }
+
+/*
+Meters
+
+### .Meter
+
+Meters can be used to show information about e.g. resource usage and credit levels.
+
+They can show either an absolute value or a fraction.
+
+Markup: _Meter.html
+
+Style guide: component-meter
+*/
+/*
+Level notifications
+
+Meters can be color coded if they reach certain levels.
+
+Meter--warning - Use when the metered value should be noticed.
+Meter--critical - Use when the metered value needs immediate attention.
+
+Markup: _Meter.html
+
+Style guide: component-meter.levels
+*/
+.Meter {
+  position: relative;
+  display: inline-block;
+  width: 8em;
+  height: 5em;
+  padding: 2.5em 0 0;
+  text-align: center;
+  vertical-align: top;
+  color: #5b5a57;
+  font-size: 1rem; }
+  .Meter:hover {
+    color: #5b5a57; }
+  .Meter.Meter--critical {
+    color: #e23434; }
+  .Meter.Meter--warning {
+    color: #fba621; }
+  .Meter .Meter-label {
+    text-transform: uppercase;
+    opacity: .7;
+    font-size: .8em;
+    font-weight: normal; }
+  .Meter .Meter-value {
+    position: absolute;
+    top: .2em;
+    left: 50%;
+    width: 100%;
+    margin-left: -50%;
+    white-space: nowrap;
+    font-size: 1.7em;
+    font-weight: 600; }
+    .Meter .Meter-value .Meter-value-limit {
+      font-size: .6em; }
+  @media only screen and (max-width: 760px) {
+    .Meter {
+      padding-top: 2em; } }
+
+/*
+Iconograpy
+
+### .Icon
+
+Icons can be used to enhance other elements like buttons.
+
+The icons are defined as vector graphics in a special icon font called **atomicons**.
+
+Weight: -6
+
+Style guide: base-icon
+*/
+@font-face {
+  font-family: atomicons;
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/atomicons.eot?wo9dv9");
+  src: url("../fonts/atomicons.eot?#iefixwo9dv9") format("embedded-opentype"), url("../fonts/atomicons.woff?wo9dv9") format("woff"), url("../fonts/atomicons.ttf?wo9dv9") format("truetype"), url("../fonts/atomicons.svg?wo9dv9#atomicons") format("svg"); }
+
+/*
+
+Icon variants and labels
+
+You can add modifiers to change how your icons are displayed.
+
+For the modifiers to work optimally you should use a child element with the `Icon-label` class to wrap the label text. It is good practice to use this even on standalone icons, since that will make the element with the icon more accessible for e.g. screenreaders.
+
+Icon--large - Use this for a larger icon compared to the label.
+Icon--standalone - Use this for an icon with a hidden label.
+Icon--collapsible - Use this if you want to show the label on larger screens and collapse to a standalone icon when the view port shrinks. (Resize your browser window!)
+
+Markup: _Icon.variants.html
+
+Weight: -10
+
+Style guide: base-icon.variants
+*/
+.Icon:before {
+  position: relative;
+  text-transform: none;
+  font-family: atomicons;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  speak: none;
+  top: .11em;
+  margin-right: .2em;
+  font-size: 1.2em;
+  line-height: 1.2; }
+
+.Icon .Icon-label {
+  display: inline-block;
+  text-decoration: inherit;
+  font-size: inherit;
+  font-weight: inherit; }
+
+.Icon.Icon--large:before {
+  top: .2em;
+  font-size: 2em; }
+
+.Icon.Icon--standalone:before {
+  margin-right: -.1em; }
+
+.Icon.Icon--standalone .Icon-label {
+  overflow: hidden;
+  height: 1px;
+  font-size: 0; }
+
+@media only screen and (max-width: 760px) {
+  .Icon.Icon--collapsible:before {
+    margin-right: -.1em; }
+  .Icon.Icon--collapsible .Icon-label {
+    overflow: hidden;
+    height: 1px;
+    font-size: 0; } }
+
+/*
+Icon colors
+
+Since the icons are made with a font they will generally take on the current `color`. However, you can override that with one of the color modifiers.
+
+Icon--blue - &nbsp;
+Icon--green - &nbsp;
+Icon--yellow - &nbsp;
+Icon--red - &nbsp;
+
+Swatch: true;
+
+Markup: _IconSwatch.color.html
+
+Weight: -8
+
+Style guide: base-icon.color
+*/
+.Icon--blue {
+  color: #3fa9f5; }
+
+.Icon--green {
+  color: #8dc640; }
+
+.Icon--yellow {
+  color: #fba621; }
+
+.Icon--red {
+  color: #e23434; }
+
+/*
+Icon list
+
+Icon--billing - &nbsp;
+Icon--hosting - &nbsp;
+Icon--cloud - &nbsp;
+Icon--signout - &nbsp;
+Icon--gauge - &nbsp;
+Icon--atomia - &nbsp;
+Icon--checked - &nbsp;
+Icon--star - &nbsp;
+Icon--plus - &nbsp;
+Icon--minus - &nbsp;
+Icon--close - &nbsp;
+Icon--clear - &nbsp;
+Icon--more - &nbsp;
+Icon--less - &nbsp;
+Icon--menu - &nbsp;
+Icon--first - &nbsp;
+Icon--previous - &nbsp;
+Icon--next - &nbsp;
+Icon--last - &nbsp;
+Icon--maxlayout - &nbsp;
+Icon--regularlayout - &nbsp;
+Icon--external - &nbsp;
+Icon--unlocked - &nbsp;
+Icon--locked - &nbsp;
+Icon--checked2 - &nbsp;
+Icon--comments - &nbsp;
+Icon--history - &nbsp;
+Icon--cart - &nbsp;
+Icon--info - &nbsp;
+Icon--unsuspended - &nbsp;
+Icon--upgrade - &nbsp;
+Icon--downgrade - &nbsp;
+Icon--edit - &nbsp;
+Icon--manualreviewok - &nbsp;
+Icon--recycle - &nbsp;
+Icon--extend - &nbsp;
+Icon--customer - &nbsp;
+Icon--reseller - &nbsp;
+Icon--notareseller - &nbsp;
+Icon--placementok - &nbsp;
+Icon--new - &nbsp;
+Icon--email - &nbsp;
+Icon--credited - &nbsp;
+Icon--resize - &nbsp;
+Icon--ok - &nbsp;
+Icon--pending - &nbsp;
+Icon--warning - &nbsp;
+Icon--unsuspended2 - &nbsp;
+Icon--unmatched - &nbsp;
+Icon--underpaid - &nbsp;
+Icon--timedout - &nbsp;
+Icon--suspended - &nbsp;
+Icon--placementfailed - &nbsp;
+Icon--overpaid - &nbsp;
+Icon--new2 - &nbsp;
+Icon--manualreview - &nbsp;
+Icon--closed - &nbsp;
+Icon--deleted - &nbsp;
+Icon--unmatched2 - &nbsp;
+Icon--canceled - &nbsp;
+Icon--search - &nbsp;
+Icon--email2 - &nbsp;
+Icon--defaultemail - &nbsp;
+Icon--emailforwards - &nbsp;
+Icon--mailinglists - &nbsp;
+Icon--statistics - &nbsp;
+Icon--dns - &nbsp;
+Icon--transferdomain - &nbsp;
+Icon--errorpages - &nbsp;
+Icon--buydomain - &nbsp;
+Icon--nameservers - &nbsp;
+Icon--ssl - &nbsp;
+Icon--defaultdirectories - &nbsp;
+Icon--passwordprotection - &nbsp;
+Icon--virtualdirectories - &nbsp;
+Icon--handlermappings - &nbsp;
+Icon--office365 - &nbsp;
+Icon--vps - &nbsp;
+Icon--firewall - &nbsp;
+Icon--volumes - &nbsp;
+Icon--keypairs - &nbsp;
+Icon--cronjobs - &nbsp;
+Icon--ftp - &nbsp;
+Icon--domainmanager - &nbsp;
+Icon--sitebuilder - &nbsp;
+Icon--appinstaller - &nbsp;
+Icon--authcodes - &nbsp;
+Icon--mysql - &nbsp;
+Icon--mssql - &nbsp;
+Icon--postgresql - &nbsp;
+Icon--msexchange - &nbsp;
+Icon--accountpassword - &nbsp;
+Icon--mimetypes - &nbsp;
+Icon--defaultdocs - &nbsp;
+Icon--restrictedips - &nbsp;
+Icon--dmn_dmn_subs - &nbsp;
+Icon--folder - &nbsp;
+Icon--folder-open - &nbsp;
+Icon--sidebar - &nbsp;
+Icon--x - &nbsp;
+Icon--loading - &nbsp;
+Icon--sort - &nbsp;
+Icon--asc - &nbsp;
+Icon--desc - &nbsp;
+Icon--help - &nbsp;
+
+Markup: _IconSwatch.html
+
+Swatch: true;
+
+Style guide: base-icon.list
+*/
+.Icon--billing:before {
+  content: '\e902'; }
+
+.Icon--hosting:before {
+  content: '\e903'; }
+
+.Icon--cloud:before {
+  content: '\e904'; }
+
+.Icon--signout:before {
+  content: '\e654'; }
+
+.Icon--gauge:before {
+  content: '\e901'; }
+
+.Icon--atomia:before {
+  content: '\e600'; }
+
+.Icon--checked:before {
+  content: '\e601'; }
+
+.Icon--star:before {
+  content: '\e602'; }
+
+.Icon--plus:before {
+  content: '\e603'; }
+
+.Icon--minus:before {
+  content: '\e604'; }
+
+.Icon--close:before {
+  content: '\e605'; }
+
+.Icon--clear:before {
+  content: '\e606'; }
+
+.Icon--more:before {
+  content: '\e607'; }
+
+.Icon--less:before {
+  content: '\e608'; }
+
+.Icon--menu:before {
+  content: '\e609'; }
+
+.Icon--first:before {
+  content: '\e60a'; }
+
+.Icon--previous:before {
+  content: '\e60b'; }
+
+.Icon--next:before {
+  content: '\e60c'; }
+
+.Icon--last:before {
+  content: '\e60d'; }
+
+.Icon--maxlayout:before {
+  content: '\e60e'; }
+
+.Icon--regularlayout:before {
+  content: '\e60f'; }
+
+.Icon--external:before {
+  content: '\e610'; }
+
+.Icon--unlocked:before {
+  content: '\e611'; }
+
+.Icon--locked:before {
+  content: '\e612'; }
+
+.Icon--checked2:before {
+  content: '\e613'; }
+
+.Icon--comments:before {
+  content: '\e614'; }
+
+.Icon--history:before {
+  content: '\e615'; }
+
+.Icon--cart:before {
+  content: '\e616'; }
+
+.Icon--info:before {
+  content: '\e617'; }
+
+.Icon--unsuspended:before {
+  content: '\e618'; }
+
+.Icon--upgrade:before {
+  content: '\e619'; }
+
+.Icon--downgrade:before {
+  content: '\e61a'; }
+
+.Icon--edit:before {
+  content: '\e61b'; }
+
+.Icon--manualreviewok:before {
+  content: '\e61c'; }
+
+.Icon--recycle:before {
+  content: '\e61d'; }
+
+.Icon--extend:before {
+  content: '\e61e'; }
+
+.Icon--customer:before {
+  content: '\e61f'; }
+
+.Icon--reseller:before {
+  content: '\e620'; }
+
+.Icon--notareseller:before {
+  content: '\e630'; }
+
+.Icon--placementok:before {
+  content: '\e621'; }
+
+.Icon--new:before {
+  content: '\e622'; }
+
+.Icon--email:before {
+  content: '\e623'; }
+
+.Icon--credited:before {
+  content: '\e624'; }
+
+.Icon--resize:before {
+  content: '\e625'; }
+
+.Icon--ok:before {
+  content: '\e626'; }
+
+.Icon--pending:before {
+  content: '\e627'; }
+
+.Icon--warning:before {
+  content: '\e628'; }
+
+.Icon--unsuspended2:before {
+  content: '\e629'; }
+
+.Icon--unmatched:before {
+  content: '\e62a'; }
+
+.Icon--underpaid:before {
+  content: '\e62b'; }
+
+.Icon--timedout:before {
+  content: '\e62c'; }
+
+.Icon--suspended:before {
+  content: '\e62d'; }
+
+.Icon--placementfailed:before {
+  content: '\e62e'; }
+
+.Icon--overpaid:before {
+  content: '\e62f'; }
+
+.Icon--new2:before {
+  content: '\e631'; }
+
+.Icon--manualreview:before {
+  content: '\e632'; }
+
+.Icon--closed:before {
+  content: '\e633'; }
+
+.Icon--deleted:before {
+  content: '\e634'; }
+
+.Icon--unmatched2:before {
+  content: '\e635'; }
+
+.Icon--canceled:before {
+  content: '\e636'; }
+
+.Icon--search:before {
+  content: '\e637'; }
+
+.Icon--email2:before {
+  content: '\e638'; }
+
+.Icon--defaultemail:before {
+  content: '\e639'; }
+
+.Icon--emailforwards:before {
+  content: '\e63a'; }
+
+.Icon--mailinglists:before {
+  content: '\e63b'; }
+
+.Icon--statistics:before {
+  content: '\e63c'; }
+
+.Icon--dns:before {
+  content: '\e63d'; }
+
+.Icon--transferdomain:before {
+  content: '\e63e'; }
+
+.Icon--errorpages:before {
+  content: '\e63f'; }
+
+.Icon--buydomain:before {
+  content: '\e640'; }
+
+.Icon--nameservers:before {
+  content: '\e641'; }
+
+.Icon--ssl:before {
+  content: '\e642'; }
+
+.Icon--defaultdirectories:before {
+  content: '\e643'; }
+
+.Icon--passwordprotection:before {
+  content: '\e644'; }
+
+.Icon--virtualdirectories:before {
+  content: '\e645'; }
+
+.Icon--handlermappings:before {
+  content: '\e646'; }
+
+.Icon--office365:before {
+  content: '\e647'; }
+
+.Icon--vps:before {
+  content: '\e648'; }
+
+.Icon--firewall:before {
+  content: '\e649'; }
+
+.Icon--volumes:before {
+  content: '\e64a'; }
+
+.Icon--keypairs:before {
+  content: '\e64b'; }
+
+.Icon--cronjobs:before {
+  content: '\e64c'; }
+
+.Icon--ftp:before {
+  content: '\e64d'; }
+
+.Icon--domainmanager:before {
+  content: '\e64e'; }
+
+.Icon--sitebuilder:before {
+  content: '\e64f'; }
+
+.Icon--appinstaller:before {
+  content: '\e650'; }
+
+.Icon--authcodes:before {
+  content: '\e651'; }
+
+.Icon--mysql:before {
+  content: '\e652'; }
+
+.Icon--mssql:before {
+  content: '\e653'; }
+
+.Icon--postgresql:before {
+  content: '\e65c'; }
+
+.Icon--msexchange:before {
+  content: '\e656'; }
+
+.Icon--accountpassword:before {
+  content: '\e657'; }
+
+.Icon--mimetypes:before {
+  content: '\e658'; }
+
+.Icon--defaultdocs:before {
+  content: '\e659'; }
+
+.Icon--restrictedips:before {
+  content: '\e65a'; }
+
+.Icon--dmn_dmn_subs:before {
+  content: '\e65b'; }
+
+.Icon--folder:before {
+  content: '\e907'; }
+
+.Icon--folder-open:before {
+  content: '\e90c'; }
+
+.Icon--sidebar:before {
+  content: '\e900'; }
+
+.Icon--x:before {
+  content: '\e905'; }
+
+.Icon--loading:before {
+  display: inline-block;
+  content: '\e655';
+  -webkit-animation: rotateplane 1s infinite linear;
+  animation: rotateplane 1s infinite linear; }
+
+.Icon--sort:before {
+  content: '\e908'; }
+
+.Icon--asc:before {
+  content: '\e909'; }
+
+.Icon--desc:before {
+  content: '\e90a'; }
+
+.Icon--help:before {
+  content: '\e90b'; }
+
+/*
+Logotype
+
+### .Logo
+
+The brand logo as used in e.g. the main navigation bar.
+
+Use the `$logo-path` variable to set an SVG image to use for the logo.
+
+Use the `$logo-label` variable to set the hidden text label.
+
+Below is the default logo without context dependent positioning.
+
+Markup: _Logo.html
+
+Weight: -7
+
+Style guide: base-logo
+*/
+/* stylelint-disable function-url-quotes */
+.Logo {
+  display: inline-block;
+  width: 9rem;
+  height: 6rem;
+  margin-top: -2.4rem;
+  vertical-align: middle;
+  background: url("http://patternlibrary.atomia.com/img/atomia_logo_white.svg") no-repeat top left;
+  background-size: 9rem 9rem; }
+  .Logo:after {
+    overflow: hidden;
+    height: 1px;
+    content: "Atomia";
+    font-size: 0; }
+  @media only screen and (max-width: 360px) {
+    .Logo {
+      width: 8rem;
+      height: 5.5rem;
+      margin-top: -1.8rem;
+      background-size: 8rem 8rem; } }
+
+/*
+Navigation bar
+
+Use this for the logo placed in the default `NavBar--apps` component
+
+Logo--nav - Navigation bar logo
+
+Markup: _Logo.nav.html
+
+Style guide: base-logo.navbar
+*/
+.Logo--nav {
+  float: left; }
+  @media only screen and (max-width: 480px) {
+    .Logo--nav {
+      margin-left: 1rem; } }
+
+/*
+Alternative logo
+
+Use this for the alternative logo, in our case with inverted colors
+
+Logo--alt - Navigation bar logo
+
+Markup: _Logo.alt.html
+
+Style guide: base-logo.alt
+*/
+.Logo--alt {
+  background: url("../img/atomia_logo_pink.svg") no-repeat top left;
+  background-size: 9rem 9rem; }
+
+/*
+Flags
+
+### .Flag
+
+Flags can be used e.g. for language selectors. The flags are defined in a **PNG sprite sheet**.
+
+Weight: -5
+
+Style guide: base-flag
+*/
+.Flag {
+  display: inline-block;
+  width: 4.2rem;
+  height: 2.6rem;
+  vertical-align: text-top;
+  background: url("../img/flags@2x.png");
+  background-size: 22rem 13.3rem; }
+
+.Flag--large {
+  width: 8rem;
+  height: 4.5rem;
+  vertical-align: middle;
+  background-size: 41rem 24rem; }
+
+/*
+Available flags
+
+Flags for the localizations supported by Atomia and a few additional ones are available.
+
+Flag--en-gb - &nbsp;
+Flag--sv-se - &nbsp;
+Flag--da-dk - &nbsp;
+Flag--es-es - &nbsp;
+Flag--no    - &nbsp;
+Flag--nl-nl - &nbsp;
+Flag--pt-pt - &nbsp;
+Flag--pt-br - &nbsp;
+Flag--de-de - &nbsp;
+Flag--es-ar - &nbsp;
+Flag--pl-pl - &nbsp;
+Flag--en-us - &nbsp;
+Flag--fr-ch - &nbsp;
+Flag--de-ch - &nbsp;
+Flag--it-ch - &nbsp;
+Flag--ru-ru - &nbsp;
+Flag--ro-ro - &nbsp;
+Flag--it-it - &nbsp;
+Flag--en-is - &nbsp;
+Flag--is-is - &nbsp;
+Flag--zh-hk - &nbsp;
+Flag--fr-fr - &nbsp;
+Flag--es-cl - &nbsp;
+Flag--de-at - &nbsp;
+
+Markup: _FlagSwatch.html
+
+Swatch: true;
+
+Weight: -10
+
+Style guide: base-flag.list
+
+*/
+/*
+Large flags
+
+The flags are also available in a larger size.
+
+Flag--en-gb.Flag--large - &nbsp;
+Flag--sv-se.Flag--large - &nbsp;
+Flag--da-dk.Flag--large - &nbsp;
+Flag--es-es.Flag--large - &nbsp;
+Flag--no.Flag--large    - &nbsp;
+Flag--nl-nl.Flag--large - &nbsp;
+Flag--pt-pt.Flag--large - &nbsp;
+Flag--pt-br.Flag--large - &nbsp;
+Flag--de-de.Flag--large - &nbsp;
+Flag--es-ar.Flag--large - &nbsp;
+Flag--pl-pl.Flag--large - &nbsp;
+Flag--en-us.Flag--large - &nbsp;
+Flag--fr-ch.Flag--large - &nbsp;
+Flag--de-ch.Flag--large - &nbsp;
+Flag--it-ch.Flag--large - &nbsp;
+Flag--ru-ru.Flag--large - &nbsp;
+Flag--ro-ro.Flag--large - &nbsp;
+Flag--it-it.Flag--large - &nbsp;
+Flag--en-is.Flag--large - &nbsp;
+Flag--is-is.Flag--large - &nbsp;
+Flag--zh-hk.Flag--large - &nbsp;
+Flag--fr-fr.Flag--large - &nbsp;
+Flag--es-cl.Flag--large - &nbsp;
+Flag--de-at.Flag--large - &nbsp;
+
+Markup: _FlagSwatch.html
+
+Swatch: true;
+
+Style guide: base-flag.large
+
+*/
+.Flag--en-gb {
+  background-position: -.1rem -.1rem; }
+
+.Flag--en-gb.Flag--large {
+  background-position: -.2rem -.2rem; }
+
+.Flag--sv-se {
+  background-position: -4.5rem -.1rem; }
+
+.Flag--sv-se.Flag--large {
+  background-position: -8.3rem -.2rem; }
+
+.Flag--da-dk {
+  background-position: -8.9rem -.1rem; }
+
+.Flag--da-dk.Flag--large {
+  background-position: -16.5rem -.2rem; }
+
+.Flag--es-es {
+  background-position: -13.3rem -.1rem; }
+
+.Flag--es-es.Flag--large {
+  background-position: -24.7rem -.2rem; }
+
+.Flag--no {
+  background-position: -17.7rem -.1rem; }
+
+.Flag--no.Flag--large {
+  background-position: -32.9rem -.2rem; }
+
+.Flag--nl-nl {
+  background-position: -.1rem -2.7rem; }
+
+.Flag--nl-nl.Flag--large {
+  background-position: -.2rem -5rem; }
+
+.Flag--pt-pt {
+  background-position: -4.5rem -2.7rem; }
+
+.Flag--pt-pt.Flag--large {
+  background-position: -8.3rem -5rem; }
+
+.Flag--pt-br {
+  background-position: -8.9rem -2.7rem; }
+
+.Flag--pt-br.Flag--large {
+  background-position: -16.5rem -5rem; }
+
+.Flag--de-de {
+  background-position: -13.3rem -2.7rem; }
+
+.Flag--de-de.Flag--large {
+  background-position: -24.7rem -5rem; }
+
+.Flag--es-ar {
+  background-position: -17.7rem -2.7rem; }
+
+.Flag--es-ar.Flag--large {
+  background-position: -32.9rem -5rem; }
+
+.Flag--pl-pl {
+  background-position: -.1rem -5.4rem; }
+
+.Flag--pl-pl.Flag--large {
+  background-position: -.2rem -9.7rem; }
+
+.Flag--en-us {
+  background-position: -4.5rem -5.4rem; }
+
+.Flag--en-us.Flag--large {
+  background-position: -8.3rem -9.7rem; }
+
+.Flag--fr-ch,
+.Flag--de-ch,
+.Flag--it-ch {
+  background-position: -8.9rem -5.4rem; }
+
+.Flag--fr-ch.Flag--large,
+.Flag--de-ch.Flag--large,
+.Flag--it-ch.Flag--large {
+  background-position: -16.5rem -9.7rem; }
+
+.Flag--ru-ru {
+  background-position: -13.3rem -5.4rem; }
+
+.Flag--ru-ru.Flag--large {
+  background-position: -24.7rem -9.7rem; }
+
+.Flag--ro-ro {
+  background-position: -17.7rem -5.4rem; }
+
+.Flag--ro-ro.Flag--large {
+  background-position: -32.9rem -9.7rem; }
+
+.Flag--it-it {
+  background-position: -.1rem -8rem; }
+
+.Flag--it-it.Flag--large {
+  background-position: -.2rem -14.6rem; }
+
+.Flag--en-is {
+  background-position: -4.5rem -8rem; }
+
+.Flag--en-is.Flag--large {
+  background-position: -8.3rem -14.6rem; }
+
+.Flag--is-is {
+  background-position: -8.9rem -8rem; }
+
+.Flag--is-is.Flag--large {
+  background-position: -16.5rem -14.6rem; }
+
+.Flag--zh-hk {
+  background-position: -13.3rem -8rem; }
+
+.Flag--zh-hk.Flag--large {
+  background-position: -24.7rem -14.6rem; }
+
+.Flag--fr-fr {
+  background-position: -17.7rem -8rem; }
+
+.Flag--fr-fr.Flag--large {
+  background-position: -32.9rem -14.6rem; }
+
+.Flag--es-cl {
+  background-position: -.1rem -10.7rem; }
+
+.Flag--es-cl.Flag--large {
+  background-position: -.2rem -19.4rem; }
+
+.Flag--de-at {
+  background-position: -4.5rem -10.7rem; }
+
+.Flag--de-at.Flag--large {
+  background-position: -8.3rem -19.4rem; }
+
+#ui-datepicker-div {
+  display: none; }
+
+.ui-datepicker {
+  z-index: 2000;
+  width: 17em; }
+
+.ui-datepicker-header {
+  position: relative;
+  padding: .5em 1em .6em;
+  cursor: default; }
+
+.ui-datepicker-prev,
+.ui-datepicker-next {
+  position: absolute;
+  top: 5px;
+  cursor: pointer; }
+
+.ui-datepicker-prev {
+  left: 5px; }
+
+.ui-datepicker-next {
+  right: 5px; }
+
+.ui-datepicker-header .ui-icon {
+  display: block;
+  overflow: hidden;
+  width: 16px;
+  height: 16px;
+  text-indent: -9999px; }
+
+.ui-datepicker-prev:before {
+  position: relative;
+  text-transform: none;
+  font-family: atomicons;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  speak: none;
+  top: .05em;
+  margin-right: .2em;
+  font-size: 1.2em;
+  line-height: 1.2;
+  content: '\e60b'; }
+
+.ui-datepicker-next:before {
+  position: relative;
+  text-transform: none;
+  font-family: atomicons;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  speak: none;
+  top: .05em;
+  margin-right: .2em;
+  font-size: 1.2em;
+  line-height: 1.2;
+  content: '\e60c'; }
+
+.ui-datepicker-title {
+  text-align: center;
+  text-transform: none; }
+
+.ui-datepicker-calendar {
+  width: 16em !important;
+  margin: .5em;
+  margin-bottom: 0;
+  border: none; }
+
+.ui-datepicker-calendar th,
+.ui-datepicker-calendar td {
+  padding: .1em;
+  border: none;
+  background-color: transparent !important; }
+
+.ui-datepicker-calendar th {
+  text-align: center;
+  background-color: #c22042 !important; }
+
+.ui-datepicker td span,
+.ui-datepicker td a {
+  display: block;
+  padding: .2em;
+  text-align: right;
+  text-decoration: none;
+  color: #3a3836;
+  border-radius: 3px;
+  background-color: #f7f7f6; }
+
+.ui-datepicker td span:hover,
+.ui-datepicker td a:hover {
+  background-color: white; }
+
+.ui-datepicker td span.ui-state-active,
+.ui-datepicker td a.ui-state-active {
+  color: #3a3836;
+  background-color: #8dc640 !important;
+  font-weight: bold; }
+
+.ui-datepicker td.ui-datepicker-week-end span,
+.ui-datepicker td.ui-datepicker-week-end a {
+  background-color: #d3d1ce; }
+
+.ui-datepicker td.ui-datepicker-week-end span:hover,
+.ui-datepicker td.ui-datepicker-week-end a:hover {
+  background-color: #ebeae9; }
+
+.ui-datepicker td.ui-datepicker-today span,
+.ui-datepicker td.ui-datepicker-today a {
+  color: #fff;
+  background-color: #7f7d7a; }
+
+.ui-datepicker td.ui-datepicker-today span:hover,
+.ui-datepicker td.ui-datepicker-today a:hover {
+  color: #fff;
+  background-color: #989694; }
+
+.ui-daterangepickercontain {
+  position: absolute;
+  z-index: 2000; }
+
+.ui-daterangepicker ul,
+.ranges,
+.range-start,
+.range-end {
+  float: left; }
+
+.ui-daterangepicker {
+  overflow: hidden;
+  border: 1px solid #d3d1ce;
+  border-radius: 0;
+  background-color: #f7f7f6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  font-size: 12px; }
+
+.ui-daterangepicker ul {
+  z-index: 9;
+  width: 152px;
+  margin: 0;
+  list-style-type: none; }
+
+.ui-daterangepicker ul li {
+  position: relative;
+  margin: 0; }
+
+.ui-daterangepicker ul li a {
+  display: block;
+  padding: 6px 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  line-height: 16px; }
+
+.ui-daterangepicker ul li a:hover {
+  text-transform: uppercase;
+  background-color: #dfdfdb; }
+
+.ui-daterangepicker li > span {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 7px;
+  width: 16px;
+  height: 16px; }
+
+.ranges {
+  position: relative;
+  padding: 1em 1em 3.5em; }
+
+.ui-daterangepicker .ui-datepicker {
+  height: 16em;
+  box-shadow: none; }
+
+.range-end {
+  margin-left: -9px !important; }
+
+.title-start,
+.title-end {
+  display: block;
+  padding: 0 0 .5em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #3a3836;
+  font-size: 1.2em; }
+
+.range-end .ui-datepicker {
+  width: 19em;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0; }
+
+.range-end .ui-datepicker-header {
+  padding-left: 2em; }
+
+.range-end .ui-datepicker-header .ui-datepicker-prev {
+  left: 29px; }
+
+.range-end .ui-datepicker-calendar {
+  margin-left: 2.5em; }
+
+.ranges > button {
+  color: #fff;
+  background-color: #8dc640;
+  border-color: #72a330;
+  font-size: .9rem;
+  line-height: 1.8em;
+  position: absolute;
+  right: 13px;
+  bottom: 10px;
+  text-transform: uppercase; }
+
+.ranges > button:active {
+  color: #fff;
+  background-color: #8dc640;
+  border-color: #72a330;
+  font-size: .9rem;
+  line-height: 1.8em;
+  top: auto;
+  bottom: 9px;
+  text-transform: uppercase; }
+
+.ranges > span {
+  position: absolute;
+  bottom: 10px;
+  left: 15px; }
+
+/*
+Month picker
+
+Month pickers are used when an exact date is not required, e.g. for showing usage stats.
+
+By itself the month picker is entirely generated by the [jQuery UI Month Picker Plugin](https://kidsysco.github.io/jquery-ui-month-picker/) via the `monthPicker` binding.
+
+The automatically generated widget DOM nodes have classes that are prefixed with `month-picker-`.
+
+Style guide: component-month-picker
+
+*/
+/*
+Single month picker
+
+A single month picker can be generated inline or as a pop-up when an input field is focused.
+
+Markup: _MonthPicker.html
+
+Style guide: component-month-picker.single
+
+Weight: -10
+
+*/
+.month-picker {
+  position: absolute;
+  z-index: 2000;
+  width: 17em;
+  font-size: 12px;
+  border: 1px solid #d3d1ce;
+  border-radius: 5px;
+  background-color: #d3d1ce; }
+  .month-picker .month-picker-header {
+    background: #f7f7f6;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; }
+  .month-picker tbody tr:hover {
+    background: none; }
+  .month-picker a {
+    cursor: pointer; }
+
+.month-picker-previous,
+.month-picker-next {
+  position: relative; }
+
+.month-picker-previous {
+  left: 5px; }
+  .month-picker-previous .ui-button {
+    color: #aba8a5; }
+  .month-picker-previous a:before {
+    position: relative;
+    text-transform: none;
+    font-family: atomicons;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    margin-right: .2em;
+    font-size: 1.2em;
+    line-height: 1.2;
+    content: '\e60b'; }
+
+.month-picker-next {
+  right: 5px; }
+  .month-picker-next .ui-button {
+    color: #aba8a5; }
+  .month-picker-next a:before {
+    position: relative;
+    text-transform: none;
+    font-family: atomicons;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    margin-right: .2em;
+    font-size: 1.2em;
+    line-height: 1.2;
+    content: '\e60c'; }
+
+.month-picker-header .ui-icon {
+  display: block;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  text-indent: -9999px; }
+
+.month-picker-title {
+  text-align: center;
+  text-transform: none;
+  vertical-align: middle; }
+  .month-picker-title .ui-button {
+    color: #aba8a5; }
+
+.month-picker-year-table {
+  background: none; }
+
+.month-picker-month-table {
+  width: 16em;
+  margin: .5em;
+  border: none;
+  background: none; }
+  .month-picker-month-table tbody tr {
+    border: none; }
+  .month-picker-month-table td {
+    padding: .1em;
+    border: none;
+    background-color: transparent !important; }
+    .month-picker-month-table td a {
+      display: block;
+      padding: .2em;
+      text-align: center;
+      text-decoration: none;
+      color: #3a3836;
+      border-radius: 3px; }
+      .month-picker-month-table td a:hover {
+        background-color: #c7c4c1; }
+      .month-picker-month-table td a.ui-state-active {
+        color: #d8005b;
+        background-color: #fff !important;
+        font-weight: bold; }
+  .month-picker-month-table th {
+    padding: .1em;
+    border: none;
+    text-align: center;
+    background-color: #c22042 !important; }
+
+.month-picker.month-picker--dark {
+  border-color: #5b5a57;
+  background-color: #5b5a57; }
+  .month-picker.month-picker--dark .month-picker-header {
+    background: #757470; }
+  .month-picker.month-picker--dark .month-picker-previous .ui-button,
+  .month-picker.month-picker--dark .month-picker-next .ui-button,
+  .month-picker.month-picker--dark .month-picker-title .ui-button {
+    color: #aba8a5; }
+  .month-picker.month-picker--dark .month-picker-month-table td a {
+    color: #f7f7f6; }
+    .month-picker.month-picker--dark .month-picker-month-table td a:hover {
+      background-color: #757470; }
+    .month-picker.month-picker--dark .month-picker-month-table td a.ui-state-active {
+      color: #d8005b;
+      background-color: #fff !important; }
+
+/*
+Range month pickers
+
+### .MonthPickerRange
+
+Two month pickers can also be combined into a range picker.
+
+The example below shows how to generate such a range picker with a knockout.js template and a simple model.
+
+The `click` bindings in the template take advantage of the fact that the `monthPicker` binding value can be set via the `uiSetMonthPicker` event, and that each `monthPicker` can be named with the `monthPickerName` binding.
+
+Markup: _MonthPicker.range.html
+
+Style guide: component-month-picker.range
+
+Weight: -9
+
+*/
+.MonthPickerRange {
+  background-color: #fff;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 1em;
+  position: absolute;
+  z-index: 40;
+  border: 1px solid #d3d1ce; }
+
+.MonthPickerRange-item {
+  vertical-align: top;
+  display: inline-block;
+  height: 100%; }
+
+.MonthPickerRange-title {
+  text-align: center;
+  font-size: .9rem;
+  color: #fff;
+  background: #d3d1ce;
+  border-radius: 5px; }
+
+.MonthPickerRange-presets {
+  padding-top: 1.5em;
+  padding-right: 2.5em; }
+
+.MonthPickerRange-presetItem {
+  text-decoration: none;
+  color: #aba8a5;
+  cursor: pointer;
+  font-size: .9em;
+  margin-bottom: .5em; }
+
+.MonthPickerRange-actions {
+  margin-top: 1em; }
+
+.MonthPickerRange.MonthPickerRange--dark {
+  background-color: #757470;
+  border: none; }
+  .MonthPickerRange.MonthPickerRange--dark .MonthPickerRange-title {
+    color: #aba8a5;
+    background: #5b5a57; }
+  .MonthPickerRange.MonthPickerRange--dark .MonthPickerRange-presetItem {
+    color: #aba8a5; }
+
+/* Patch to Flot library components. */
+.legend table {
+  width: auto !important;
+  border: none; }
+
+.legend table td {
+  border: none; }
+
+/*
+Siteselector
+
+### .Siteselector
+
+Siteselector - Used as a standalone component
+Siteselector.Siteselector--dark - Used with other components, `.Bar` for example
+
+Markup: _Siteselector.html
+
+Style guide: component-siteselector
+*/
+/*
+Working example
+
+This is a working example of the siteselector
+
+Markup: _Siteselector.working.html
+
+Weight: -9
+
+Style guide: component-siteselector.working
+*/
+.Siteselector {
+  background: #aba8a5;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  position: relative;
+  line-height: normal;
+  border: 1px solid #aba8a5;
+  display: inline-block;
+  overflow: hidden;
+  color: #fff; }
+
+.Siteselector-input {
+  width: 17rem;
+  height: 2.7rem;
+  margin: 0;
+  padding: 0 3rem 0 .5rem;
+  border: none;
+  background: #f7f7f6;
+  font-size: .8em; }
+
+.Siteselector-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  height: 2rem;
+  width: 2rem;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  border-bottom: none;
+  background: #aba8a5;
+  color: #f7f7f6;
+  -webkit-transition: all .3s ease 0s;
+  transition: all .3s ease 0s; }
+  .Siteselector-btn:before {
+    top: 0;
+    margin-right: 0; }
+  .Siteselector-btn:hover {
+    background: #9f9b98; }
+
+.Siteselector-label {
+  margin: 0 1rem;
+  text-transform: uppercase;
+  font-size: .8em; }
+
+.Siteselector--dark {
+  background: #7f7d7a;
+  border: 1px solid #7f7d7a; }
+  .Siteselector--dark .Siteselector-input {
+    background: #aba8a5; }
+  .Siteselector--dark .Siteselector-btn {
+    background: #7f7d7a;
+    color: #aba8a5; }
+
+@media only screen and (max-width: 760px) {
+  .Siteselector {
+    height: 5.6rem;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 5px;
+    display: block; }
+  .Siteselector-label {
+    display: inline-block;
+    height: 2.8rem;
+    line-height: 2.8rem; }
+  .Siteselector-input {
+    width: 100%; } }
+
+.Siteselector-list {
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+  margin-top: 10px;
+  padding-top: 1em;
+  background: #4a4a4a;
+  color: #9c9c9c;
+  border-radius: 8px;
+  text-transform: initial; }
+  .Siteselector-list:after {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: ' ';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #4a4a4a;
+    border-width: 10px;
+    margin-left: -10px; }
+  .Siteselector-list .dt-Search {
+    border-radius: 1.5rem;
+    left: 50%;
+    position: absolute;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    color: #5e5e5e;
+    background: #343434;
+    padding: 0 .7rem .1rem;
+    width: calc(100% - 30px);
+    margin: 0;
+    border-color: #5b5b5b; }
+  .Siteselector-list .dt-Wrapper {
+    margin: 2rem 0 0;
+    padding-bottom: 1rem;
+    font-size: 1rem;
+    overflow: hidden; }
+  .Siteselector-list .dt-Actions {
+    box-shadow: none;
+    background: none;
+    margin: 0;
+    display: inline; }
+  .Siteselector-list .dt-Info {
+    text-align: center;
+    font-size: 1rem;
+    margin: 0; }
+  .Siteselector-list thead {
+    display: none; }
+  .Siteselector-list tr {
+    background: #343434;
+    border-bottom: 1px solid #252525;
+    border-top: 1px solid #484848;
+    display: block; }
+    .Siteselector-list tr:hover {
+      background: #4e4e4e; }
+  .Siteselector-list td {
+    padding: .7rem 1rem; }
+  .Siteselector-list table a {
+    color: #d5d5d5; }
+  .Siteselector-list .Paginate-button {
+    background: #4a4a4a;
+    border-color: #9c9c9c; }
+  .Siteselector-list .Paginate-button.is-active {
+    background: #9c9c9c; }
+  .Siteselector-list .Paginate-button.is-disabled,
+  .Siteselector-list .Paginate-button.is-disabled:hover {
+    background: #343434;
+    border-color: #343434; }
+
+/*
+Bar
+
+### .Bar
+
+Bars are used for headings and to divide things under sections.
+
+Bar--brand - Brand colors
+Bar--neutral - Neutral colors
+
+Markup: _Bar.standard.html
+
+Style guide: component-bar
+*/
+/*
+Bar with components
+
+Example of component used in dashboard/quickquide
+
+Markup: _Bar.html
+
+Style guide: component-bar.icon
+
+Weight: -10
+*/
+/*
+Stacked Bars
+
+When Bars are stacked on top of each other they can use the `Bar--stacked` modifier to be separated slightly.
+
+This can be useful to create an accordion like effect to hide and show individual sections or categories of something.
+
+Markup: _Bar.stacked.html
+
+Style guide: component-bar.stacked
+
+Weight: -9
+*/
+.Bar {
+  width: 100%;
+  position: relative;
+  min-height: 3rem;
+  background: #aba8a5;
+  color: #fff;
+  line-height: 3rem;
+  font-size: 1.2em;
+  text-align: left;
+  padding: .3em 1.2em; }
+
+.Bar--brand {
+  background: #d8005b; }
+
+.Bar--stacked {
+  margin-top: .3em; }
+
+.Bar-title {
+  padding-right: 2em;
+  margin: 0; }
+
+.Bar-item {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal; }
+
+.Bar-item--right {
+  float: right;
+  margin-right: 2em; }
+
+.Bar-icon {
+  position: absolute;
+  top: .25em;
+  right: 1.25em;
+  color: rgba(255, 255, 255, 0.55); }
+  .Bar-icon:hover {
+    color: #fff;
+    cursor: pointer; }
+
+@media only screen and (max-width: 760px) {
+  .Bar-item {
+    display: block;
+    float: none;
+    margin: 0;
+    line-height: inherit; } }
+
+/*
+Iconbox
+
+### .Iconbox
+
+Iconboxes are used in dashboard view in HCP
+
+Markup: _Iconbox.html
+
+Style guide: component-iconbox
+*/
+.Iconbox {
+  position: relative;
+  display: inline-block;
+  width: 32%;
+  min-width: 20rem;
+  min-height: 16rem;
+  margin: 2rem 0 0;
+  padding: 1em;
+  text-align: center;
+  background: #fff;
+  border: 2px solid transparent; }
+  .Iconbox:hover {
+    border: 2px solid #d8005b; }
+  @media only screen and (max-width: 1024px) {
+    .Iconbox {
+      width: 48%; } }
+  @media only screen and (max-width: 480px) {
+    .Iconbox {
+      width: 100%; } }
+
+.Iconbox-icon {
+  color: #aba8a5;
+  font-size: 4em; }
+  .Iconbox-icon:before {
+    margin: 0; }
+
+.Iconbox-text {
+  margin-top: 4.4em;
+  color: #aba8a5; }
+
+.Iconbox-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 4em .5em 0;
+  text-transform: uppercase;
+  color: #d8005b;
+  font-size: 1.8em;
+  font-weight: 600; }
+
+/*
+Based on https://github.com/philipwalton/solved-by-flexbox/blob/master/assets/css/components/media.css
+
+Copyright (c) 2015 Philip Walton
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+*/
+/*
+Media object
+
+### .Media
+
+The classic media object shows an image (avatar, icon or other "media") to the side of some textual content.
+
+This is the media object as implemented in [Solved by Flexbox](https://philipwalton.github.io/solved-by-flexbox/demos/media-object/)
+
+Markup: _Media.html
+
+Style guide: component-media
+*/
+.Media {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  margin-bottom: 1em; }
+
+.Media-figure {
+  margin-right: 1em; }
+
+.Media-body {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1; }
+
+.Media-body,
+.Media-body :last-child {
+  margin-bottom: 0; }
+
+.Media-title {
+  margin: 0 0 .5em; }
+
+.Media--center {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center; }
+
+.Media--reverse > .Media-figure {
+  -webkit-box-ordinal-group: 2;
+  -webkit-order: 1;
+  -ms-flex-order: 1;
+  order: 1;
+  margin: 0 0 0 1em; }
+
+/* Specific variants */
+.Media--appInstaller {
+  background-color: #f7f7f6;
+  padding: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  position: relative; }
+  .Media--appInstaller .Media-description {
+    font-size: .8em;
+    line-height: 1.2em;
+    margin-bottom: 3em; }
+  .Media--appInstaller .Media-actions {
+    bottom: 1em;
+    right: 3em;
+    position: absolute; }
+
+.AttributeList-itemName {
+  color: #7f7d7a;
+  font-weight: bold; }
+
+.AttributeList--horizontal .AttributeList-item {
+  display: inline-block;
+  margin-right: 1em; }
+
+.CardSelect {
+  position: relative;
+  display: inline-block;
+  width: 32%;
+  min-width: 17rem;
+  min-height: 0;
+  margin: 2rem 0 0;
+  padding: 1em;
+  border: 3px solid #7f7d7a; }
+  .CardSelect:hover {
+    border: 3px solid #d8005b;
+    cursor: pointer; }
+    .CardSelect:hover.is-disabled {
+      border: 3px solid #5b5a57;
+      cursor: default; }
+  @media only screen and (max-width: 1024px) {
+    .CardSelect {
+      width: 48%; } }
+  @media only screen and (max-width: 480px) {
+    .CardSelect {
+      width: 100%; } }
+
+.CardSelect.is-disabled {
+  opacity: .3; }
+
+.CardSelect.is-selected {
+  border: 3px solid #d8005b; }
+  .CardSelect.is-selected .CardSelect-heading:after {
+    position: relative;
+    text-transform: none;
+    font-family: atomicons;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    speak: none;
+    content: ' \e613'; }
+
+.CardSelect-heading {
+  color: #d8005b;
+  font-size: 1.2em;
+  font-weight: bold; }
+
+.CardSelect-text {
+  margin-top: .8rem;
+  color: #7f7d7a; }
+
+.ActionFlow {
+  counter-reset: action-flow-counter;
+  font-size: .8rem;
+  margin-bottom: 5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-radius: 5px;
+  background-color: #fff; }
+
+.ActionFlow-step {
+  display: inline-block;
+  margin-right: 6.8em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  color: #5b5a57;
+  opacity: .3; }
+
+.ActionFlow-step:before {
+  content: counter(action-flow-counter);
+  counter-increment: action-flow-counter;
+  border-radius: 50%;
+  background-color: #5b5a57;
+  font-size: 3em;
+  float: left;
+  margin-right: .2em;
+  color: #fff;
+  width: 1.4em;
+  height: 1.4em;
+  text-align: center; }
+
+.ActionFlow-step.is-current {
+  color: #d8005b;
+  opacity: 1; }
+
+.ActionFlow-step.is-current:before {
+  background-color: #d8005b; }
+
+.ActionFlow-step.is-completed {
+  opacity: .4; }
+
+.ActionFlow-step.is-completed:before {
+  background-color: #d8005b; }
+
+.ActionFlow-stepTitle {
+  margin: 0;
+  white-space: nowrap;
+  font-size: 1.4rem;
+  font-weight: 600; }
+
+.ActionFlow-stepDescription {
+  margin: 0;
+  white-space: nowrap;
+  font-weight: 600;
+  font-style: italic;
+  color: #5b5a57; }
+
+button[data-balloon] {
+  overflow: visible; }
+
+[data-balloon] {
+  position: relative; }
+  [data-balloon]:after {
+    filter: alpha(opactiy=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: all 0.18s ease-out 0.18s;
+    transition: all 0.18s ease-out 0.18s;
+    background: rgba(17, 17, 17, 0.9);
+    border-radius: 4px;
+    color: #fff;
+    content: attr(data-balloon);
+    font-size: 12px;
+    padding: .5em 1em;
+    position: absolute;
+    white-space: nowrap;
+    z-index: 10; }
+  [data-balloon]:before {
+    background: no-repeat url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20width%3D%2236px%22%20height%3D%2212px%22%3E%3Cpath%20fill%3D%22rgba(17, 17, 17, 0.9)%22%20transform%3D%22rotate(0)%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E");
+    background-size: 100% auto;
+    width: 18px;
+    height: 6px;
+    filter: alpha(opactiy=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: all 0.18s ease-out 0.18s;
+    transition: all 0.18s ease-out 0.18s;
+    content: '';
+    position: absolute;
+    z-index: 10; }
+  [data-balloon]:hover:before, [data-balloon]:hover:after, [data-balloon][data-balloon-visible]:before, [data-balloon][data-balloon-visible]:after {
+    filter: alpha(opactiy=100);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+    opacity: 1;
+    pointer-events: auto; }
+  [data-balloon][data-balloon-break]:after {
+    white-space: normal; }
+  [data-balloon][data-balloon-pos="up"]:after {
+    bottom: 100%;
+    left: 50%;
+    margin-bottom: 11px;
+    -webkit-transform: translate(-50%, 10px);
+    transform: translate(-50%, 10px);
+    -webkit-transform-origin: top;
+    transform-origin: top; }
+  [data-balloon][data-balloon-pos="up"]:before {
+    bottom: 100%;
+    left: 50%;
+    margin-bottom: 5px;
+    -webkit-transform: translate(-50%, 10px);
+    transform: translate(-50%, 10px);
+    -webkit-transform-origin: top;
+    transform-origin: top; }
+  [data-balloon][data-balloon-pos="up"]:hover:after, [data-balloon][data-balloon-pos="up"][data-balloon-visible]:after {
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0); }
+  [data-balloon][data-balloon-pos="up"]:hover:before, [data-balloon][data-balloon-pos="up"][data-balloon-visible]:before {
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0); }
+  [data-balloon][data-balloon-pos='down']:after {
+    left: 50%;
+    margin-top: 11px;
+    top: 100%;
+    -webkit-transform: translate(-50%, -10px);
+    transform: translate(-50%, -10px); }
+  [data-balloon][data-balloon-pos='down']:before {
+    background: no-repeat url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20width%3D%2236px%22%20height%3D%2212px%22%3E%3Cpath%20fill%3D%22rgba(17, 17, 17, 0.9)%22%20transform%3D%22rotate(180 18 6)%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E");
+    background-size: 100% auto;
+    width: 18px;
+    height: 6px;
+    left: 50%;
+    margin-top: 5px;
+    top: 100%;
+    -webkit-transform: translate(-50%, -10px);
+    transform: translate(-50%, -10px); }
+  [data-balloon][data-balloon-pos='down']:hover:after, [data-balloon][data-balloon-pos='down'][data-balloon-visible]:after {
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0); }
+  [data-balloon][data-balloon-pos='down']:hover:before, [data-balloon][data-balloon-pos='down'][data-balloon-visible]:before {
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0); }
+  [data-balloon][data-balloon-pos='left']:after {
+    margin-right: 11px;
+    right: 100%;
+    top: 50%;
+    -webkit-transform: translate(10px, -50%);
+    transform: translate(10px, -50%); }
+  [data-balloon][data-balloon-pos='left']:before {
+    background: no-repeat url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20width%3D%2212px%22%20height%3D%2236px%22%3E%3Cpath%20fill%3D%22rgba(17, 17, 17, 0.9)%22%20transform%3D%22rotate(-90 18 18)%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E");
+    background-size: 100% auto;
+    width: 6px;
+    height: 18px;
+    margin-right: 5px;
+    right: 100%;
+    top: 50%;
+    -webkit-transform: translate(10px, -50%);
+    transform: translate(10px, -50%); }
+  [data-balloon][data-balloon-pos='left']:hover:after, [data-balloon][data-balloon-pos='left'][data-balloon-visible]:after {
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%); }
+  [data-balloon][data-balloon-pos='left']:hover:before, [data-balloon][data-balloon-pos='left'][data-balloon-visible]:before {
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%); }
+  [data-balloon][data-balloon-pos='right']:after {
+    left: 100%;
+    margin-left: 11px;
+    top: 50%;
+    -webkit-transform: translate(-10px, -50%);
+    transform: translate(-10px, -50%); }
+  [data-balloon][data-balloon-pos='right']:before {
+    background: no-repeat url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20width%3D%2212px%22%20height%3D%2236px%22%3E%3Cpath%20fill%3D%22rgba(17, 17, 17, 0.9)%22%20transform%3D%22rotate(90 6 6)%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E");
+    background-size: 100% auto;
+    width: 6px;
+    height: 18px;
+    left: 100%;
+    margin-left: 5px;
+    top: 50%;
+    -webkit-transform: translate(-10px, -50%);
+    transform: translate(-10px, -50%); }
+  [data-balloon][data-balloon-pos='right']:hover:after, [data-balloon][data-balloon-pos='right'][data-balloon-visible]:after {
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%); }
+  [data-balloon][data-balloon-pos='right']:hover:before, [data-balloon][data-balloon-pos='right'][data-balloon-visible]:before {
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%); }
+  [data-balloon][data-balloon-length='small']:after {
+    white-space: normal;
+    width: 80px; }
+  [data-balloon][data-balloon-length='medium']:after {
+    white-space: normal;
+    width: 150px; }
+  [data-balloon][data-balloon-length='large']:after {
+    white-space: normal;
+    width: 260px; }
+  [data-balloon][data-balloon-length='xlarge']:after {
+    white-space: normal;
+    width: 380px; }
+    @media screen and (max-width: 768px) {
+      [data-balloon][data-balloon-length='xlarge']:after {
+        white-space: normal;
+        width: 90vw; } }
+  [data-balloon][data-balloon-length='fit']:after {
+    white-space: normal;
+    width: 100%; }
+
+/*
+Utilities
+
+### .u-*
+
+Utilities are single use classes that can be used to apply some very targeted styling.
+
+The utilities are included at the bottom of the stylesheet and many of them have `!important` applied, so they will trump other styles where they are added.
+
+Weight: -9
+
+Style guide: tool-utils
+*/
+/*
+Floating
+
+Utilities are single use classes that can be used to override some settings.
+
+* **u-left**: float left
+* **u-right**: float right
+* **u-clear**: clearfix for container
+
+Markup: _Utils.float.html
+
+Style guide: tool-utils.float
+*/
+.u-left {
+  float: left !important; }
+
+.u-right {
+  float: right !important; }
+
+.u-clear:after {
+  display: block;
+  clear: both;
+  content: ' '; }
+
+/*
+Text align
+
+* **u-left-text**: align left
+* **u-right-text**: align right
+* **u-center-text**: align center
+
+Markup: _Utils.align.html
+
+Style guide: tool-utils.align
+*/
+.u-left-text {
+  text-align: left !important; }
+
+.u-right-text {
+  text-align: right !important; }
+
+.u-center-text {
+  text-align: center !important; }
+
+/*
+Text modifiers
+
+* **u-large-text**: larger font size
+* **u-success-text**: success color text
+* **u-warning-text**: warning color text
+* **u-error-text**: error color text
+
+Markup: _Utils.text.html
+
+Style guide: tool-utils.text
+*/
+.u-large-text {
+  font-size: 2em; }
+
+.u-success-text {
+  color: #8dc640 !important; }
+
+.u-warning-text {
+  color: #fba621 !important; }
+
+.u-error-text {
+  color: #e23434 !important; }
+
+.u-inherit-text {
+  color: inherit; }
+
+.u-underline-text {
+  text-decoration: underline; }
+
+.u-dotted-underline {
+  border-bottom: 1px dotted;
+  font-weight: inherit; }
+
+/*
+Margin
+
+* **u-margin-top**: Set a margin above the element
+* **u-margin-left**: Set a margin to the left of the element
+* **u-margin-right**: Set a margin to the right of the element
+* **u-margin-bottom**: Set a margin below the element
+
+Markup: _Utils.margin.html
+
+Style guide: tool-utils.margin
+*/
+.u-margin-top {
+  margin-top: 4em; }
+
+.u-margin-left {
+  margin-left: 1em; }
+
+.u-margin-right {
+  margin-right: 1em; }
+
+.u-margin-bottom {
+  margin-bottom: 4em; }
+
+/*
+Custom text
+
+* **u-locked**: render a lock icon before the text
+* **u-fine-print**: make the text small
+
+Markup: _Utils.custom.html
+
+Style guide: tool-utils.custom
+*/
+.u-locked:before {
+  position: relative;
+  text-transform: none;
+  font-family: atomicons;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  speak: none;
+  padding-right: .4em;
+  content: '\e612'; }
+
+.u-fine-print {
+  display: inline-block;
+  opacity: .5;
+  font-size: .8em;
+  line-height: 1.2em; }
+
+.u-is-disabled {
+  opacity: .5;
+  pointer-events: none;
+  cursor: default; }
+
+/*
+Input border
+
+* **u-input-border**: put a border around an input field.
+
+Useful when background color is the same as input field color.
+
+Markup: _Utils.input-border.html
+
+Style guide: tool-utils.input-border
+
+*/
+.u-input-border {
+  border: 1px solid #d3d1ce !important; }
+
+/*
+Flexbox container
+
+* **u-flexbox-container**: Container element for flexbox-items.
+
+Style guide: tool-utils.flexbox-container
+
+*/
+.u-flexbox-container {
+  padding: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+
+.u-nowrap {
+  white-space: nowrap; }
+
+/*
+Display
+
+* **u-inline-block**: Set `display` to inline block.
+
+Style guide: tool-utils.flexbox-container
+
+*/
+.u-inline-block {
+  display: inline-block !important; }
+
+/*
+Cover
+
+* **u-cover**: Makes element cover other elements
+
+Style guide: tool-utils.cover
+
+*/
+.u-cover {
+  position: absolute !important;
+  z-index: 100 !important; }

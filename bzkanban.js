@@ -3,7 +3,7 @@
 'use strict';
 
 // Configuration options.
-var bzSiteUrl = "http://bugzilla.msec.local";
+var bzSiteUrl = "http://bugs.atomia.com";
 var bzOrder = "priority,bug_severity,assigned_to";
 var bzAllowEditBugs = true;
 var bzAddCommentOnChange = true;
@@ -34,6 +34,9 @@ var bzDefaultPriority;
 var bzDefaultSeverity;
 var bzDefaultMilestone;
 var bzAuthObject;
+
+var availableFeatureColors = ['u-bg-color-blue', 'u-bg-color-green', 'u-bg-color-yellow', 'u-bg-color-red', 'u-bg-color-blue-light', 'u-bg-color-green-light', 'u-bg-color-yellow-light', 'u-bg-color-red-light'  ];
+var features = [];
 
 function initBzkanban() {
     loadParams();
@@ -132,6 +135,7 @@ function createQueryFields() {
     query.id = "query";
 
     var product = document.createElement("span");
+    product.innerHTML = "Product: "
 
     var productIcon = document.createElement("i");
     productIcon.className = "fa fa-archive";
@@ -167,12 +171,8 @@ function createQueryFields() {
             hideSpinner();
         });
     });
-
     var milestone = document.createElement("span");
-
-    var milestoneIcon = document.createElement("i");
-    milestoneIcon.className = "fa fa-flag";
-    milestoneIcon.title = "Milestone";
+    milestone.innerHTML = "Milestone:";
 
     var milestoneList = document.createElement("select");
     milestoneList.id = "textMilestone";
@@ -188,7 +188,7 @@ function createQueryFields() {
     });
 
     var assignee = document.createElement("span");
-
+    assignee.innerHTML = "Assignee: ";
     var assigneeIcon = document.createElement("i");
     assigneeIcon.className = "fa fa-user";
     assigneeIcon.title = "Assignee";
@@ -206,11 +206,8 @@ function createQueryFields() {
         filterByAssignee(name);
     });
 
-    product.appendChild(productIcon);
     product.appendChild(productList);
-    milestone.appendChild(milestoneIcon);
     milestone.appendChild(milestoneList);
-    assignee.appendChild(assigneeIcon);
     assignee.appendChild(assigneeList);
 
     query.appendChild(product);
@@ -384,7 +381,7 @@ function loadBugs(callback) {
     bzBoardLoadTime = new Date().toISOString();
 
     bzRestGetBugsUrl = "/rest.cgi/bug?product=" + bzProduct;
-    bzRestGetBugsUrl += "&include_fields=summary,status,resolution,id,severity,priority,assigned_to,last_updated,deadline";
+    bzRestGetBugsUrl += "&include_fields=summary,status,resolution,id,severity,priority,assigned_to,last_updated,deadline,blocks,depends_on";
     bzRestGetBugsUrl += "&order=" + bzOrder;
     bzRestGetBugsUrl += "&target_milestone=" + bzProductMilestone;
     bzRestGetBugsUrl += "&component=" + bzComponent;
@@ -514,8 +511,11 @@ function loadColumns(callback) {
         hideBacklog();
 
         var statuses = response.values;
+        var validStatuses = ['Selected', 'Specified', 'Identified', 'Development', 'Review', 'Merged', 'QA', 'Documentation', 'Release', 'Released']
         statuses.forEach(function(status) {
-            addBoardColumn(status);
+            if(validStatuses.indexOf(status) != -1) {
+              addBoardColumn(status);
+            }
         });
 
         callback();
@@ -711,7 +711,23 @@ function addBoardColumn(status) {
 
 function createCard(bug) {
     var card = document.createElement("div");
-    card.className = "card";
+    console.log(bug);
+    var depends_on = document.createElement("div");
+    depends_on.className = "card-depends-on";
+    if(bug.blocks.length > 0) {
+      card.className = "card-task";
+      if(features.indexOf(bug.blocks[0]) != -1) {
+        card.className = "card-task " + availableFeatureColors[features.indexOf(bug.blocks[0])];
+      }
+      depends_on.innerHTML = "Parent: " + bug.blocks[0];
+    }
+    else {
+      card.className = "card";
+      if(bug.depends_on.length > 0) {
+        features.push(bug.id);
+        card.className = "card " + availableFeatureColors[features.indexOf(bug.id)];
+      }
+    }
     card.dataset.bugId = bug.id;
     card.dataset.bugStatus = bug.status;
     card.dataset.bugPriority = bug.priority;
@@ -789,6 +805,7 @@ function createCard(bug) {
     severity.appendChild(document.createTextNode(bug.severity));
 
     card.appendChild(buglink);
+    card.appendChild(depends_on);
     card.appendChild(summary);
     card.appendChild(meta);
     meta.appendChild(icons);
