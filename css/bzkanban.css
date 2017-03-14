@@ -144,6 +144,8 @@ body {
 .badge[data-priority='---'] {
     color: green;
 }
+
+
 #textBacklog {
     width: 100px;
     border-style: solid;

@@ -15,6 +15,7 @@ var bzBacklogDefaultStatus = "CONFIRMED";
 
 // "Private" global variables. Do not touch.
 var bzProduct = "";
+var bzProducts = ["Billing2", "Admin Panel 2"];
 var bzProductMilestone = "";
 var bzComponent = "";
 var bzPriority = "";
@@ -35,7 +36,7 @@ var bzDefaultSeverity;
 var bzDefaultMilestone;
 var bzAuthObject;
 
-var availableFeatureColors = ['u-bg-color-blue', 'u-bg-color-green', 'u-bg-color-yellow', 'u-bg-color-red', 'u-bg-color-blue-light', 'u-bg-color-green-light', 'u-bg-color-yellow-light', 'u-bg-color-red-light'  ];
+var availableFeatureColors = ['u-bg-color-blue', 'u-bg-color-green', 'u-bg-color-yellow', 'u-bg-color-red', 'u-bg-color-blue-light', 'u-bg-color-green-light', 'u-bg-color-yellow-light', 'u-bg-color-red-light', 'u-bg-color-dawn'  ];
 var features = [];
 
 function initBzkanban() {
@@ -58,6 +59,8 @@ function loadParams() {
     var milestone = getURLParameter("milestone");
     if (milestone !== null) {
         bzProductMilestone = milestone;
+    } else {
+      bzProductMilestone = '---'
     }
 
     var assignee = getURLParameter("assignee");
@@ -102,7 +105,7 @@ function initNav(callback) {
 
     async.parallel([
         loadName,
-        loadProductsList,
+        //loadProducts,
         loadMilestonesList
     ],
     function(err, results) {
@@ -210,7 +213,7 @@ function createQueryFields() {
     milestone.appendChild(milestoneList);
     assignee.appendChild(assigneeList);
 
-    query.appendChild(product);
+    //query.appendChild(product);
     query.appendChild(milestone);
     query.appendChild(assignee);
 
@@ -330,14 +333,6 @@ function showLoginModal() {
 
 
 function loadBoard(callbackLoadBoard) {
-    if (bzProduct === "" || bzProductMilestone === "") {
-        if (callbackLoadBoard !== undefined) {
-            return callbackLoadBoard();
-        } else {
-            return;
-        }
-    }
-
     showSpinner();
     clearAssigneesList();
     clearCards();
@@ -378,40 +373,53 @@ function loadBoard(callbackLoadBoard) {
 }
 
 function loadBugs(callback) {
+  console.log("load bugs");
     bzBoardLoadTime = new Date().toISOString();
+    var totalProducts = bzProducts.length;
+    var handledProducts = 0;
+    for (var i = 0; i < bzProducts.length; i++) {
+        bzRestGetBugsUrl = "/rest.cgi/bug?product=" + bzProducts[i];
+        bzRestGetBugsUrl += "&include_fields=summary,status,resolution,id,severity,priority,assigned_to,last_updated,deadline,blocks,depends_on";
+        bzRestGetBugsUrl += "&order=" + bzOrder;
+        bzRestGetBugsUrl += "&target_milestone=" + bzProductMilestone;
+        bzRestGetBugsUrl += "&component=" + bzComponent;
+        bzRestGetBugsUrl += "&priority=" + bzPriority;
 
-    bzRestGetBugsUrl = "/rest.cgi/bug?product=" + bzProduct;
-    bzRestGetBugsUrl += "&include_fields=summary,status,resolution,id,severity,priority,assigned_to,last_updated,deadline,blocks,depends_on";
-    bzRestGetBugsUrl += "&order=" + bzOrder;
-    bzRestGetBugsUrl += "&target_milestone=" + bzProductMilestone;
-    bzRestGetBugsUrl += "&component=" + bzComponent;
-    bzRestGetBugsUrl += "&priority=" + bzPriority;
+        loadBug(bzRestGetBugsUrl, bzProducts[i], function(){
+          handledProducts++;
+          if(handledProducts == totalProducts)
+            callback();
+        })
 
-    httpGet(bzRestGetBugsUrl, function(response) {
-        var bugs = response.bugs;
+      }
+}
 
-        bugs.forEach(function(bug) {
-            var card = createCard(bug);
-            document.querySelector("#" + bug.status + " .cards").appendChild(card);
-        });
+function loadBug(bzRestGetBugsUrl, product, callback) {
+  httpGet(bzRestGetBugsUrl, function(response) {
+      var bugs = response.bugs;
 
-        showColumnCounts();
-        loadAssigneesList();
-        if (bzAssignedTo !== "") {
-            var assignee = bzAssignees.get(bzAssignedTo);
-            if (assignee === undefined) {
-                // This may happen when changing milestones if assignee had been selected but has no cards here.
-                // TODO: hide all cards?
-                console.log("No cards found assigned to " + bzAssignedTo + ". Showing all.");
-            } else {
-                filterByAssignee(assignee.real_name);
-            }
-        }
-        scheduleCheckForUpdates();
+      bugs.forEach(function(bug) {
+          var card = createCard(bug, product);
+          document.querySelector("#" + bug.status + " .cards").appendChild(card);
+      });
 
-        console.log("Loaded bugs: " + bugs.length);
-        callback();
-    });
+      showColumnCounts();
+      loadAssigneesList();
+      if (bzAssignedTo !== "") {
+          var assignee = bzAssignees.get(bzAssignedTo);
+          if (assignee === undefined) {
+              // This may happen when changing milestones if assignee had been selected but has no cards here.
+              // TODO: hide all cards?
+              console.log("No cards found assigned to " + bzAssignedTo + ". Showing all.");
+          } else {
+              filterByAssignee(assignee.real_name);
+          }
+      }
+      scheduleCheckForUpdates();
+
+      console.log("Loaded bugs: " + bugs.length);
+      callback();
+  });
 }
 
 function loadProductsList(callback) {
@@ -436,11 +444,11 @@ function loadProductsList(callback) {
 
 function loadMilestonesList(callback) {
     if (bzProduct === "") {
-        return callback();
+        //return callback();
     }
 
     clearMilestonesList();
-    httpGet("/rest.cgi/product?names=" + bzProduct + "&include_fields=milestones", function(response) {
+    httpGet("/rest.cgi/product?names=" + bzProducts[0] + "&include_fields=milestones", function(response) {
         document.getElementById("textMilestone").disabled = false;
         var milestones = response.products[0].milestones;
         milestones.forEach(function(milestone) {
@@ -709,7 +717,7 @@ function addBoardColumn(status) {
     return div;
 }
 
-function createCard(bug) {
+function createCard(bug, product) {
     var card = document.createElement("div");
     console.log(bug);
     var depends_on = document.createElement("div");
@@ -785,10 +793,16 @@ function createCard(bug) {
 
     var deadline = createDeadlineElement(bug.deadline);
 
+    var productSpan = document.createElement("span");
+    productSpan.title = product;
+    productSpan.className ="badge priority";
+    productSpan.innerHTML = product;
+
     var priority = document.createElement("span");
     priority.className = "badge priority";
     priority.title = "Priority";
     priority.dataset.priority = bug.priority;
+
     var priorityIcon = document.createElement("i");
     priorityIcon.className = "fa fa-sort";
     priority.appendChild(priorityIcon);
@@ -809,6 +823,7 @@ function createCard(bug) {
     card.appendChild(summary);
     card.appendChild(meta);
     meta.appendChild(icons);
+    icons.appendChild(productSpan);
     icons.appendChild(priority);
     icons.appendChild(severity);
     icons.appendChild(comment);
