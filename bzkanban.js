@@ -4,7 +4,7 @@
 
 // Configuration options.
 var bzSiteUrl = "http://bugs.atomia.com";
-var bzOrder = "priority,bug_severity,assigned_to";
+var bzOrder = "id";
 var bzAllowEditBugs = true;
 var bzAddCommentOnChange = true;
 var bzLoadComments = false;
