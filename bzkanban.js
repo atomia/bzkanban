@@ -38,6 +38,7 @@ var bzAuthObject;
 
 var availableFeatureColors = ['u-bg-color-blue', 'u-bg-color-green', 'u-bg-color-yellow', 'u-bg-color-red', 'u-bg-color-blue-light', 'u-bg-color-green-light', 'u-bg-color-yellow-light', 'u-bg-color-red-light', 'u-bg-color-dawn'  ];
 var features = [];
+var bugsGrouped = [];
 
 function initBzkanban() {
     loadParams();
@@ -335,7 +336,7 @@ function loadBugs(callback) {
     for (var i = 0; i < bzProducts.length; i++) {
         bzRestGetBugsUrl = "/rest.cgi/bug?product=" + bzProducts[i];
         bzRestGetBugsUrl += "&include_fields=summary,status,resolution,id,severity,priority,assigned_to,last_updated,deadline,blocks,depends_on";
-        bzRestGetBugsUrl += "&order=" + bzOrder;
+        bzRestGetBugsUrl += "&order=" + bzOrder + "%20DESC";
         bzRestGetBugsUrl += "&target_milestone=" + bzProductMilestone;
         bzRestGetBugsUrl += "&component=" + bzComponent;
         bzRestGetBugsUrl += "&priority=" + bzPriority;
@@ -352,11 +353,16 @@ function loadBugs(callback) {
 function loadBug(bzRestGetBugsUrl, product, callback) {
   httpGet(bzRestGetBugsUrl, function(response) {
       var bugs = response.bugs;
+      bugsGrouped = groupBugs(bugs);
 
-      bugs.forEach(function(bug) {
-          var card = createCard(bug, product);
-          document.querySelector("#" + bug.status + " .cards").appendChild(card);
-      });
+
+        for(var bugGroup in bugsGrouped)
+        {
+            bugsGrouped[bugGroup].forEach(function(bug) {
+            var card = createCard(bug, product);
+            document.querySelector("#" + bug.status + " .cards").appendChild(card);
+        });
+      }
 
       showColumnCounts();
       loadAssigneesList();
@@ -375,6 +381,25 @@ function loadBug(bzRestGetBugsUrl, product, callback) {
       console.log("Loaded bugs: " + bugs.length);
       callback();
   });
+}
+
+function groupBugs(bugs) {
+    var groups = {};
+    for (var i = 0; i < bugs.length; i++) {
+      var groupName = bugs[i].blocks[0];
+      if(typeof groupName == 'undefined') {
+        groupName = bugs[i].id;
+      }
+      if(typeof groupName != 'undefined') {
+        console.log(groupName)
+        if (!groups[groupName]) {
+          groups[groupName] = [];
+        }
+        groups[groupName].push(bugs[i]);
+      }
+    }
+    console.log(groups)
+    return(groups)
 }
 
 function loadMilestonesList(callback) {
@@ -669,6 +694,28 @@ function createCard(bug, product) {
       if(bug.depends_on.length > 0) {
         features.push(bug.id);
         card.className = "card " + availableFeatureColors[features.indexOf(bug.id)];
+      }
+      if(bug.status == "Specified" && bug.depends_on.length > 0) {
+          // Calculate max number of tasks in lane
+          var identified = 0;
+          var development = 0;
+          var review = 0;
+          var merged = 0;
+          bugsGrouped[bug.id].forEach(function (bug) {
+            if(bug.status == 'Identified')
+              identified++;
+            else if(bug.status == 'Development')
+              development++;
+            else if(bug.status == 'Review')
+              review++;
+            else if(bug.status == 'Merged')
+              merged++;
+          })
+          var groupValues = [identified, development, review, merged]
+          var maxTasks = groupValues.reduce(function(a, b) {
+              return Math.max(a, b);
+          });
+          card.style.height =(100 * maxTasks) +"px";
       }
     }
     card.dataset.bugId = bug.id;

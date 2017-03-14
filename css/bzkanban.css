@@ -60,6 +60,7 @@ body {
     margin: 5px;
     font-size: small;
     box-shadow: 0px 1px 0px lightgrey;
+    height:100px;
 }
 .card:hover {
     background-color: ghostwhite;
