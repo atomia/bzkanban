@@ -355,13 +355,14 @@ function loadBug(bzRestGetBugsUrl, product, callback) {
       var bugs = response.bugs;
       bugsGrouped = groupBugs(bugs);
 
-
         for(var bugGroup in bugsGrouped)
         {
             bugsGrouped[bugGroup].forEach(function(bug) {
-            var card = createCard(bug, product);
-            document.querySelector("#" + bug.status + " .cards").appendChild(card);
-        });
+                var card = createCard(bug, product);
+                document.querySelector("#" + bug.status + " .cards").appendChild(card);
+            });
+
+            fillBlankSlots(bugsGrouped[bugGroup]);
       }
 
       showColumnCounts();
@@ -677,6 +678,53 @@ function addBoardColumn(status) {
     return div;
 }
 
+function fillBlankSlots(cardGroup) {
+    var identified = 0;
+    var development = 0;
+    var review = 0;
+    var merged = 0;
+    cardGroup.forEach(function (bug) {
+      if(bug.status == 'Identified')
+        identified++;
+      else if(bug.status == 'Development')
+        development++;
+      else if(bug.status == 'Review')
+        review++;
+      else if(bug.status == 'Merged')
+        merged++;
+    })
+    var groupValues = [identified, development, review, merged]
+    var maxTasks = groupValues.reduce(function(a, b) {
+        return Math.max(a, b);
+    });
+
+    if(identified < maxTasks) {
+      var card = document.createElement("div");
+      card.className = "card-blank";
+      document.querySelector("#Identified .cards").appendChild(card);
+    }
+    if(development < maxTasks) {
+      for(var i = 0; i < maxTasks; i++) {
+          var card = document.createElement("div");
+          card.className = "card-blank";
+          document.querySelector("#Development .cards").appendChild(card);
+      }
+    }
+    if(review < maxTasks) {
+      for(var i = 0; i < maxTasks; i++) {
+          var card = document.createElement("div");
+          card.className = "card-blank";
+          document.querySelector("#Review .cards").appendChild(card);
+      }
+    }
+    if(merged < maxTasks) {
+      for(var i = 0; i < maxTasks; i++) {
+          var card = document.createElement("div");
+          card.className = "card-blank";
+          document.querySelector("#Merged .cards").appendChild(card);
+      }
+    }
+}
 function createCard(bug, product) {
     var card = document.createElement("div");
     console.log(bug);
@@ -715,7 +763,7 @@ function createCard(bug, product) {
           var maxTasks = groupValues.reduce(function(a, b) {
               return Math.max(a, b);
           });
-          card.style.height =(100 * maxTasks) +"px";
+          card.style.height =(100 * maxTasks + 10) +"px";
       }
     }
     card.dataset.bugId = bug.id;

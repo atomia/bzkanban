@@ -53,6 +53,14 @@ body {
 #BACKLOG .board-column-content {
     background: darkgrey;
 }
+
+.card-blank {
+    padding: 10px;
+    margin: 5px;
+    font-size: small;
+    height:100px;
+}
+
 .card {
     color: #000;
     border-radius: 3px;
@@ -61,6 +69,7 @@ body {
     font-size: small;
     box-shadow: 0px 1px 0px lightgrey;
     height:100px;
+    overflow-y:auto;
 }
 .card:hover {
     background-color: ghostwhite;
@@ -73,6 +82,8 @@ body {
     margin: 5px;
     font-size: small;
     box-shadow: 0px 1px 0px lightgrey;
+    height:100px;
+    overflow-y:auto;
 }
 .card-task:hover {
     background-color: #b3e7ff;
