@@ -15,7 +15,7 @@ var bzBacklogDefaultStatus = "CONFIRMED";
 
 // "Private" global variables. Do not touch.
 var bzProduct = "";
-var bzProducts = ["Billing2", "Admin Panel 2"];
+var bzProducts = ["Zephyr - Admin", "Zephyr - Billing"];
 var bzProductMilestone = "";
 var bzComponent = "";
 var bzPriority = "";
@@ -143,7 +143,6 @@ function createQueryFields() {
     // When the user changes the Milestone drop down
     milestoneList.addEventListener("input", function() {
         bzProductMilestone = document.getElementById("textMilestone").value;
-
         // Hot load the board without a form submit.
         loadBoard();
     });
@@ -174,22 +173,6 @@ function createQueryFields() {
     query.appendChild(assignee);
 
     return query;
-}
-
-function createBacklogButton() {
-    var backlogShowButton = document.createElement("button");
-    backlogShowButton.id = "btnShowBacklog";
-    backlogShowButton.innerText = "Show Backlog";
-    backlogShowButton.style.display = "none";
-    backlogShowButton.addEventListener("click", function() {
-        if (!isBacklogVisible()) {
-            showBacklog();
-        } else {
-            hideBacklog();
-        }
-    });
-
-    return backlogShowButton;
 }
 
 function createActions() {
@@ -224,8 +207,6 @@ function createActions() {
     bell.id = "notification";
     bell.className = "fa fa-bell";
 
-    actions.appendChild(createBacklogButton());
-    //actions.appendChild(newbug);
     actions.appendChild(whoami);
     actions.appendChild(login);
     actions.appendChild(bell);
@@ -293,23 +274,12 @@ function loadBoard(callbackLoadBoard) {
     clearAssigneesList();
     clearCards();
     hideNotification();
-    //showNewBugButton();
-    if (bzProductMilestone === "---") {
-        hideBacklog();
-        hideBacklogButton();
-    } else {
-        showBacklogButton();
-    }
     updateAddressBar();
 
     async.series([
         loadBugs,
         function(callback) {
-            if (isBacklogVisible()) {
-                loadBacklogCards(callback);
-            } else {
-                callback();
-            }
+            callback();
         },
         function(callback) {
             // Needed for Bugzilla 6 because email not returned in bug info anymore.
@@ -359,7 +329,9 @@ function loadBug(bzRestGetBugsUrl, product, callback) {
         {
             bugsGrouped[bugGroup].forEach(function(bug) {
                 var card = createCard(bug, product);
-                document.querySelector("#" + bug.status + " .cards").appendChild(card);
+                if(document.querySelector("#" + bug.status + " .cards") != null) {
+                    document.querySelector("#" + bug.status + " .cards").appendChild(card);
+                }
             });
 
             fillBlankSlots(bugsGrouped[bugGroup]);
@@ -475,10 +447,6 @@ function loadColumnsAndCards(callback) {
 
 function loadColumns(callback) {
     httpGet("/rest.cgi/field/bug/status/values", function(response) {
-        // Always add a backlog as first column
-        var backlog = addBoardColumn("BACKLOG");
-        hideBacklog();
-
         var statuses = response.values;
         var validStatuses = ['Selected', 'Specified', 'Identified', 'Development', 'Review', 'Merged', 'QA', 'Documentation', 'Release', 'Released']
         statuses.forEach(function(status) {
@@ -809,8 +777,9 @@ function createCard(bug, product) {
     picture.className = "gravatar";
     picture.style.display = "none";
     // Email field removed in Bugzilla 6.
-    if (bug.assigned_to_detail.email !== undefined) {
-        picture.src = getGravatarImgSrc(bug.assigned_to_detail.email);
+    if (bug.assigned_to !== undefined) {
+      console.log(bug.assigned_to)
+        picture.src = getGravatarImgSrc(bug.assigned_to);
         picture.style.display = "block";
     }
 
@@ -1238,57 +1207,6 @@ function showBacklog() {
     }
 }
 
-function hideBacklog() {
-    var button = document.getElementById("btnShowBacklog");
-    var backlogCol = document.querySelector("#BACKLOG.board-column");
-
-    if (isBacklogVisible()) {
-        var backlog = backlogCol.querySelector(".cards");
-        backlogCol.style.display = "none";
-        button.innerText = "Show Backlog";
-    }
-}
-
-function isBacklogVisible() {
-    var backlogCol = document.querySelector("#BACKLOG.board-column");
-
-    if (backlogCol.style.display === "") {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function loadBacklogCards(callback) {
-    showSpinner();
-
-    bzRestGetBacklogUrl = "/rest.cgi/bug?product=" + bzProduct;
-    bzRestGetBacklogUrl += "&include_fields=summary,status,id,severity,priority,assigned_to,last_updated,deadline";
-    bzRestGetBacklogUrl += "&order=" + bzOrder;
-    bzRestGetBacklogUrl += "&target_milestone=---";
-    bzRestGetBacklogUrl += "&resolution=---";
-    bzRestGetBacklogUrl += "&component=" + bzComponent;
-    bzRestGetBacklogUrl += "&priority=" + bzPriority;
-
-    httpGet(bzRestGetBacklogUrl, function(response) {
-        hideSpinner();
-        var bugs = response.bugs;
-        var backlogCards = document.querySelector("#BACKLOG" + " .cards");
-
-        bugs.forEach(function(bug) {
-            var card = createCard(bug);
-            backlogCards.appendChild(card);
-        });
-
-        // force a recount now that we have a new column.
-        showColumnCounts();
-
-        if (callback !== undefined) {
-            callback();
-        }
-    });
-}
-
 function isTrue(string) {
     return (string === 'true');
 }
@@ -1300,11 +1218,10 @@ function removeChildren(elem) {
 }
 
 function getGravatarImgSrc(email) {
-    var hash = CryptoJS.MD5(email);
+    var hash = CryptoJS.MD5(email.toLowerCase());
     var hashString = hash.toString(CryptoJS.enc.Base64);
-
     if (hashString !== "") {
-        return ("https://www.gravatar.com/avatar/" + hashString + "?s=20&d=identicon");
+        return ("https://www.gravatar.com/avatar/" + hashString + "?s=20&");
     }
 }
 
