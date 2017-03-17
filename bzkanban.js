@@ -672,21 +672,21 @@ function fillBlankSlots(cardGroup) {
       document.querySelector("#Identified .cards").appendChild(card);
     }
     if(development < maxTasks) {
-      for(var i = 0; i < maxTasks; i++) {
+      for(var i = 0; i < maxTasks - development; i++) {
           var card = document.createElement("div");
           card.className = "card-blank";
           document.querySelector("#Development .cards").appendChild(card);
       }
     }
     if(review < maxTasks) {
-      for(var i = 0; i < maxTasks; i++) {
+      for(var i = 0; i < maxTasks - review; i++) {
           var card = document.createElement("div");
           card.className = "card-blank";
           document.querySelector("#Review .cards").appendChild(card);
       }
     }
     if(merged < maxTasks) {
-      for(var i = 0; i < maxTasks; i++) {
+      for(var i = 0; i < maxTasks - merged; i++) {
           var card = document.createElement("div");
           card.className = "card-blank";
           document.querySelector("#Merged .cards").appendChild(card);
@@ -1600,14 +1600,13 @@ function loadEmailAddress(callback) {
         return callback();
     }
 
-    var ids = [];
+    var idUrl;
     bzAssignees.forEach(function(user) {
         if (user.id === undefined) {
             return;
         }
-        ids.push(user.id);
+        idUrl = "ids=" + user.id + "&";
     });
-    var idUrl = "ids=" + ids.join(',') + "&";
 
     httpGet("/rest.cgi/user?" + idUrl + "include_fields=email,name", function(response) {
         response.users.forEach(function(user) {
