@@ -36,7 +36,7 @@ var bzDefaultSeverity;
 var bzDefaultMilestone;
 var bzAuthObject;
 
-var availableFeatureColors = ['u-bg-color-blue', 'u-bg-color-green', 'u-bg-color-yellow', 'u-bg-color-red', 'u-bg-color-blue-light', 'u-bg-color-green-light', 'u-bg-color-yellow-light', 'u-bg-color-red-light', 'u-bg-color-dawn'  ];
+var availableFeatureColors = ['u-bg-color-blue-medium', 'u-bg-color-green-medium', 'u-bg-color-yellow', 'u-bg-color-red', 'u-bg-color-blue-light', 'u-bg-color-green-light', 'u-bg-color-yellow-light', 'u-bg-color-red-light', 'u-bg-color-dawn'  ];
 var features = [];
 var bugsGrouped = [];
 
@@ -406,6 +406,7 @@ function loadAssigneesList() {
     });
 
     var elem = document.getElementById("textAssignee");
+    removeChildren(elem);
 
     sorted.forEach(function(assignee) {
         var option = document.createElement("option");
@@ -661,32 +662,34 @@ function fillBlankSlots(cardGroup) {
       else if(bug.status == 'Merged')
         merged++;
     })
-    var groupValues = [identified, development, review, merged]
+    var groupValues = [identified, development, review, merged, 1]; //Min 1 height
     var maxTasks = groupValues.reduce(function(a, b) {
         return Math.max(a, b);
     });
 
     if(identified < maxTasks) {
-      var card = document.createElement("div");
-      card.className = "card-blank";
-      document.querySelector("#Identified .cards").appendChild(card);
+      for(var i = 0; i < maxTasks - identified; i++) {
+        var card = document.createElement("div");
+        card.className = "card-blank";
+        document.querySelector("#Identified .cards").appendChild(card);
+      }
     }
     if(development < maxTasks) {
-      for(var i = 0; i < maxTasks; i++) {
+      for(var i = 0; i < maxTasks - development; i++) {
           var card = document.createElement("div");
           card.className = "card-blank";
           document.querySelector("#Development .cards").appendChild(card);
       }
     }
     if(review < maxTasks) {
-      for(var i = 0; i < maxTasks; i++) {
+      for(var i = 0; i < maxTasks - review; i++) {
           var card = document.createElement("div");
           card.className = "card-blank";
           document.querySelector("#Review .cards").appendChild(card);
       }
     }
     if(merged < maxTasks) {
-      for(var i = 0; i < maxTasks; i++) {
+      for(var i = 0; i < maxTasks - merged; i++) {
           var card = document.createElement("div");
           card.className = "card-blank";
           document.querySelector("#Merged .cards").appendChild(card);
@@ -696,14 +699,11 @@ function fillBlankSlots(cardGroup) {
 function createCard(bug, product) {
     var card = document.createElement("div");
     console.log(bug);
-    var depends_on = document.createElement("div");
-    depends_on.className = "card-depends-on";
     if(bug.blocks.length > 0) {
       card.className = "card-task";
       if(features.indexOf(bug.blocks[0]) != -1) {
         card.className = "card-task " + availableFeatureColors[features.indexOf(bug.blocks[0])];
       }
-      depends_on.innerHTML = "Parent: " + bug.blocks[0];
     }
     else {
       card.className = "card";
@@ -731,7 +731,9 @@ function createCard(bug, product) {
           var maxTasks = groupValues.reduce(function(a, b) {
               return Math.max(a, b);
           });
-          card.style.height =(100 * maxTasks + 10) +"px";
+
+          var cardPadding = ((maxTasks - 1) / 2) * 10;
+          card.style.height =(100 * maxTasks + cardPadding) + "px";
       }
     }
     card.dataset.bugId = bug.id;
@@ -818,7 +820,6 @@ function createCard(bug, product) {
     severity.appendChild(document.createTextNode(bug.severity));
 
     card.appendChild(buglink);
-    card.appendChild(depends_on);
     card.appendChild(summary);
     card.appendChild(meta);
     meta.appendChild(icons);
@@ -911,7 +912,7 @@ function clearAssigneesList() {
 }
 
 function filterByAssignee(name) {
-    var cards = document.querySelectorAll(".card");
+    var cards = document.querySelectorAll(".card, .card-task");
     cards.forEach(function(card) {
         var fullname = card.querySelector(".fullname").innerHTML;
         if (name == fullname || name == "ALL") {
@@ -1087,7 +1088,7 @@ function showColumnCounts() {
         cardCount = document.createElement("span");
         cardCount.className = "board-column-card-count";
 
-        var cards = col.querySelectorAll(".card");
+        var cards = col.querySelectorAll(".card, .card-task");
         var count = 0;
         cards.forEach(function(card) {
             // Account for filtered out cards
@@ -1609,11 +1610,14 @@ function loadEmailAddress(callback) {
         }
         idUrl += "ids=" + user.id + "&";
     });
+
     httpGet("/rest.cgi/user?" + idUrl + "include_fields=email,name", function(response) {
         response.users.forEach(function(user) {
             var userDetail = bzAssignees.get(user.name);
-            userDetail.email = user.email;
-            updateGravatarIcons(user);
+            if(user.email !== undefined) {
+                userDetail.email = user.email;
+            }
+            updateGravatarIcons(userDetail);
         });
         callback();
     });

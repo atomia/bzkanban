@@ -17,8 +17,8 @@ body {
     padding: 10px 5px 5px 5px;
     padding-top: 10px;
     border-radius: 3px 3px 0 0;
-    background: #d8005b;
-    color: #fff;
+    background: #d3d1ce;
+    color: #5b5a57;
 
 }
 .cards {
@@ -93,13 +93,12 @@ body {
     font-size: smaller;
 }
 .card-summary {
-    padding-top: 10px;
     word-break: break-word;
 }
 .card-meta {
     font-size: smaller;
     color: grey;
-    margin-top: 10px;
+    margin-top: 3px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -121,11 +120,6 @@ body {
     margin-right: 10px;
 }
 
-.card-depends-on {
-    float: right;
-    font-weight: bold;
-
-}
 .badge .fa {
     padding-right: 3px;
 }
