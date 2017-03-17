@@ -13,6 +13,9 @@ var bzAutoRefresh = false;
 var bzDomElement = "#bzkanban";
 var bzBacklogDefaultStatus = "CONFIRMED";
 
+var ignorePriority = true;
+var ignoreSeverity = true;
+
 // "Private" global variables. Do not touch.
 var bzProduct = "";
 var bzProducts = ["Zephyr - Admin", "Zephyr - Billing"];
@@ -806,8 +809,11 @@ function createCard(bug, product) {
 
     var priorityIcon = document.createElement("i");
     priorityIcon.className = "fa fa-sort";
-    priority.appendChild(priorityIcon);
-    priority.appendChild(document.createTextNode(bug.priority));
+
+    if(!ignorePriority) {
+        priority.appendChild(priorityIcon);
+        priority.appendChild(document.createTextNode(bug.priority));
+    }
 
     var severity = document.createElement("span");
     severity.className = "badge severity";
@@ -816,8 +822,11 @@ function createCard(bug, product) {
     var severityIcon = document.createElement("i");
     severityIcon.className = "fa";
     severityIcon.classList.add("fa-lightbulb-o");
-    severity.appendChild(severityIcon);
-    severity.appendChild(document.createTextNode(bug.severity));
+
+    if(!ignoreSeverity) {
+        severity.appendChild(severityIcon);
+        severity.appendChild(document.createTextNode(bug.severity));
+    }
 
     card.appendChild(buglink);
     card.appendChild(summary);
