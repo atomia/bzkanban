@@ -661,15 +661,17 @@ function fillBlankSlots(cardGroup) {
       else if(bug.status == 'Merged')
         merged++;
     })
-    var groupValues = [identified, development, review, merged]
+    var groupValues = [identified, development, review, merged, 1]; //Min 1 height
     var maxTasks = groupValues.reduce(function(a, b) {
         return Math.max(a, b);
     });
 
     if(identified < maxTasks) {
-      var card = document.createElement("div");
-      card.className = "card-blank";
-      document.querySelector("#Identified .cards").appendChild(card);
+      for(var i = 0; i < maxTasks - identified; i++) {
+        var card = document.createElement("div");
+        card.className = "card-blank";
+        document.querySelector("#Identified .cards").appendChild(card);
+      }
     }
     if(development < maxTasks) {
       for(var i = 0; i < maxTasks - development; i++) {
