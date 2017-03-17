@@ -406,6 +406,7 @@ function loadAssigneesList() {
     });
 
     var elem = document.getElementById("textAssignee");
+    removeChildren(elem);
 
     sorted.forEach(function(assignee) {
         var option = document.createElement("option");
@@ -911,7 +912,7 @@ function clearAssigneesList() {
 }
 
 function filterByAssignee(name) {
-    var cards = document.querySelectorAll(".card");
+    var cards = document.querySelectorAll(".card, .card-task");
     cards.forEach(function(card) {
         var fullname = card.querySelector(".fullname").innerHTML;
         if (name == fullname || name == "ALL") {
@@ -1602,12 +1603,12 @@ function loadEmailAddress(callback) {
         return callback();
     }
 
-    var idUrl;
+    var idUrl = "";
     bzAssignees.forEach(function(user) {
         if (user.id === undefined) {
             return;
         }
-        idUrl = "ids=" + user.id + "&";
+        idUrl += "ids=" + user.id + "&";
     });
 
     httpGet("/rest.cgi/user?" + idUrl + "include_fields=email,name", function(response) {
