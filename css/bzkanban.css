@@ -2,15 +2,14 @@ body {
     background: #F7F7F6; /* fallback for old browsers */
     font-family: sans-serif;
     margin: 0;
+    padding-bottom: 0;
 }
 #bzkanban {
     display: flex;
-    height: 100%;
     flex-direction: column;
 }
 #board {
     display: flex;
-    flex: 1;
     overflow-x: scroll;
 }
 .board-column-title {
@@ -28,7 +27,7 @@ body {
 }
 .board-column-card-count {
     font-size: small;
-    color: grey;
+    color: #444;
     margin-left: 10px;
 }
 .board-column {
@@ -74,7 +73,7 @@ body {
     overflow-y:auto;
 }
 .card:hover {
-    background-color: ghostwhite;
+    box-shadow: 0 0 75px 75px rgba(0,0,0,0.075) inset;
     border-color: black;
 }
 .card-task {
@@ -88,7 +87,7 @@ body {
     overflow-y:auto;
 }
 .card-task:hover {
-    background-color: #b3e7ff;
+    box-shadow: 0 0 75px 75px rgba(0,0,0,0.075) inset;
     border-color: black;
 }
 .card-ref {
@@ -99,7 +98,7 @@ body {
 }
 .card-meta {
     font-size: smaller;
-    color: grey;
+    color: #444;
     margin-top: 3px;
     display: flex;
     flex-direction: row;
@@ -343,7 +342,7 @@ button:hover {
     background-color: lightgrey;
 }
 a {
-    color: grey;
+    color: #444;
 }
 a:hover {
     color: lightgrey;
