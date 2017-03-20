@@ -327,17 +327,18 @@ function loadBug(bzRestGetBugsUrl, product, callback) {
   httpGet(bzRestGetBugsUrl, function(response) {
       var bugs = response.bugs;
       bugsGrouped = groupBugs(bugs);
-
         for(var bugGroup in bugsGrouped)
         {
+            var cardsAdded = 0;
             bugsGrouped[bugGroup].forEach(function(bug) {
                 var card = createCard(bug, product);
                 if(document.querySelector("#" + bug.status + " .cards") != null) {
                     document.querySelector("#" + bug.status + " .cards").appendChild(card);
+                    cardsAdded++;
                 }
             });
-
-            fillBlankSlots(bugsGrouped[bugGroup]);
+            if(cardsAdded > 0)
+              fillBlankSlots(bugsGrouped[bugGroup]);
       }
 
       showColumnCounts();
@@ -669,7 +670,6 @@ function fillBlankSlots(cardGroup) {
     var maxTasks = groupValues.reduce(function(a, b) {
         return Math.max(a, b);
     });
-
     if(identified < maxTasks) {
       for(var i = 0; i < maxTasks - identified; i++) {
         var card = document.createElement("div");
