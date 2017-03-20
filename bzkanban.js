@@ -39,7 +39,7 @@ var bzDefaultSeverity;
 var bzDefaultMilestone;
 var bzAuthObject;
 
-var availableFeatureColors = ['u-bg-color-blue-medium', 'u-bg-color-green-medium', 'u-bg-color-yellow', 'u-bg-color-red', 'u-bg-color-blue-light', 'u-bg-color-green-light', 'u-bg-color-yellow-light', 'u-bg-color-red-light', 'u-bg-color-dawn'  ];
+var availableFeatureColors = ['u-bg-color-blue-medium', 'u-bg-color-green-medium', 'u-bg-color-yellow-medium', 'u-bg-color-red-medium', 'u-bg-color-blue-light', 'u-bg-color-green-light', 'u-bg-color-yellow-light', 'u-bg-color-red-light', 'u-bg-color-dawn' ];
 var features = [];
 var bugsGrouped = [];
 
