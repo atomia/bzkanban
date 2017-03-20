@@ -704,16 +704,18 @@ function createCard(bug, product) {
     console.log(bug);
     if(bug.blocks.length > 0) {
       card.className = "card-task";
-      if(features.indexOf(bug.blocks[0]) != -1) {
-        card.className = "card-task " + availableFeatureColors[features.indexOf(bug.blocks[0])];
+      if(features.indexOf(bug.blocks[0]) == -1) {
+        features.push(bug.blocks[0]);
       }
+
+      card.className = "card-task " + availableFeatureColors[features.indexOf(bug.blocks[0])];
     }
     else {
       card.className = "card";
-      if(bug.depends_on.length > 0) {
+      if(features.indexOf(bug.id) == -1) {
         features.push(bug.id);
-        card.className = "card " + availableFeatureColors[features.indexOf(bug.id)];
       }
+      card.className = "card " + availableFeatureColors[features.indexOf(bug.id)];
       if(bug.status == "Specified" && bug.depends_on.length > 0) {
           // Calculate max number of tasks in lane
           var identified = 0;
