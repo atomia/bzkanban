@@ -39,7 +39,7 @@ var bzDefaultSeverity;
 var bzDefaultMilestone;
 var bzAuthObject;
 
-var availableFeatureColors = ['u-bg-color-blue-medium', 'u-bg-color-green-medium', 'u-bg-color-yellow-medium', 'u-bg-color-red-medium', 'u-bg-color-blue-light', 'u-bg-color-green-light', 'u-bg-color-yellow-light', 'u-bg-color-red-light', 'u-bg-color-dawn' ];
+var availableFeatureColors = ['u-bg-color-blue-medium', 'u-bg-color-green-medium', 'u-bg-color-yellow-medium', 'u-bg-color-red-medium', 'u-bg-color-blue-light', 'u-bg-color-green-light', 'u-bg-color-yellow-light', 'u-bg-color-red-light', 'u-bg-color-dawn', 'u-bg-color-green-x-light' ];
 var features = [];
 var bugsGrouped = [];
 
@@ -652,12 +652,15 @@ function addBoardColumn(status) {
 }
 
 function fillBlankSlots(cardGroup) {
+    var specified = 0;
     var identified = 0;
     var development = 0;
     var review = 0;
     var merged = 0;
     cardGroup.forEach(function (bug) {
-      if(bug.status == 'Identified')
+      if(bug.status == 'Specified')
+        specified++;
+      else if(bug.status == 'Identified')
         identified++;
       else if(bug.status == 'Development')
         development++;
@@ -665,38 +668,49 @@ function fillBlankSlots(cardGroup) {
         review++;
       else if(bug.status == 'Merged')
         merged++;
-    })
-    var groupValues = [identified, development, review, merged, 1]; //Min 1 height
-    var maxTasks = groupValues.reduce(function(a, b) {
-        return Math.max(a, b);
     });
-    if(identified < maxTasks) {
-      for(var i = 0; i < maxTasks - identified; i++) {
-        var card = document.createElement("div");
-        card.className = "card-blank";
-        document.querySelector("#Identified .cards").appendChild(card);
-      }
-    }
-    if(development < maxTasks) {
-      for(var i = 0; i < maxTasks - development; i++) {
-          var card = document.createElement("div");
-          card.className = "card-blank";
-          document.querySelector("#Development .cards").appendChild(card);
-      }
-    }
-    if(review < maxTasks) {
-      for(var i = 0; i < maxTasks - review; i++) {
-          var card = document.createElement("div");
-          card.className = "card-blank";
-          document.querySelector("#Review .cards").appendChild(card);
-      }
-    }
-    if(merged < maxTasks) {
-      for(var i = 0; i < maxTasks - merged; i++) {
-          var card = document.createElement("div");
-          card.className = "card-blank";
-          document.querySelector("#Merged .cards").appendChild(card);
-      }
+
+    if(specified > 0 || identified > 0 || development > 0 || review > 0 || merged > 0){
+
+        var groupValues = [identified, development, review, merged, 1]; //Min 1 height
+        var maxTasks = groupValues.reduce(function(a, b) {
+            return Math.max(a, b);
+        });
+        if(specified == 0) {
+          for(var i = 0; i < maxTasks; i++) {
+            var card = document.createElement("div");
+            card.className = "card-blank";
+            document.querySelector("#Specified .cards").appendChild(card);
+          }  
+        }
+        if(identified < maxTasks) {
+          for(var i = 0; i < maxTasks - identified; i++) {
+            var card = document.createElement("div");
+            card.className = "card-blank";
+            document.querySelector("#Identified .cards").appendChild(card);
+          }
+        }
+        if(development < maxTasks) {
+          for(var i = 0; i < maxTasks - development; i++) {
+              var card = document.createElement("div");
+              card.className = "card-blank";
+              document.querySelector("#Development .cards").appendChild(card);
+          }
+        }
+        if(review < maxTasks) {
+          for(var i = 0; i < maxTasks - review; i++) {
+              var card = document.createElement("div");
+              card.className = "card-blank";
+              document.querySelector("#Review .cards").appendChild(card);
+          }
+        }
+        if(merged < maxTasks) {
+          for(var i = 0; i < maxTasks - merged; i++) {
+              var card = document.createElement("div");
+              card.className = "card-blank";
+              document.querySelector("#Merged .cards").appendChild(card);
+          }
+        }
     }
 }
 function createCard(bug, product) {
@@ -708,14 +722,14 @@ function createCard(bug, product) {
         features.push(bug.blocks[0]);
       }
 
-      card.className = "card-task " + availableFeatureColors[features.indexOf(bug.blocks[0])];
+      card.className = "card-task " + availableFeatureColors[features.indexOf(bug.blocks[0]) % 10];
     }
     else {
       card.className = "card";
       if(features.indexOf(bug.id) == -1) {
         features.push(bug.id);
       }
-      card.className = "card " + availableFeatureColors[features.indexOf(bug.id)];
+      card.className = "card " + availableFeatureColors[features.indexOf(bug.id) % 10];
       if(bug.status == "Specified" && bug.depends_on.length > 0) {
           // Calculate max number of tasks in lane
           var identified = 0;
